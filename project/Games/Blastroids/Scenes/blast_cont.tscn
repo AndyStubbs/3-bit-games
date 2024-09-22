@@ -284,7 +284,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Life1" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life1"]
@@ -294,7 +294,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
 [node name="Life2" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life2"]
@@ -304,7 +304,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
 [node name="Life3" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life3"]
@@ -314,7 +314,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
 [node name="Life4" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life4"]
@@ -324,7 +324,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
 [node name="Life5" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life5"]
@@ -334,7 +334,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
 [node name="Life6" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life6"]
@@ -344,7 +344,7 @@ scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
 [node name="Life7" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
-custom_minimum_size = Vector2(40, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life7"]

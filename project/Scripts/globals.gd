@@ -36,11 +36,13 @@ const TUN_IMAGES: Array = [
 const BLAST_IMAGES: Array = [
 	[
 		preload( "res://Games/Blastroids/Images/spaceship3_0.png" ), 
-		preload( "res://Games/Blastroids/Images/spaceship3_markers3.png" )
+		preload( "res://Games/Blastroids/Images/spaceship3_markers3.png" ),
+		preload( "res://Games/Blastroids/Images/spaceship3_outline.png" )
 	],
 	[
 		preload( "res://Games/Blastroids/Images/spaceship4_0.png" ),
-		preload( "res://Games/Blastroids/Images/spaceship4_markers2.png" )
+		preload( "res://Games/Blastroids/Images/spaceship4_markers2.png" ),
+		preload( "res://Games/Blastroids/Images/spaceship4_outline.png" )
 	]
 ]
 const CONTROL_NAMES: Dictionary = {

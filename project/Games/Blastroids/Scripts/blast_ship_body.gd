@@ -96,6 +96,7 @@ var stats: Dictionary = {
 	"crate_kills": 0,
 	"missile_kills": 0
 }
+var lives_image
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -127,11 +128,11 @@ func init( new_game: BlastGame ) -> void:
 	energy_bar = ui.get_node( "ShipData/EnergyBar" )
 	weapons_bar = ui.get_node( "WeaponsData/WeaponsBar" )
 	ammo_label = ui.get_node( "WeaponsData/WeaponsBar/AmmoCount" )
-	lives_box = ui.get_node( "Lives/HB" )
 	weapon_box = ui.get_node( "WeaponsData/Control/HB" )
+	lives_box = game.uis[ world_id ].get_node( "Lives/HB" )
 	for child in lives_box.get_children():
 		var child_sprite: Sprite2D = child.get_child( 0 )
-		child_sprite.texture = sprite.texture
+		child_sprite.texture = lives_image
 		child_sprite.modulate = ship_color
 		child_sprite.modulate.a = 0.8
 	lives = Blast.settings.lives
@@ -152,6 +153,7 @@ func setup_ship( settings: Dictionary ) -> void:
 	sprite.texture = Globals.BLAST_IMAGES[ settings.image_id ][ 0 ]
 	sprite_markers.texture = Globals.BLAST_IMAGES[ settings.image_id ][ 1 ]
 	sprite_markers.modulate = ship_color
+	lives_image = Globals.BLAST_IMAGES[ settings.image_id ][ 2 ]
 
 
 func setup_weapon() -> void:

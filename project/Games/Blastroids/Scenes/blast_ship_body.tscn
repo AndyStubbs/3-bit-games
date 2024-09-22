@@ -1,0 +1,134 @@
+[gd_scene load_steps=20 format=3 uid="uid://10i1qjfhmetd"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship_body.gd" id="1_u0bsr"]
+[ext_resource type="Texture2D" uid="uid://dsuvukl4b1wkm" path="res://Games/Blastroids/Images/spaceship3_0.png" id="2_477gp"]
+[ext_resource type="Texture2D" uid="uid://ca22402n1bviv" path="res://Games/Blastroids/Images/spaceship3_markers3.png" id="3_e1t4l"]
+[ext_resource type="Texture2D" uid="uid://55fyxo6aygs8" path="res://Assets/Images/cursor.png" id="3_knoh3"]
+[ext_resource type="AudioStream" uid="uid://b6wymg66j681l" path="res://Assets/Sounds/thrust.wav" id="4_3wnfd"]
+[ext_resource type="AudioStream" uid="uid://cv8a7oxvfrwap" path="res://Assets/Sounds/laser_short.wav" id="5_es6bb"]
+[ext_resource type="AudioStream" uid="uid://crjk56u5benq5" path="res://Assets/Sounds/laser_short_2.wav" id="6_0fmls"]
+[ext_resource type="AudioStream" uid="uid://7k4je673lp0r" path="res://Assets/Sounds/laser_short_3.wav" id="7_8vcg3"]
+[ext_resource type="AudioStream" uid="uid://cboxcnfar5jr5" path="res://Assets/Sounds/ship_hit.wav" id="8_rfy71"]
+[ext_resource type="AudioStream" uid="uid://wa6w5fkpx1hc" path="res://Assets/Sounds/ship_hit2.wav" id="9_lvhjq"]
+[ext_resource type="AudioStream" uid="uid://cv24og2lgetpu" path="res://Assets/Sounds/ship_hit3.wav" id="10_vt0qi"]
+[ext_resource type="AudioStream" uid="uid://bv66yxwarga0s" path="res://Assets/Sounds/ship_collide2.wav" id="10_xr00q"]
+[ext_resource type="AudioStream" uid="uid://u1xwqlocv1ab" path="res://Assets/Sounds/select.wav" id="12_beo2e"]
+[ext_resource type="AudioStream" uid="uid://c6lkhefy7g0iw" path="res://Assets/Sounds/charge2.wav" id="13_t0cbb"]
+[ext_resource type="AudioStream" uid="uid://cyw3lufs1hukc" path="res://Assets/Sounds/explosion.wav" id="14_wr8xf"]
+[ext_resource type="AudioStream" uid="uid://cqalw1ktlp1mi" path="res://Assets/Sounds/next_turn_2.wav" id="15_qavu0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5y3kg"]
+radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dfmpb"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kvwq8"]
+radius = 500.0
+
+[node name="ShipBody" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+mass = 10.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_u0bsr")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5y3kg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_477gp")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("3_e1t4l")
+
+[node name="GunPoints" type="Node2D" parent="."]
+
+[node name="GunPoint1" type="Marker2D" parent="GunPoints"]
+position = Vector2(28, -20)
+
+[node name="GunPoint2" type="Marker2D" parent="GunPoints"]
+position = Vector2(28, 22)
+
+[node name="MissilePoint" type="Marker2D" parent="."]
+position = Vector2(26, 0)
+
+[node name="NavMarker" type="Sprite2D" parent="."]
+modulate = Color(0.027451, 1, 0, 1)
+texture_filter = 1
+texture = ExtResource("3_knoh3")
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+visible = false
+enabled = false
+shape = SubResource("CircleShape2D_dfmpb")
+target_position = Vector2(100, 0)
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_kvwq8")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="ThrustSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_3wnfd")
+volume_db = -6.734
+bus = &"Sound"
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_es6bb")
+volume_db = -8.0
+bus = &"Sound"
+
+[node name="LaserSound2" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("6_0fmls")
+volume_db = -8.0
+bus = &"Sound"
+
+[node name="LaserSound3" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_8vcg3")
+volume_db = -8.0
+bus = &"Sound"
+
+[node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_rfy71")
+bus = &"Sound"
+
+[node name="Hit2" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_lvhjq")
+bus = &"Sound"
+
+[node name="Hit3" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("10_vt0qi")
+bus = &"Sound"
+
+[node name="Collide" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("10_xr00q")
+bus = &"Sound"
+
+[node name="Select" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("12_beo2e")
+bus = &"Sound"
+
+[node name="ChargeSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_t0cbb")
+pitch_scale = 1.25
+bus = &"Sound"
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("14_wr8xf")
+bus = &"Sound"
+
+[node name="StartSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("15_qavu0")
+bus = &"Sound"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

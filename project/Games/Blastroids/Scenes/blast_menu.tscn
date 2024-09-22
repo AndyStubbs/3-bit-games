@@ -1,0 +1,111 @@
+[gd_scene load_steps=4 format=3 uid="uid://6alqj2rempg2"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_menu.gd" id="1_bgg41"]
+[ext_resource type="PackedScene" uid="uid://dyhh1j60dt6t0" path="res://Shared/player_select.tscn" id="1_yedil"]
+[ext_resource type="Texture2D" uid="uid://b6bv4frxy18or" path="res://Games/Blastroids/Images/background_0.webp" id="2_33dug"]
+
+[node name="BlastMenu" type="Node"]
+script = ExtResource("1_bgg41")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.544974, 0.544974, 0.544974, 1)
+offset_left = -30.0
+offset_top = -27.0
+offset_right = 1762.0
+offset_bottom = 997.0
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("2_33dug")
+
+[node name="MC" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VB" type="VBoxContainer" parent="MC"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MC/VB"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 102
+text = "Blastroids"
+horizontal_alignment = 1
+
+[node name="MC" type="MarginContainer" parent="MC/VB"]
+custom_minimum_size = Vector2(0, 900)
+layout_mode = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 128
+
+[node name="PL" type="Panel" parent="MC/VB/MC"]
+layout_mode = 2
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC"]
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="PlayerSelect" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+layout_mode = 2
+game_type = 2
+
+[node name="PlayerSelect2" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+layout_mode = 2
+game_type = 2
+player_id = 1
+
+[node name="PlayerSelect3" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+layout_mode = 2
+game_type = 2
+player_id = 2
+
+[node name="PlayerSelect4" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+layout_mode = 2
+game_type = 2
+player_id = 3
+
+[node name="Control" type="Control" parent="MC/VB/MC/PL/MC/VB"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="HB2" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="StartButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HB2"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "TR_START"
+
+[node name="ReturnButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HB2"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "TR_BACK"
+
+[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HB2/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HB2/ReturnButton" to="." method="_on_return_button_pressed"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://ehrejlv3kggk"]
+
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/points.gd" id="1_cdg5x"]
+[ext_resource type="LabelSettings" uid="uid://crd741d8v7t3s" path="res://Assets/Resources/font_anton_32.tres" id="1_yfo8g"]
+[ext_resource type="AudioStream" uid="uid://dchfwafeadnkp" path="res://Assets/Sounds/tick2.wav" id="3_notud"]
+
+[node name="Points" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "50"
+label_settings = ExtResource("1_yfo8g")
+script = ExtResource("1_cdg5x")
+
+[node name="TickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_notud")
+bus = &"Sound"

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://soyt0xw6soo0"]
+
+[sub_resource type="GDScript" id="GDScript_ntg3v"]
+script/source = "extends Sprite2D
+
+
+@export var clone_parent: Node2D
+
+
+func update( _delta: float ) -> void:
+	position = clone_parent.position
+	rotation = clone_parent.rotation
+"
+
+[node name="BlastClone" type="Sprite2D"]
+script = SubResource("GDScript_ntg3v")

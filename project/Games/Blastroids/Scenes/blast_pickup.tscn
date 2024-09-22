@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://i2qm58qq6nbv"]
+
+[ext_resource type="Texture2D" uid="uid://dtc8afgna6x2" path="res://Assets/Images/sphere.png" id="1_kqv27"]
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_pickup.gd" id="1_ue4om"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y0urs"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_57cay"]
+radius = 200.0
+
+[node name="BlastPickup" type="Area2D"]
+modulate = Color(1, 1, 0, 1)
+monitorable = false
+script = ExtResource("1_ue4om")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kqv27")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_y0urs")
+
+[node name="GravityArea" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea"]
+visible = false
+shape = SubResource("CircleShape2D_57cay")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="GravityArea" to="." method="_on_gravity_area_body_entered"]
+[connection signal="body_exited" from="GravityArea" to="." method="_on_gravity_area_body_exited"]

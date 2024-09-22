@@ -1,0 +1,220 @@
+[gd_scene load_steps=13 format=3 uid="uid://dl3rxtqyxc6lo"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game.gd" id="1_ish2g"]
+[ext_resource type="PackedScene" uid="uid://10i1qjfhmetd" path="res://Games/Blastroids/Scenes/blast_ship_body.tscn" id="2_4de21"]
+[ext_resource type="PackedScene" uid="uid://y5f3aijgvm8l" path="res://Games/Blastroids/Scenes/blast_cont.tscn" id="2_tlaso"]
+[ext_resource type="FontFile" uid="uid://du4fcyuvxpb56" path="res://Assets/Fonts/ProtestGuerrilla-Regular.ttf" id="3_la5p5"]
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game_over.gd" id="3_ypayv"]
+[ext_resource type="AudioStream" uid="uid://0s2eoi25wo8" path="res://Assets/Sounds/pickup_01.wav" id="4_moumk"]
+[ext_resource type="PackedScene" uid="uid://crhtwwp1ps7u1" path="res://Games/Blastroids/Scenes/blast_crate.tscn" id="4_xka0d"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="5_28w2k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amygs"]
+bg_color = Color(0.277528, 0.277528, 0.277528, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpu2v"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wbes"]
+bg_color = Color(0, 0, 0, 0.762)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 48.0
+expand_margin_top = 48.0
+expand_margin_right = 48.0
+expand_margin_bottom = 48.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xth2m"]
+bg_color = Color(0.0885599, 0.0885599, 0.0885599, 1)
+
+[node name="BlastGame" type="Node"]
+script = ExtResource("1_ish2g")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Panel" type="Panel" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_amygs")
+
+[node name="Players" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="PL" type="Panel" parent="Players"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bpu2v")
+
+[node name="HB" type="HBoxContainer" parent="Players/PL"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 1
+
+[node name="Cont" parent="Players/PL/HB" instance=ExtResource("2_tlaso")]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Players/PL/HB"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0.751)
+
+[node name="Cont2" parent="Players/PL/HB" instance=ExtResource("2_tlaso")]
+layout_mode = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="GameOver" type="Panel" parent="CanvasLayer"]
+custom_minimum_size = Vector2(1200, 800)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -400.0
+offset_right = 500.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7wbes")
+script = ExtResource("3_ypayv")
+
+[node name="VB" type="VBoxContainer" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinnerLabel" type="Label" parent="CanvasLayer/GameOver/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_la5p5")
+theme_override_font_sizes/font_size = 104
+text = "Player 1 Wins"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/GameOver/VB"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/GameOver/VB"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+theme_override_constants/h_separation = 64
+columns = 5
+
+[node name="HB" type="HBoxContainer" parent="CanvasLayer/GameOver/VB/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="HB2" type="HBoxContainer" parent="CanvasLayer/GameOver/VB/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="HB3" type="HBoxContainer" parent="CanvasLayer/GameOver/VB/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="HB4" type="HBoxContainer" parent="CanvasLayer/GameOver/VB/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="HB5" type="HBoxContainer" parent="CanvasLayer/GameOver/VB/GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/GameOver/VB"]
+layout_mode = 2
+theme_override_constants/margin_left = 350
+theme_override_constants/margin_right = 350
+
+[node name="ReturnButton" type="Button" parent="CanvasLayer/GameOver/VB/MC"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_28w2k")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_xth2m")
+text = "Return To Menu"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+visible = false
+modulate = Color(1, 1, 1, 0.47)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 0
+
+[node name="World" type="Node2D" parent="CanvasLayer/SubViewportContainer/WorldViewport"]
+
+[node name="Bodies" type="Node2D" parent="CanvasLayer/SubViewportContainer/WorldViewport/World"]
+
+[node name="ShipBody" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("2_4de21")]
+
+[node name="ShipBody2" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("2_4de21")]
+position = Vector2(180, 0)
+world_id = 1
+controls = "CPU"
+
+[node name="BlastCrate" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(0, -100)
+
+[node name="BlastCrate2" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(0, -200)
+
+[node name="BlastCrate3" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(0, -300)
+
+[node name="BlastCrate4" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(0, -400)
+
+[node name="BlastCrate5" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(0, -500)
+
+[node name="BlastCrate6" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(200, -500)
+
+[node name="BlastCrate7" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(300, -500)
+
+[node name="BlastCrate8" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(400, -500)
+
+[node name="BlastCrate9" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
+position = Vector2(500, -500)
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="PickupSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_moumk")
+bus = &"Sound"
+
+[connection signal="pressed" from="CanvasLayer/GameOver/VB/MC/ReturnButton" to="CanvasLayer/GameOver" method="_on_return_button_pressed"]

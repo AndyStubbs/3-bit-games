@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://nrx4kxd26tib"]
+
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/bullet.gd" id="2_2nvq7"]
+[ext_resource type="Texture2D" uid="uid://dtxnb11gmvo45" path="res://Assets/Images/pixel.png" id="2_piyfg"]
+[ext_resource type="PackedScene" uid="uid://b5a8boi8e7y7y" path="res://Games/ReadyAimFire/Scenes/rocket.tscn" id="3_61407"]
+[ext_resource type="AudioStream" uid="uid://o2ffv7jubl6g" path="res://Assets/Sounds/rocket.wav" id="4_3btef"]
+[ext_resource type="AudioStream" uid="uid://cm7ct2b8xjkna" path="res://Assets/Sounds/slime.wav" id="5_ym4df"]
+[ext_resource type="AudioStream" uid="uid://y0drjjv4xrpw" path="res://Assets/Sounds/dirt.wav" id="6_bi0fb"]
+[ext_resource type="AudioStream" uid="uid://daqfpo7er073i" path="res://Assets/Sounds/wood_bridge.wav" id="7_330rj"]
+[ext_resource type="AudioStream" uid="uid://brw8t3fou0o0u" path="res://Assets/Sounds/shovel.wav" id="8_5esvc"]
+[ext_resource type="AudioStream" uid="uid://bwibp0xiyby14" path="res://Assets/Sounds/split.wav" id="9_wasgm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7peyb"]
+radius = 3.0
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("2_2nvq7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_piyfg")
+
+[node name="Rocket" parent="Sprite2D" instance=ExtResource("3_61407")]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_7peyb")
+
+[node name="RocketSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3btef")
+bus = &"Sound"
+
+[node name="SlimeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ym4df")
+bus = &"Sound"
+
+[node name="DirtSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bi0fb")
+bus = &"Sound"
+
+[node name="BridgeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_330rj")
+bus = &"Sound"
+
+[node name="ShovelSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5esvc")
+bus = &"Sound"
+
+[node name="SplitSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_wasgm")
+bus = &"Sound"
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

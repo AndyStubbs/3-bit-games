@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3 uid="uid://eaxsrkibtsqe"]
+
+[ext_resource type="PackedScene" uid="uid://biefg4fxkvtuc" path="res://Games/TunnelTanks/Scenes/tun_player_container.tscn" id="1_wtd82"]
+
+[node name="TunPlayersThree" type="Node"]
+
+[node name="MC" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 60
+
+[node name="HB" type="HBoxContainer" parent="MC"]
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="TunPlayerContainer" parent="MC/HB" instance=ExtResource("1_wtd82")]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+cols = 3
+
+[node name="TunPlayerContainer2" parent="MC/HB" instance=ExtResource("1_wtd82")]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+cols = 3
+
+[node name="TunPlayerContainer3" parent="MC/HB" instance=ExtResource("1_wtd82")]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+cols = 3

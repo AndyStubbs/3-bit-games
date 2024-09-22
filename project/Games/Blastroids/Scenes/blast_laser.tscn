@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://mywfmgmp0a3m"]
+
+[ext_resource type="Texture2D" uid="uid://42yqkipc602j" path="res://Games/Blastroids/Images/blast_laser.png" id="1_no8by"]
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_laser.gd" id="1_w2eh4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cg7r3"]
+radius = 5.0
+
+[node name="BlastLaser" type="Area2D"]
+script = ExtResource("1_w2eh4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_no8by")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cg7r3")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

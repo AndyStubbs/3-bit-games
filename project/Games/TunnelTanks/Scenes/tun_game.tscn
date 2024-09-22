@@ -1,0 +1,454 @@
+[gd_scene load_steps=18 format=3 uid="uid://bx8snxykfdgmx"]
+
+[ext_resource type="Texture2D" uid="uid://bqmxyayu8uv2x" path="res://Games/TunnelTanks/Images/backdrop.png" id="1_4u2e0"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_game.gd" id="1_gsspc"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_ground.gd" id="1_y2tg4"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_game_over.gd" id="4_8h7jh"]
+[ext_resource type="AudioStream" uid="uid://b8q8ahhjp124c" path="res://Games/TunnelTanks/Sounds/laserShoot.wav" id="5_t4klx"]
+[ext_resource type="AudioStream" uid="uid://dw3lcxssfq1ht" path="res://Games/TunnelTanks/Sounds/laserShoot_1.wav" id="6_5chly"]
+[ext_resource type="AudioStream" uid="uid://dxjknx8tttq3i" path="res://Games/TunnelTanks/Sounds/explosion.wav" id="7_gw5ui"]
+[ext_resource type="AudioStream" uid="uid://dh6hv7c1m7tn1" path="res://Games/TunnelTanks/Sounds/hitHurt.wav" id="8_5b1i4"]
+[ext_resource type="AudioStream" uid="uid://d0yakqg37sutg" path="res://Games/TunnelTanks/Sounds/hitHurt_1.wav" id="9_ehhgo"]
+[ext_resource type="Script" path="res://Scripts/loading_label.gd" id="10_a2m58"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="10_eocbd"]
+[ext_resource type="PackedScene" uid="uid://cu7m2nbckgq03" path="res://Shared/mute_button.tscn" id="10_q14wb"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="13_cny7t"]
+[ext_resource type="FontFile" uid="uid://c3gncvcmikaq0" path="res://Assets/Fonts/AbrilFatface-Regular.ttf" id="14_gwe0a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pxmn1"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_eayb1"]
+font_size = 102
+outline_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g50uc"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="TunGame" type="Node"]
+script = ExtResource("1_gsspc")
+
+[node name="TunGround" type="Node" parent="."]
+script = ExtResource("1_y2tg4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer"]
+texture_repeat = 2
+texture = ExtResource("1_4u2e0")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1920, 1080)
+
+[node name="Players" type="Node" parent="."]
+
+[node name="PlayersCPU" type="Node" parent="."]
+
+[node name="SubViewport" type="SubViewport" parent="PlayersCPU"]
+
+[node name="World" type="Node2D" parent="PlayersCPU/SubViewport"]
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("4_8h7jh")
+
+[node name="PL" type="Panel" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pxmn1")
+
+[node name="GameMap" type="Sprite2D" parent="GameOver/PL"]
+
+[node name="MC" type="MarginContainer" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 500
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 500
+
+[node name="VB" type="VBoxContainer" parent="GameOver/MC"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="GameOver/MC/VB"]
+layout_mode = 2
+text = "Player 1 Wins!"
+label_settings = SubResource("LabelSettings_eayb1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="StatsPanel" type="Panel" parent="GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+
+[node name="MC" type="MarginContainer" parent="GameOver/MC/VB/StatsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 12
+
+[node name="SC" type="ScrollContainer" parent="GameOver/MC/VB/StatsPanel/MC"]
+layout_mode = 2
+
+[node name="StatsVB" type="VBoxContainer" parent="GameOver/MC/VB/StatsPanel/MC/SC"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="GameOver/MC/VB/StatsPanel/MC/SC/StatsVB"]
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="GameOver/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 150
+alignment = 1
+
+[node name="ShowMapButton" type="Button" parent="GameOver/MC/VB/HB"]
+custom_minimum_size = Vector2(350, 80)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "TR_SHOW_MAP"
+
+[node name="MenuButton" type="Button" parent="GameOver/MC/VB/HB"]
+custom_minimum_size = Vector2(350, 80)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 32
+text = "TR_RETURN_MENU"
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="LaserHit" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_t4klx")
+
+[node name="LaserFire" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("6_5chly")
+
+[node name="TankExploded" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_gw5ui")
+
+[node name="TankHit" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_5b1i4")
+
+[node name="TankCollided" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_ehhgo")
+
+[node name="LoadingScreen" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g50uc")
+
+[node name="LoadingLabel" type="Label" parent="LoadingScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -143.5
+offset_top = -44.0
+offset_right = 143.5
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 64
+text = "TR_LOADING..."
+vertical_alignment = 1
+script = ExtResource("10_a2m58")
+
+[node name="MuteButton" parent="." instance=ExtResource("10_q14wb")]
+offset_left = -90.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 90.0
+
+[node name="Cursor" parent="." instance=ExtResource("13_cny7t")]
+
+[node name="RoundPanel" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(0, 400)
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MC" type="MarginContainer" parent="RoundPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 80
+
+[node name="VB" type="VBoxContainer" parent="RoundPanel/MC"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="HBTitle" type="HBoxContainer" parent="RoundPanel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HBTitle"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("14_gwe0a")
+theme_override_font_sizes/font_size = 64
+text = "Round 1 Winner:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HBTitle"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("14_gwe0a")
+theme_override_font_sizes/font_size = 64
+text = "Player 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HB" type="HBoxContainer" parent="RoundPanel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="HB" type="HBoxContainer" parent="RoundPanel/MC/VB/HB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB/HB"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB/HB"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB2" type="HBoxContainer" parent="RoundPanel/MC/VB/HB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB/HB2"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB/HB2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB3" type="HBoxContainer" parent="RoundPanel/MC/VB/HB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB/HB3"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB/HB3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB4" type="HBoxContainer" parent="RoundPanel/MC/VB/HB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB/HB4"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB/HB4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB2" type="HBoxContainer" parent="RoundPanel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="HB" type="HBoxContainer" parent="RoundPanel/MC/VB/HB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB2/HB"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB2/HB"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB2" type="HBoxContainer" parent="RoundPanel/MC/VB/HB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB2/HB2"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB2/HB2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB3" type="HBoxContainer" parent="RoundPanel/MC/VB/HB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB2/HB3"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB2/HB3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB4" type="HBoxContainer" parent="RoundPanel/MC/VB/HB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB2/HB4"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB2/HB4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB3" type="HBoxContainer" parent="RoundPanel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="HB" type="HBoxContainer" parent="RoundPanel/MC/VB/HB3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB3/HB"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB3/HB"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB2" type="HBoxContainer" parent="RoundPanel/MC/VB/HB3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB3/HB2"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB3/HB2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB3" type="HBoxContainer" parent="RoundPanel/MC/VB/HB3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB3/HB3"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB3/HB3"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[node name="HB4" type="HBoxContainer" parent="RoundPanel/MC/VB/HB3"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RoundPanel/MC/VB/HB3/HB4"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "Player 1:"
+
+[node name="Label2" type="Label" parent="RoundPanel/MC/VB/HB3/HB4"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_eocbd")
+theme_override_font_sizes/font_size = 48
+text = "7"
+
+[connection signal="pressed" from="GameOver/MC/VB/HB/ShowMapButton" to="GameOver" method="_on_show_map_button_pressed"]
+[connection signal="pressed" from="GameOver/MC/VB/HB/MenuButton" to="GameOver" method="_on_menu_button_pressed"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5yeqqa0g1u0c"]
+
+[ext_resource type="Texture2D" uid="uid://cxr33ie5nbywy" path="res://Games/ReadyAimFire/Images/bouncing_bomb.png" id="1_357nc"]
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/bouncing_bullet.gd" id="1_ca8y4"]
+[ext_resource type="AudioStream" uid="uid://cxeu33dkh45kr" path="res://Assets/Sounds/bounce.wav" id="3_jwy7v"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0w82d"]
+friction = 0.25
+bounce = 0.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cecyl"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4quul"]
+radius = 3.0
+
+[node name="BouncingBullet" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_0w82d")
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_ca8y4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_357nc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cecyl")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_4quul")
+
+[node name="BounceSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_jwy7v")
+bus = &"Sound"
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

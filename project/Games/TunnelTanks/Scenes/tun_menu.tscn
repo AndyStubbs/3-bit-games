@@ -1,0 +1,426 @@
+[gd_scene load_steps=15 format=3 uid="uid://dxerqx70xmih"]
+
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_menu.gd" id="1_32wgc"]
+[ext_resource type="PackedScene" uid="uid://dyhh1j60dt6t0" path="res://Shared/player_select.tscn" id="1_nf0fw"]
+[ext_resource type="StyleBox" uid="uid://dnn2wm2kpb3ec" path="res://Assets/Resources/menu_panel.tres" id="2_rmm0a"]
+[ext_resource type="Texture2D" uid="uid://bo4nmd5bg45ug" path="res://Games/TunnelTanks/Images/tun_back_2.webp" id="2_xnsyj"]
+[ext_resource type="FontFile" uid="uid://c3gncvcmikaq0" path="res://Assets/Fonts/AbrilFatface-Regular.ttf" id="3_05e78"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="3_pp4yi"]
+[ext_resource type="StyleBox" uid="uid://dgyeto6ptjlys" path="res://Assets/Resources/menu_item_panel.tres" id="4_5ol3g"]
+[ext_resource type="PackedScene" uid="uid://cu7m2nbckgq03" path="res://Shared/mute_button.tscn" id="8_8gmkj"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="9_enatm"]
+[ext_resource type="PackedScene" uid="uid://dm5kiqh62u0tm" path="res://Shared/controls.tscn" id="10_k31p2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fo8oh"]
+font = ExtResource("3_05e78")
+font_size = 128
+font_color = Color(0, 0, 0, 1)
+shadow_size = 16
+shadow_color = Color(1, 1, 1, 0.541176)
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c33q0"]
+bg_color = Color(0.0208334, 0.206959, 0.3255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxgyh"]
+bg_color = Color(0.011623, 0.150331, 0.243241, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y2a44"]
+bg_color = Color(0.0588235, 0.352941, 0.537255, 1)
+
+[node name="TunMenu" type="Node"]
+script = ExtResource("1_32wgc")
+
+[node name="BackgroundTexture" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -634.0
+offset_top = -357.0
+offset_right = -634.0
+offset_bottom = -357.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("2_xnsyj")
+stretch_mode = 4
+
+[node name="MC" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 64
+
+[node name="VB" type="VBoxContainer" parent="MC"]
+layout_mode = 2
+
+[node name="Header" type="Label" parent="MC/VB"]
+layout_mode = 2
+text = "TR_TUNNEL_TANKS"
+label_settings = SubResource("LabelSettings_fo8oh")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="MC/VB"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="MC" type="MarginContainer" parent="MC/VB"]
+layout_mode = 2
+theme_override_constants/margin_left = 256
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 256
+theme_override_constants/margin_bottom = 64
+
+[node name="Panel" type="Panel" parent="MC/VB/MC"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("2_rmm0a")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 64
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/Panel/MC"]
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="MC/VB/MC/Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="PlayerSelect" parent="MC/VB/MC/Panel/MC/VB/HB" instance=ExtResource("1_nf0fw")]
+layout_mode = 2
+game_type = 0
+
+[node name="PlayerSelect2" parent="MC/VB/MC/Panel/MC/VB/HB" instance=ExtResource("1_nf0fw")]
+layout_mode = 2
+game_type = 0
+player_id = 1
+
+[node name="PlayerSelect3" parent="MC/VB/MC/Panel/MC/VB/HB" instance=ExtResource("1_nf0fw")]
+layout_mode = 2
+game_type = 0
+player_id = 2
+
+[node name="PlayerSelect4" parent="MC/VB/MC/Panel/MC/VB/HB" instance=ExtResource("1_nf0fw")]
+layout_mode = 2
+game_type = 0
+player_id = 3
+
+[node name="Control" type="Control" parent="MC/VB/MC/Panel/MC/VB"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="HB2" type="HBoxContainer" parent="MC/VB/MC/Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 38
+alignment = 1
+
+[node name="Panel" type="Panel" parent="MC/VB/MC/Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_5ol3g")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+text = "TR_SPEED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeedOptions" type="OptionButton" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+selected = 1
+item_count = 3
+popup/item_0/text = "TR_SLOW"
+popup/item_1/text = "TR_NORMAL"
+popup/item_1/id = 1
+popup/item_2/text = "TR_TURBO"
+popup/item_2/id = 2
+
+[node name="Panel2" type="Panel" parent="MC/VB/MC/Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_5ol3g")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel2/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel2/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+text = "TR_MAP_SIZE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MapSizeOptions" type="OptionButton" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel2/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+selected = 1
+item_count = 3
+popup/item_0/text = "TR_NORMAL"
+popup/item_1/text = "TR_LARGE"
+popup/item_1/id = 1
+popup/item_2/text = "TR_HUGE"
+popup/item_2/id = 2
+
+[node name="Panel3" type="Panel" parent="MC/VB/MC/Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_5ol3g")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel3/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel3/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+text = "TR_ROCKS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RocksOptions" type="OptionButton" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel3/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+selected = 0
+item_count = 4
+popup/item_0/text = "TR_NONE"
+popup/item_1/text = "TR_FEW"
+popup/item_1/id = 1
+popup/item_2/text = "TR_SOME"
+popup/item_2/id = 2
+popup/item_3/text = "TR_MANY"
+popup/item_3/id = 3
+
+[node name="Panel4" type="Panel" parent="MC/VB/MC/Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_5ol3g")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel4/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel4/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+text = "TR_POINTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsOptions" type="OptionButton" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel4/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+selected = 1
+item_count = 7
+popup/item_0/text = "1"
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+popup/item_5/text = "6"
+popup/item_5/id = 5
+popup/item_6/text = "7"
+popup/item_6/id = 6
+
+[node name="Panel5" type="Panel" parent="MC/VB/MC/Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_5ol3g")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel5/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel5/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+text = "TR_ADD_CPUS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AddCPUOptions" type="OptionButton" parent="MC/VB/MC/Panel/MC/VB/HB2/Panel5/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+selected = 0
+item_count = 7
+popup/item_0/text = "0"
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+popup/item_5/text = "5"
+popup/item_5/id = 5
+popup/item_6/text = "6"
+popup/item_6/id = 6
+
+[node name="Control2" type="Control" parent="MC/VB/MC/Panel/MC/VB"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="HB3" type="HBoxContainer" parent="MC/VB/MC/Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="StartButton" type="Button" parent="MC/VB/MC/Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/hover = SubResource("StyleBoxFlat_c33q0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dxgyh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y2a44")
+text = "TR_START"
+
+[node name="ControlsButton" type="Button" parent="MC/VB/MC/Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/hover = SubResource("StyleBoxFlat_c33q0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dxgyh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y2a44")
+text = "TR_SHOW_CONTROLS"
+
+[node name="BackButton" type="Button" parent="MC/VB/MC/Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_pp4yi")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/hover = SubResource("StyleBoxFlat_c33q0")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dxgyh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_y2a44")
+text = "TR_BACK"
+
+[node name="MuteButton" parent="." instance=ExtResource("8_8gmkj")]
+offset_left = -90.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = 90.0
+
+[node name="Cursor" parent="." instance=ExtResource("9_enatm")]
+
+[node name="Controls" parent="." instance=ExtResource("10_k31p2")]
+visible = false
+game_postfix = "_TUN"
+
+[connection signal="item_selected" from="MC/VB/MC/Panel/MC/VB/HB2/Panel/MC/VB/SpeedOptions" to="." method="_on_option_updated"]
+[connection signal="item_selected" from="MC/VB/MC/Panel/MC/VB/HB2/Panel2/MC/VB/MapSizeOptions" to="." method="_on_option_updated"]
+[connection signal="item_selected" from="MC/VB/MC/Panel/MC/VB/HB2/Panel3/MC/VB/RocksOptions" to="." method="_on_option_updated"]
+[connection signal="item_selected" from="MC/VB/MC/Panel/MC/VB/HB2/Panel4/MC/VB/PointsOptions" to="." method="_on_option_updated"]
+[connection signal="item_selected" from="MC/VB/MC/Panel/MC/VB/HB2/Panel5/MC/VB/AddCPUOptions" to="." method="_on_option_updated"]
+[connection signal="pressed" from="MC/VB/MC/Panel/MC/VB/HB3/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MC/VB/MC/Panel/MC/VB/HB3/ControlsButton" to="." method="_on_show_controls_pressed"]
+[connection signal="pressed" from="MC/VB/MC/Panel/MC/VB/HB3/BackButton" to="." method="_on_back_button_pressed"]

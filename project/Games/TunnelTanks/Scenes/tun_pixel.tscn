@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bddapfbaahnsu"]
+
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_pixel.gd" id="1_4p0js"]
+[ext_resource type="Texture2D" uid="uid://dtxnb11gmvo45" path="res://Assets/Images/pixel.png" id="1_7ec7u"]
+
+[node name="Pixel" type="Sprite2D"]
+modulate = Color(0.776471, 0.0588235, 0.0745098, 0)
+texture = ExtResource("1_7ec7u")
+centered = false
+script = ExtResource("1_4p0js")

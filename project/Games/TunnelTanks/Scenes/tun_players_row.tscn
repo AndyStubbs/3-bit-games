@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://bagnx6n3rpocb"]
+
+[ext_resource type="FontFile" uid="uid://c3gncvcmikaq0" path="res://Assets/Fonts/AbrilFatface-Regular.ttf" id="1_ibfp3"]
+[ext_resource type="FontFile" uid="uid://s448mi5ku8ny" path="res://Assets/Fonts/NotoSansMono-Regular.ttf" id="1_u0ieo"]
+[ext_resource type="FontFile" uid="uid://bpleq6po4rhr2" path="res://Assets/Fonts/OpenSans-Italic.ttf" id="3_vg5y2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hbsbd"]
+font = ExtResource("1_ibfp3")
+font_size = 38
+outline_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_l0iqc"]
+font = ExtResource("3_vg5y2")
+font_size = 28
+outline_size = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_ef1x0"]
+font = ExtResource("1_ibfp3")
+font_size = 38
+outline_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_43ag1"]
+font = ExtResource("3_vg5y2")
+font_size = 28
+outline_size = 2
+
+[node name="HBPlayersRow" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="VBPlayer1" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBPlayer1"]
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_hbsbd")
+
+[node name="Stats" type="Label" parent="VBPlayer1"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_u0ieo")
+theme_override_font_sizes/font_size = 28
+text = "Score:           3
+Kills:           0
+Shots Fired:     0
+Shots Hit:       0
+Hit Percent:  0.00%
+Meters Moved:  103
+Meters Dug:     29"
+
+[node name="Award" type="Label" parent="VBPlayer1"]
+layout_mode = 2
+text = "The Rock"
+label_settings = SubResource("LabelSettings_l0iqc")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBPlayer2" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBPlayer2"]
+layout_mode = 2
+text = "Player 2"
+label_settings = SubResource("LabelSettings_ef1x0")
+
+[node name="Stats" type="Label" parent="VBPlayer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_u0ieo")
+theme_override_font_sizes/font_size = 28
+text = "Score:           3
+Kills:           0
+Shots Fired:     0
+Shots Hit:       0
+Hit Percent:  0.00%
+Meters Moved:  103
+Meters Dug:     29"
+
+[node name="Award" type="Label" parent="VBPlayer2"]
+layout_mode = 2
+text = "Smelly Socks"
+label_settings = SubResource("LabelSettings_43ag1")
+horizontal_alignment = 1

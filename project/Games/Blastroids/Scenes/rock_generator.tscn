@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://wt7rm61676qr"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_rock_generator.gd" id="1_uyyn5"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_uyyn5")

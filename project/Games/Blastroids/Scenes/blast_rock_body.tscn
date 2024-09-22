@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmehk4f0pk85"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_rock_body.gd" id="1_4e3g8"]
+[ext_resource type="AudioStream" uid="uid://dlqs1eg0ncbbw" path="res://Assets/Sounds/rock_hit3.wav" id="2_12ljy"]
+[ext_resource type="AudioStream" uid="uid://cboquju8pnja8" path="res://Assets/Sounds/rock_hit4.wav" id="3_2436n"]
+[ext_resource type="AudioStream" uid="uid://dk4bikldgek7d" path="res://Assets/Sounds/explosion-6055.mp3" id="4_ivx3g"]
+
+[node name="BlastRock" type="RigidBody2D"]
+mass = 100.0
+center_of_mass_mode = 1
+max_contacts_reported = 5
+angular_damp_mode = 1
+script = ExtResource("1_4e3g8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+modulate = Color(1, 1, 1, 0.380392)
+position = Vector2(-50, -50)
+polygon = PackedVector2Array(0, -48, 59, -1, -1, 52, -50, -1)
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_12ljy")
+volume_db = -4.0
+bus = &"Sound"
+
+[node name="Hit2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_2436n")
+volume_db = -4.0
+bus = &"Sound"
+
+[node name="Explode" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ivx3g")
+volume_db = -4.0
+bus = &"Sound"

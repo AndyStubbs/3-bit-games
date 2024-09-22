@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cu7m2nbckgq03"]
+
+[ext_resource type="Script" path="res://Scripts/mute_button.gd" id="1_j16fl"]
+[ext_resource type="Texture2D" uid="uid://bqvpfgrucmk47" path="res://Assets/Images/audio_icon.png" id="2_cn6d3"]
+
+[node name="MuteButton" type="Control"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1920.0
+offset_right = -1845.0
+offset_bottom = 75.0
+grow_horizontal = 0
+script = ExtResource("1_j16fl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_cn6d3")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

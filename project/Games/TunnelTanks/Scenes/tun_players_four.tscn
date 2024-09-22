@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8clvneuh8cjc"]
+
+[ext_resource type="PackedScene" uid="uid://bdysgrmlt31dp" path="res://Games/TunnelTanks/Scenes/tun_player_container_v.tscn" id="1_kc2qo"]
+
+[node name="TunPlayersFour" type="Node"]
+
+[node name="MC" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 16
+
+[node name="VB" type="VBoxContainer" parent="MC"]
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="TunPlayerContainer" parent="MC/VB/HB" instance=ExtResource("1_kc2qo")]
+layout_mode = 2
+rows = 2
+
+[node name="TunPlayerContainer2" parent="MC/VB/HB" instance=ExtResource("1_kc2qo")]
+layout_mode = 2
+rows = 2
+
+[node name="Control" type="Control" parent="MC/VB"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HB2" type="HBoxContainer" parent="MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 28
+alignment = 1
+
+[node name="TunPlayerContainer" parent="MC/VB/HB2" instance=ExtResource("1_kc2qo")]
+layout_mode = 2
+rows = 2
+
+[node name="TunPlayerContainer2" parent="MC/VB/HB2" instance=ExtResource("1_kc2qo")]
+layout_mode = 2
+rows = 2

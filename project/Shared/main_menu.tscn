@@ -1,0 +1,353 @@
+[gd_scene load_steps=29 format=3 uid="uid://rln4ls1sira7"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_xb45s"]
+[ext_resource type="Texture2D" uid="uid://dadar3uordke5" path="res://Assets/Images/star.png" id="2_mt01x"]
+[ext_resource type="PackedScene" uid="uid://cpjeh8m3h3bpe" path="res://Shared/game_select.tscn" id="3_4qrvl"]
+[ext_resource type="PackedScene" uid="uid://cu7m2nbckgq03" path="res://Shared/mute_button.tscn" id="3_b3fuy"]
+[ext_resource type="LabelSettings" uid="uid://bky0gqougv14i" path="res://Assets/Resources/font_pg_128_white.tres" id="3_i0e4d"]
+[ext_resource type="Texture2D" uid="uid://bys0h711dwyqn" path="res://Assets/Images/grabber.png" id="5_v8jbg"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="6_05ohr"]
+[ext_resource type="Texture2D" uid="uid://ybm5vt3xphf5" path="res://Assets/Images/tick.png" id="6_a3anb"]
+[ext_resource type="AudioStream" uid="uid://b5qmpj2m30qck" path="res://Assets/Sounds/next_turn.wav" id="7_2ecdf"]
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="8_ledo7"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="8_qxcby"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2weqg"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_5fyyl"]
+offsets = PackedFloat32Array(0, 0.425926, 1)
+colors = PackedColorArray(1, 1, 0.392157, 1, 1, 0, 0.65098, 1, 0, 0.458824, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tmun4"]
+gradient = SubResource("Gradient_5fyyl")
+
+[sub_resource type="Gradient" id="Gradient_jxgkn"]
+offsets = PackedFloat32Array(0, 0.123457, 0.820988, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.352941, 0.352941, 0.352941, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hgi7m"]
+gradient = SubResource("Gradient_jxgkn")
+
+[sub_resource type="Curve" id="Curve_wvfy7"]
+max_value = 200.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 200), 617.347, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_i3g3l"]
+curve = SubResource("Curve_wvfy7")
+
+[sub_resource type="Curve" id="Curve_poj15"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.9, 0.901099), 1.83329, 1.83329, 0, 0, Vector2(1, 2), 6.14092, 1.31461, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_08q1t"]
+curve = SubResource("Curve_poj15")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_po5yy"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 50, 1)
+velocity_pivot = Vector3(960, 540, 0)
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 0.499998
+radial_accel_max = 0.499998
+radial_accel_curve = SubResource("CurveTexture_i3g3l")
+scale_curve = SubResource("CurveTexture_08q1t")
+color_ramp = SubResource("GradientTexture1D_hgi7m")
+color_initial_ramp = SubResource("GradientTexture1D_tmun4")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xk42q"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l02xg"]
+bg_color = Color(0.285281, 0.427985, 0.994699, 0.494118)
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rs4hx"]
+bg_color = Color(0.286275, 0.427451, 0.996078, 0.494118)
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4jja"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmfev"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wssms"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h5oh5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="MainMenu" type="Node"]
+script = ExtResource("1_xb45s")
+
+[node name="Control" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_2weqg")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Control"]
+position = Vector2(960, 540)
+amount = 800
+process_material = SubResource("ParticleProcessMaterial_po5yy")
+texture = ExtResource("2_mt01x")
+lifetime = 20.0
+preprocess = 20.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 100.0
+offset_bottom = 253.0
+grow_horizontal = 2
+text = "TR_TITLE"
+label_settings = ExtResource("3_i0e4d")
+horizontal_alignment = 1
+
+[node name="Panel" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -150.0
+offset_right = 500.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HB" type="HBoxContainer" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 84
+alignment = 1
+
+[node name="GameSelect" parent="Control/Panel/HB" instance=ExtResource("3_4qrvl")]
+layout_mode = 2
+game = 1
+
+[node name="GameSelect2" parent="Control/Panel/HB" instance=ExtResource("3_4qrvl")]
+layout_mode = 2
+
+[node name="GameSelect3" parent="Control/Panel/HB" instance=ExtResource("3_4qrvl")]
+layout_mode = 2
+game = 2
+
+[node name="MuteButton" parent="Control" instance=ExtResource("3_b3fuy")]
+layout_mode = 1
+offset_left = -90.0
+offset_top = 30.0
+offset_right = -15.0
+offset_bottom = 105.0
+
+[node name="AudioSettings" type="Panel" parent="Control"]
+visible = false
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -380.0
+offset_right = 250.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xk42q")
+
+[node name="MC" type="MarginContainer" parent="Control/AudioSettings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VB" type="VBoxContainer" parent="Control/AudioSettings/MC"]
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="Control/AudioSettings/MC/VB"]
+layout_mode = 2
+
+[node name="OptionFullscreen" type="CheckButton" parent="Control/AudioSettings/MC/VB/HB"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_05ohr")
+text = "TR_FULLSCREEN_MODE"
+
+[node name="Control" type="Control" parent="Control/AudioSettings/MC/VB/HB"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/AudioSettings/MC/VB/HB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_05ohr")
+text = "TR_LANGUAGE"
+
+[node name="OptionLanguage" type="OptionButton" parent="Control/AudioSettings/MC/VB/HB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_05ohr")
+selected = 0
+item_count = 2
+popup/item_0/text = "English"
+popup/item_1/text = "Español"
+popup/item_1/id = 1
+
+[node name="MC2" type="MarginContainer" parent="Control/AudioSettings/MC/VB"]
+layout_mode = 2
+theme_override_constants/margin_right = 100
+
+[node name="Control2" type="Control" parent="Control/AudioSettings/MC/VB"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/AudioSettings/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_05ohr")
+text = "TR_SOUND_VOLUME"
+horizontal_alignment = 1
+
+[node name="SoundSlider" type="HSlider" parent="Control/AudioSettings/MC/VB"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/center_grabber = 16
+theme_override_icons/grabber = ExtResource("5_v8jbg")
+theme_override_icons/grabber_highlight = ExtResource("5_v8jbg")
+theme_override_icons/tick = ExtResource("6_a3anb")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_l02xg")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_rs4hx")
+value = 50.0
+scrollable = false
+tick_count = 10
+ticks_on_borders = true
+
+[node name="Control" type="Control" parent="Control/AudioSettings/MC/VB"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Control/AudioSettings/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_05ohr")
+text = "TR_MUSIC_VOLUME"
+horizontal_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="Control/AudioSettings/MC/VB"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/center_grabber = 16
+theme_override_icons/grabber = ExtResource("5_v8jbg")
+theme_override_icons/grabber_highlight = ExtResource("5_v8jbg")
+theme_override_icons/tick = ExtResource("6_a3anb")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_l02xg")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_rs4hx")
+value = 50.0
+scrollable = false
+tick_count = 10
+ticks_on_borders = true
+
+[node name="MC" type="MarginContainer" parent="Control/AudioSettings/MC/VB"]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 64
+
+[node name="OkButton" type="Button" parent="Control/AudioSettings/MC/VB/MC"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_05ohr")
+text = "TR_OK"
+
+[node name="HB" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -280.0
+offset_right = 220.0
+offset_bottom = -214.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 80
+
+[node name="SettingsButton" type="Button" parent="Control/HB"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 0.713726)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 0.501961)
+theme_override_fonts/font = ExtResource("8_ledo7")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_l4jja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cmfev")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wssms")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h5oh5")
+text = "TR_SETTINGS"
+
+[node name="QuitButton" type="Button" parent="Control/HB"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 0.713726)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 0.501961)
+theme_override_fonts/font = ExtResource("8_ledo7")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_l4jja")
+theme_override_styles/hover = SubResource("StyleBoxFlat_cmfev")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_wssms")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h5oh5")
+text = "TR_QUIT"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_2ecdf")
+bus = &"Sound"
+
+[node name="Cursor" parent="." instance=ExtResource("8_qxcby")]
+
+[connection signal="toggled" from="Control/AudioSettings/MC/VB/HB/OptionFullscreen" to="." method="_on_option_fullscreen_toggled"]
+[connection signal="item_selected" from="Control/AudioSettings/MC/VB/HB/OptionLanguage" to="." method="_on_option_language_item_selected"]
+[connection signal="value_changed" from="Control/AudioSettings/MC/VB/SoundSlider" to="." method="_on_sound_slider_value_changed"]
+[connection signal="value_changed" from="Control/AudioSettings/MC/VB/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="pressed" from="Control/AudioSettings/MC/VB/MC/OkButton" to="." method="_on_ok_button_pressed"]
+[connection signal="pressed" from="Control/HB/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Control/HB/QuitButton" to="." method="_on_quit_button_pressed"]

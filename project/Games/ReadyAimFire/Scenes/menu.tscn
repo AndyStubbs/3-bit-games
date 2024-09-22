@@ -1,0 +1,960 @@
+[gd_scene load_steps=22 format=3 uid="uid://sqpc4wryqgb7"]
+
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/menu.gd" id="1_wdphn"]
+[ext_resource type="PackedScene" uid="uid://dyhh1j60dt6t0" path="res://Shared/player_select.tscn" id="2_64od7"]
+[ext_resource type="Texture2D" uid="uid://bkiojw2cokekn" path="res://Games/ReadyAimFire/Images/tanks_menu_4.webp" id="2_h3hxh"]
+[ext_resource type="PackedScene" uid="uid://b52yyvl5growe" path="res://Games/ReadyAimFire/Scenes/ammo_select.tscn" id="3_057xb"]
+[ext_resource type="FontFile" uid="uid://dy4g2gnr44f51" path="res://Assets/Fonts/ChangaOne-Regular.ttf" id="4_w37v4"]
+[ext_resource type="StyleBox" uid="uid://dnn2wm2kpb3ec" path="res://Assets/Resources/menu_panel.tres" id="5_1jtwt"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="6_go1ro"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="6_nlp5l"]
+[ext_resource type="StyleBox" uid="uid://dgyeto6ptjlys" path="res://Assets/Resources/menu_item_panel.tres" id="7_kjcd3"]
+[ext_resource type="PackedScene" uid="uid://dm5kiqh62u0tm" path="res://Shared/controls.tscn" id="7_kokti"]
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="8_2tjyx"]
+[ext_resource type="PackedScene" uid="uid://cu7m2nbckgq03" path="res://Shared/mute_button.tscn" id="8_5uhpg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ln7wi"]
+font = ExtResource("4_w37v4")
+font_size = 64
+shadow_size = 11
+shadow_color = Color(0.0235294, 0.0941176, 0.392157, 0.564706)
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vs5oy"]
+font = ExtResource("6_nlp5l")
+
+[sub_resource type="LabelSettings" id="LabelSettings_u1ptw"]
+font = ExtResource("6_nlp5l")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6hs1"]
+bg_color = Color(0.0208334, 0.206959, 0.3255, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a71sf"]
+bg_color = Color(0.011623, 0.150331, 0.243241, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07sfm"]
+bg_color = Color(0.0588235, 0.352941, 0.537255, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8tfus"]
+font = ExtResource("8_2tjyx")
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8rdw1"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v4a3p"]
+bg_color = Color(0, 0, 0, 0.623529)
+
+[node name="Menu" type="Node"]
+script = ExtResource("1_wdphn")
+
+[node name="Background" type="Sprite2D" parent="."]
+modulate = Color(0.65834, 0.65834, 0.65834, 1)
+position = Vector2(-43, -53)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("2_h3hxh")
+centered = false
+
+[node name="Header" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 250.0
+grow_horizontal = 2
+text = "TR_RAF_TITLE2"
+label_settings = SubResource("LabelSettings_ln7wi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -325.0
+offset_right = 600.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_1jtwt")
+
+[node name="MC" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VB" type="VBoxContainer" parent="Panel/MC"]
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 46
+alignment = 1
+
+[node name="PlayerSelect" parent="Panel/MC/VB/HB" instance=ExtResource("2_64od7")]
+layout_mode = 2
+
+[node name="PlayerSelect2" parent="Panel/MC/VB/HB" instance=ExtResource("2_64od7")]
+layout_mode = 2
+player_id = 1
+
+[node name="PlayerSelect3" parent="Panel/MC/VB/HB" instance=ExtResource("2_64od7")]
+layout_mode = 2
+player_id = 2
+
+[node name="PlayerSelect4" parent="Panel/MC/VB/HB" instance=ExtResource("2_64od7")]
+layout_mode = 2
+player_id = 3
+
+[node name="Control" type="Control" parent="Panel/MC/VB"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="HB2" type="HBoxContainer" parent="Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="Panel" type="Panel" parent="Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(203, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("7_kjcd3")
+
+[node name="MC" type="MarginContainer" parent="Panel/MC/VB/HB2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 6
+
+[node name="HB" type="HBoxContainer" parent="Panel/MC/VB/HB2/Panel/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MC/VB/HB2/Panel/MC/HB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_font_sizes/font_size = 16
+text = "TR_SHOTS_C"
+
+[node name="ShotsNum" type="OptionButton" parent="Panel/MC/VB/HB2/Panel/MC/HB"]
+layout_mode = 2
+focus_mode = 0
+selected = 2
+fit_to_longest_item = false
+item_count = 10
+popup/item_0/text = "3"
+popup/item_1/text = "6"
+popup/item_1/id = 1
+popup/item_2/text = "9"
+popup/item_2/id = 2
+popup/item_3/text = "12"
+popup/item_3/id = 3
+popup/item_4/text = "15"
+popup/item_4/id = 4
+popup/item_5/text = "18"
+popup/item_5/id = 5
+popup/item_6/text = "21"
+popup/item_6/id = 6
+popup/item_7/text = "24"
+popup/item_7/id = 7
+popup/item_8/text = "27"
+popup/item_8/id = 8
+popup/item_9/text = "30"
+popup/item_9/id = 9
+
+[node name="Panel2" type="Panel" parent="Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(203, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("7_kjcd3")
+
+[node name="MC" type="MarginContainer" parent="Panel/MC/VB/HB2/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 6
+
+[node name="HB" type="HBoxContainer" parent="Panel/MC/VB/HB2/Panel2/MC"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MC/VB/HB2/Panel2/MC/HB"]
+layout_mode = 2
+text = "TR_SIZE_C"
+label_settings = SubResource("LabelSettings_vs5oy")
+
+[node name="SizeSelect" type="OptionButton" parent="Panel/MC/VB/HB2/Panel2/MC/HB"]
+layout_mode = 2
+focus_mode = 0
+selected = 0
+item_count = 3
+popup/item_0/text = "TR_NORMAL"
+popup/item_1/text = "TR_LARGE"
+popup/item_1/id = 1
+popup/item_2/text = "TR_HUGE"
+popup/item_2/id = 2
+
+[node name="Panel4" type="Panel" parent="Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(203, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("7_kjcd3")
+
+[node name="MC" type="MarginContainer" parent="Panel/MC/VB/HB2/Panel4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 6
+
+[node name="HB" type="HBoxContainer" parent="Panel/MC/VB/HB2/Panel4/MC"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/MC/VB/HB2/Panel4/MC/HB"]
+layout_mode = 2
+text = "TR_TERRAIN_C"
+label_settings = SubResource("LabelSettings_u1ptw")
+
+[node name="TerrainSelect" type="OptionButton" parent="Panel/MC/VB/HB2/Panel4/MC/HB"]
+layout_mode = 2
+focus_mode = 0
+selected = 0
+item_count = 6
+popup/item_0/text = "TR_ANY"
+popup/item_1/text = "TR_MOUNTAIN"
+popup/item_1/id = 1
+popup/item_2/text = "TR_VALLEY"
+popup/item_2/id = 2
+popup/item_3/text = "TR_RANDOM_1"
+popup/item_3/id = 3
+popup/item_4/text = "TR_RANDOM_2"
+popup/item_4/id = 4
+popup/item_5/text = "TR_FLAT"
+popup/item_5/id = 5
+
+[node name="Panel3" type="Panel" parent="Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(203, 50)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("7_kjcd3")
+
+[node name="MC" type="MarginContainer" parent="Panel/MC/VB/HB2/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 6
+
+[node name="EasyTargeting" type="CheckButton" parent="Panel/MC/VB/HB2/Panel3/MC"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+button_pressed = true
+text = "TR_BONUS_SIGHTS"
+
+[node name="SettingsButton" type="Button" parent="Panel/MC/VB/HB2"]
+custom_minimum_size = Vector2(203, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_ADVANCED_SETTINGS"
+
+[node name="Control2" type="Control" parent="Panel/MC/VB"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="MC" type="MarginContainer" parent="Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 45
+
+[node name="AmmoGrid" type="GridContainer" parent="Panel/MC/VB/MC"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 20
+columns = 5
+
+[node name="AmmoSelect" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+
+[node name="AmmoSelect2" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 1
+
+[node name="AmmoSelect3" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 2
+
+[node name="AmmoSelect4" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 3
+
+[node name="AmmoSelect5" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 4
+
+[node name="AmmoSelect6" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 5
+
+[node name="AmmoSelect7" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 6
+
+[node name="AmmoSelect8" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 7
+
+[node name="AmmoSelect9" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 8
+
+[node name="AmmoSelect10" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 9
+
+[node name="AmmoSelect11" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 11
+
+[node name="AmmoSelect12" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 12
+
+[node name="AmmoSelect13" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 13
+
+[node name="AmmoSelect14" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 17
+
+[node name="AmmoSelect15" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 15
+
+[node name="AmmoSelect16" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 14
+
+[node name="AmmoSelect17" parent="Panel/MC/VB/MC/AmmoGrid" instance=ExtResource("3_057xb")]
+custom_minimum_size = Vector2(205, 45)
+layout_mode = 2
+bullet_type = 16
+
+[node name="SelectAllButton" type="Button" parent="Panel/MC/VB/MC/AmmoGrid"]
+custom_minimum_size = Vector2(205, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_SELECT_ALL"
+
+[node name="ClearButton" type="Button" parent="Panel/MC/VB/MC/AmmoGrid"]
+custom_minimum_size = Vector2(205, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_CLEAR_ALL"
+
+[node name="Control3" type="Control" parent="Panel/MC/VB"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="HB3" type="HBoxContainer" parent="Panel/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="StartButton" type="Button" parent="Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_START"
+
+[node name="TutorialButton" type="Button" parent="Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_TUTORIAL"
+
+[node name="ControlsButton" type="Button" parent="Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_SHOW_CONTROLS"
+
+[node name="BackButton" type="Button" parent="Panel/MC/VB/HB3"]
+custom_minimum_size = Vector2(190, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_BACK"
+
+[node name="Panel2" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -470.0
+offset_top = -250.0
+offset_right = 470.0
+offset_bottom = 265.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("5_1jtwt")
+
+[node name="MC" type="MarginContainer" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HB" type="HBoxContainer" parent="Panel2/MC"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Panel2/MC/HB"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+
+[node name="MC" type="MarginContainer" parent="Panel2/MC/HB/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VB" type="VBoxContainer" parent="Panel2/MC/HB/Panel/MC"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel/MC/VB"]
+layout_mode = 2
+text = "TR_SELECT_BULLET"
+label_settings = SubResource("LabelSettings_8tfus")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Panel2/MC/HB/Panel/MC/VB"]
+custom_minimum_size = Vector2(430, 350)
+layout_mode = 2
+focus_mode = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8rdw1")
+allow_search = false
+max_columns = 3
+fixed_column_width = 200
+
+[node name="Control" type="Control" parent="Panel2/MC/HB/Panel/MC/VB"]
+custom_minimum_size = Vector2(0, 9)
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="Panel2/MC/HB/Panel/MC/VB"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel/MC/VB/HB"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_MOVEMENT_POINTS"
+
+[node name="MovementSelect" type="OptionButton" parent="Panel2/MC/HB/Panel/MC/VB/HB"]
+layout_mode = 2
+selected = 2
+item_count = 6
+popup/item_0/text = "0"
+popup/item_1/text = "5"
+popup/item_1/id = 1
+popup/item_2/text = "10"
+popup/item_2/id = 2
+popup/item_3/text = "15"
+popup/item_3/id = 3
+popup/item_4/text = "20"
+popup/item_4/id = 4
+popup/item_5/text = "25"
+popup/item_5/id = 5
+
+[node name="Control" type="Control" parent="Panel2/MC/HB"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+
+[node name="Panel2" type="Panel" parent="Panel2/MC/HB"]
+custom_minimum_size = Vector2(425, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v4a3p")
+
+[node name="MC" type="MarginContainer" parent="Panel2/MC/HB/Panel2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+
+[node name="VB2" type="VBoxContainer" parent="Panel2/MC/HB/Panel2/MC"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+text = "TR_BULLET_SETTINGS"
+label_settings = SubResource("LabelSettings_8tfus")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HB" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_BULLET_FREQUENCY"
+
+[node name="BulletFreq" type="OptionButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB"]
+custom_minimum_size = Vector2(70, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+selected = 4
+fit_to_longest_item = false
+item_count = 14
+popup/item_0/text = "1"
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+popup/item_5/text = "6"
+popup/item_5/id = 5
+popup/item_6/text = "7"
+popup/item_6/id = 6
+popup/item_7/text = "8"
+popup/item_7/id = 7
+popup/item_8/text = "9"
+popup/item_8/id = 8
+popup/item_9/text = "10"
+popup/item_9/id = 9
+popup/item_10/text = "15"
+popup/item_10/id = 10
+popup/item_11/text = "20"
+popup/item_11/id = 11
+popup/item_12/text = "25"
+popup/item_12/id = 12
+popup/item_13/text = "30"
+popup/item_13/id = 13
+
+[node name="HB8" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB8"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_EXPLOSION_RADIUS"
+
+[node name="ExpRadius" type="OptionButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB8"]
+custom_minimum_size = Vector2(70, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+selected = 4
+fit_to_longest_item = false
+item_count = 19
+popup/item_0/text = "1"
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+popup/item_5/text = "6"
+popup/item_5/id = 5
+popup/item_6/text = "7"
+popup/item_6/id = 6
+popup/item_7/text = "8"
+popup/item_7/id = 7
+popup/item_8/text = "9"
+popup/item_8/id = 8
+popup/item_9/text = "10"
+popup/item_9/id = 9
+popup/item_10/text = "15"
+popup/item_10/id = 10
+popup/item_11/text = "20"
+popup/item_11/id = 11
+popup/item_12/text = "30"
+popup/item_12/id = 12
+popup/item_13/text = "40"
+popup/item_13/id = 13
+popup/item_14/text = "50"
+popup/item_14/id = 14
+popup/item_15/text = "40"
+popup/item_15/id = 15
+popup/item_16/text = "100"
+popup/item_16/id = 16
+popup/item_17/text = "150"
+popup/item_17/id = 17
+popup/item_18/text = "200"
+popup/item_18/id = 21
+
+[node name="HB2" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB2"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_EXPLOSION_FORCE"
+
+[node name="ExpForce" type="OptionButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB2"]
+custom_minimum_size = Vector2(70, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+selected = 4
+fit_to_longest_item = false
+item_count = 15
+popup/item_0/text = "0"
+popup/item_1/text = "50"
+popup/item_1/id = 1
+popup/item_2/text = "100"
+popup/item_2/id = 2
+popup/item_3/text = "150"
+popup/item_3/id = 3
+popup/item_4/text = "200"
+popup/item_4/id = 4
+popup/item_5/text = "250"
+popup/item_5/id = 5
+popup/item_6/text = "300"
+popup/item_6/id = 6
+popup/item_7/text = "350"
+popup/item_7/id = 7
+popup/item_8/text = "400"
+popup/item_8/id = 8
+popup/item_9/text = "450"
+popup/item_9/id = 9
+popup/item_10/text = "500"
+popup/item_10/id = 10
+popup/item_11/text = "750"
+popup/item_11/id = 11
+popup/item_12/text = "1000"
+popup/item_12/id = 12
+popup/item_13/text = "1500"
+popup/item_13/id = 13
+popup/item_14/text = "2000"
+popup/item_14/id = 14
+
+[node name="HB3" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB3"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_EXP_VIS_SCALE"
+
+[node name="ExpScale" type="OptionButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB3"]
+custom_minimum_size = Vector2(70, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+selected = 5
+fit_to_longest_item = false
+item_count = 18
+popup/item_0/text = "0.5"
+popup/item_1/text = "0.6"
+popup/item_1/id = 1
+popup/item_2/text = "0.7"
+popup/item_2/id = 2
+popup/item_3/text = "0.8"
+popup/item_3/id = 3
+popup/item_4/text = "0.9"
+popup/item_4/id = 4
+popup/item_5/text = "1.0"
+popup/item_5/id = 5
+popup/item_6/text = "1.1"
+popup/item_6/id = 6
+popup/item_7/text = "1.2"
+popup/item_7/id = 7
+popup/item_8/text = "1.3"
+popup/item_8/id = 8
+popup/item_9/text = "1.4"
+popup/item_9/id = 9
+popup/item_10/text = "1.5"
+popup/item_10/id = 10
+popup/item_11/text = "1.6"
+popup/item_11/id = 11
+popup/item_12/text = "1.7"
+popup/item_12/id = 12
+popup/item_13/text = "1.8"
+popup/item_13/id = 13
+popup/item_14/text = "1.9"
+popup/item_14/id = 14
+popup/item_15/text = "2.0"
+popup/item_15/id = 15
+popup/item_16/text = "2.5"
+popup/item_16/id = 16
+popup/item_17/text = "3.0"
+popup/item_17/id = 17
+
+[node name="HB4" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB4"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_POINTS"
+
+[node name="Points" type="OptionButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB4"]
+custom_minimum_size = Vector2(70, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+selected = 5
+fit_to_longest_item = false
+item_count = 18
+popup/item_0/text = "0"
+popup/item_1/text = "10"
+popup/item_1/id = 1
+popup/item_2/text = "20"
+popup/item_2/id = 2
+popup/item_3/text = "30"
+popup/item_3/id = 3
+popup/item_4/text = "40"
+popup/item_4/id = 4
+popup/item_5/text = "50"
+popup/item_5/id = 5
+popup/item_6/text = "60"
+popup/item_6/id = 6
+popup/item_7/text = "70"
+popup/item_7/id = 7
+popup/item_8/text = "80"
+popup/item_8/id = 8
+popup/item_9/text = "90"
+popup/item_9/id = 9
+popup/item_10/text = "100"
+popup/item_10/id = 10
+popup/item_11/text = "150"
+popup/item_11/id = 11
+popup/item_12/text = "200"
+popup/item_12/id = 12
+popup/item_13/text = "250"
+popup/item_13/id = 13
+popup/item_14/text = "300"
+popup/item_14/id = 14
+popup/item_15/text = "350"
+popup/item_15/id = 15
+popup/item_16/text = "400"
+popup/item_16/id = 16
+popup/item_17/text = "500"
+popup/item_17/id = 18
+
+[node name="HB5" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB5"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_BULLET_COLOR"
+
+[node name="Color" type="ColorPickerButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB5"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+
+[node name="HB6" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel2/MC/HB/Panel2/MC/VB2/HB6"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_nlp5l")
+text = "TR_BULLET_SCALE"
+
+[node name="BulletScale" type="OptionButton" parent="Panel2/MC/HB/Panel2/MC/VB2/HB6"]
+custom_minimum_size = Vector2(70, 31)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+selected = 3
+item_count = 13
+popup/item_0/text = "0.25"
+popup/item_1/text = "0.5"
+popup/item_1/id = 1
+popup/item_2/text = "0.75"
+popup/item_2/id = 2
+popup/item_3/text = "1.0"
+popup/item_3/id = 3
+popup/item_4/text = "2.0"
+popup/item_4/id = 4
+popup/item_5/text = "3.0"
+popup/item_5/id = 5
+popup/item_6/text = "4.0"
+popup/item_6/id = 6
+popup/item_7/text = "5.0"
+popup/item_7/id = 7
+popup/item_8/text = "6.0"
+popup/item_8/id = 8
+popup/item_9/text = "7.0"
+popup/item_9/id = 9
+popup/item_10/text = "8.0"
+popup/item_10/id = 10
+popup/item_11/text = "9.0"
+popup/item_11/id = 11
+popup/item_12/text = "10.0"
+popup/item_12/id = 12
+
+[node name="Control" type="Control" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="HB7" type="HBoxContainer" parent="Panel2/MC/HB/Panel2/MC/VB2"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="CloseButton" type="Button" parent="Panel2/MC/HB/Panel2/MC/VB2/HB7"]
+custom_minimum_size = Vector2(90, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_OK"
+
+[node name="ResetButton" type="Button" parent="Panel2/MC/HB/Panel2/MC/VB2/HB7"]
+custom_minimum_size = Vector2(125, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_RESET_BULLET"
+
+[node name="ResetAllButton" type="Button" parent="Panel2/MC/HB/Panel2/MC/VB2/HB7"]
+custom_minimum_size = Vector2(125, 50)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("6_nlp5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_o6hs1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a71sf")
+theme_override_styles/normal = SubResource("StyleBoxFlat_07sfm")
+text = "TR_RESET_ALL"
+
+[node name="Controls" parent="." instance=ExtResource("7_kokti")]
+visible = false
+
+[node name="AudioMenu" parent="." instance=ExtResource("8_5uhpg")]
+offset_left = -105.0
+offset_top = 30.0
+offset_right = -30.0
+offset_bottom = 105.0
+
+[node name="Cursor" parent="." instance=ExtResource("6_go1ro")]
+
+[connection signal="item_selected" from="Panel/MC/VB/HB2/Panel/MC/HB/ShotsNum" to="." method="_on_shots_num_item_selected"]
+[connection signal="item_selected" from="Panel/MC/VB/HB2/Panel2/MC/HB/SizeSelect" to="." method="_on_size_select_item_selected"]
+[connection signal="item_selected" from="Panel/MC/VB/HB2/Panel4/MC/HB/TerrainSelect" to="." method="_on_terrain_select_item_selected"]
+[connection signal="toggled" from="Panel/MC/VB/HB2/Panel3/MC/EasyTargeting" to="." method="_on_easy_targeting_toggled"]
+[connection signal="pressed" from="Panel/MC/VB/HB2/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Panel/MC/VB/MC/AmmoGrid/SelectAllButton" to="." method="_on_select_all_button_pressed"]
+[connection signal="pressed" from="Panel/MC/VB/MC/AmmoGrid/ClearButton" to="." method="_on_clear_button_pressed"]
+[connection signal="pressed" from="Panel/MC/VB/HB3/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Panel/MC/VB/HB3/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="Panel/MC/VB/HB3/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="Panel/MC/VB/HB3/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="item_selected" from="Panel2/MC/HB/Panel/MC/VB/ItemList" to="." method="_on_item_list_item_selected"]
+[connection signal="item_selected" from="Panel2/MC/HB/Panel/MC/VB/HB/MovementSelect" to="." method="_on_option_button_item_selected"]
+[connection signal="pressed" from="Panel2/MC/HB/Panel2/MC/VB2/HB7/CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="Panel2/MC/HB/Panel2/MC/VB2/HB7/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Panel2/MC/HB/Panel2/MC/VB2/HB7/ResetAllButton" to="." method="_on_reset_all_button_pressed"]

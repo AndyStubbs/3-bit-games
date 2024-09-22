@@ -1,0 +1,84 @@
+[gd_scene load_steps=15 format=3 uid="uid://caviusf8qtrg5"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_missile.gd" id="1_6e8b5"]
+[ext_resource type="Texture2D" uid="uid://y41qpgn83wvo" path="res://Games/ReadyAimFire/Images/self_guided_missile.png" id="1_b3qqa"]
+[ext_resource type="Texture2D" uid="uid://dtc8afgna6x2" path="res://Assets/Images/sphere.png" id="2_fnvvi"]
+[ext_resource type="Texture2D" uid="uid://pqicdh6fphgo" path="res://Games/Blastroids/Images/blast_missile_markers.png" id="4_1h3pe"]
+
+[sub_resource type="Gradient" id="Gradient_optp8"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7v4y7"]
+gradient = SubResource("Gradient_optp8")
+
+[sub_resource type="Curve" id="Curve_e8rmf"]
+_data = [Vector2(0.00198807, 0.683395), 0.0, 0.0, 0, 0, Vector2(1, 0.0118082), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_whp7v"]
+curve = SubResource("Curve_e8rmf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vh8lr"]
+particle_flag_disable_z = true
+spread = 1.0
+initial_velocity_min = 45.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_whp7v")
+color = Color(0.685733, 3.10443e-06, 5.77569e-07, 1)
+color_ramp = SubResource("GradientTexture1D_7v4y7")
+
+[sub_resource type="Gradient" id="Gradient_ureyx"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_146ib"]
+gradient = SubResource("Gradient_ureyx")
+
+[sub_resource type="Curve" id="Curve_yx7ub"]
+_data = [Vector2(0.00795229, 0.304428), 0.0, 0.0, 0, 0, Vector2(1, 0.0118082), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_efc34"]
+curve = SubResource("Curve_yx7ub")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ksxgi"]
+particle_flag_disable_z = true
+spread = 1.0
+initial_velocity_min = 25.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_efc34")
+color = Color(0.956863, 0.984314, 0, 1)
+color_ramp = SubResource("GradientTexture1D_146ib")
+
+[node name="BlastMissile" type="Node2D"]
+script = ExtResource("1_6e8b5")
+
+[node name="Rocket" type="Node2D" parent="."]
+position = Vector2(-10, 0)
+
+[node name="RocketParticles" type="GPUParticles2D" parent="Rocket"]
+rotation = -3.14159
+scale = Vector2(0.75, 0.75)
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_vh8lr")
+texture = ExtResource("2_fnvvi")
+lifetime = 1.5
+local_coords = true
+
+[node name="RocketParticles2" type="GPUParticles2D" parent="Rocket"]
+rotation = -3.14159
+scale = Vector2(0.75, 0.75)
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_ksxgi")
+texture = ExtResource("2_fnvvi")
+lifetime = 1.5
+local_coords = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_b3qqa")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
+texture = ExtResource("4_1h3pe")

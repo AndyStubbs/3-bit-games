@@ -1,0 +1,656 @@
+[gd_scene load_steps=34 format=3 uid="uid://ckhvjmeidcp78"]
+
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/game.gd" id="1_vh27h"]
+[ext_resource type="Texture2D" uid="uid://cyo23m5hgduu4" path="res://Games/ReadyAimFire/Images/mountain_bg_3.png" id="2_rbfxt"]
+[ext_resource type="Shader" path="res://Shaders/no_black.gdshader" id="2_x8qd1"]
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/ground.gd" id="2_xm1vo"]
+[ext_resource type="AudioStream" uid="uid://y0drjjv4xrpw" path="res://Assets/Sounds/dirt.wav" id="5_xivlp"]
+[ext_resource type="AudioStream" uid="uid://cqalw1ktlp1mi" path="res://Assets/Sounds/next_turn_2.wav" id="6_ipu5t"]
+[ext_resource type="LabelSettings" uid="uid://crd741d8v7t3s" path="res://Assets/Resources/font_anton_32.tres" id="6_skhyx"]
+[ext_resource type="AudioStream" uid="uid://ifiicnlmguff" path="res://Assets/Sounds/game_over.mp3" id="7_ygny4"]
+[ext_resource type="AudioStream" uid="uid://ycxeh501ug38" path="res://Assets/Sounds/game_over_2.mp3" id="8_5rc0q"]
+[ext_resource type="AudioStream" uid="uid://dchfwafeadnkp" path="res://Assets/Sounds/tick2.wav" id="8_cahmm"]
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="10_78d8a"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="10_ftk1l"]
+[ext_resource type="PackedScene" uid="uid://dm5kiqh62u0tm" path="res://Shared/controls.tscn" id="10_l2l81"]
+[ext_resource type="FontFile" uid="uid://dy4g2gnr44f51" path="res://Assets/Fonts/ChangaOne-Regular.ttf" id="11_rnb1u"]
+[ext_resource type="PackedScene" uid="uid://cu7m2nbckgq03" path="res://Shared/mute_button.tscn" id="12_38krn"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="13_6u6g3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tf562"]
+shader = ExtResource("2_x8qd1")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8q6xc"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jv0hb"]
+font = ExtResource("10_78d8a")
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_ujd3x"]
+font = ExtResource("10_ftk1l")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_6ak38"]
+font = ExtResource("11_rnb1u")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dqd1i"]
+font = ExtResource("11_rnb1u")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_rs27e"]
+font = ExtResource("11_rnb1u")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l16o6"]
+font = ExtResource("11_rnb1u")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_cieqf"]
+font = ExtResource("10_ftk1l")
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_urhgx"]
+font = ExtResource("10_ftk1l")
+font_size = 42
+
+[sub_resource type="LabelSettings" id="LabelSettings_hjck4"]
+font = ExtResource("10_ftk1l")
+font_size = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6s3hx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 0.745098)
+border_blend = true
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 16
+expand_margin_left = 8.0
+expand_margin_top = 8.0
+expand_margin_right = 8.0
+expand_margin_bottom = 8.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_6f4pr"]
+font = ExtResource("11_rnb1u")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="SystemFont" id="SystemFont_eodls"]
+font_names = PackedStringArray("Broadway")
+
+[sub_resource type="LabelSettings" id="LabelSettings_623nk"]
+font = SubResource("SystemFont_eodls")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xstgk"]
+font = SubResource("SystemFont_eodls")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_w0i6i"]
+font = SubResource("SystemFont_eodls")
+font_size = 48
+font_color = Color(0.105882, 0.0901961, 0.788235, 1)
+outline_size = 8
+outline_color = Color(0.365897, 0.562772, 1, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.705882)
+shadow_offset = Vector2(3, 3)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_vh27h")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_filter = 2
+texture_repeat = 3
+position = Vector2(-30, -27)
+texture = ExtResource("2_rbfxt")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 5000, 1080)
+
+[node name="Ground" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_tf562")
+scale = Vector2(4, 4)
+centered = false
+script = ExtResource("2_xm1vo")
+
+[node name="Body" type="StaticBody2D" parent="Ground"]
+scale = Vector2(0.25, 0.25)
+
+[node name="Poly" type="CollisionPolygon2D" parent="Ground/Body"]
+polygon = PackedVector2Array(29, 711, 602, 652, 755, 488, 1168, 457, 1493, 610, 1773, 595, 2022, 734, 2015, 1205, -127, 1195, -120, 640)
+
+[node name="GroundSound" type="AudioStreamPlayer" parent="Ground"]
+stream = ExtResource("5_xivlp")
+bus = &"Sound"
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+position = Vector2(960, 540)
+limit_left = 0
+limit_top = 0
+drag_horizontal_enabled = true
+
+[node name="NextTurnSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ipu5t")
+bus = &"Sound"
+
+[node name="GameoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ygny4")
+volume_db = 8.0
+bus = &"Sound"
+
+[node name="GameoverSound2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5rc0q")
+bus = &"Sound"
+
+[node name="TickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_cahmm")
+bus = &"Sound"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOver" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -412.5
+offset_right = 350.0
+offset_bottom = 412.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8q6xc")
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VB" type="VBoxContainer" parent="CanvasLayer/GameOver/MC"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOver/MC/VB"]
+layout_mode = 2
+text = "TR_GAME_OVER"
+label_settings = SubResource("LabelSettings_jv0hb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="WinnerIs" type="Label" parent="CanvasLayer/GameOver/MC/VB"]
+layout_mode = 2
+text = "TR_WINNER_IS"
+label_settings = SubResource("LabelSettings_ujd3x")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control3" type="Control" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Control3b" type="Control" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Winners" type="VBoxContainer" parent="CanvasLayer/GameOver/MC/VB"]
+layout_mode = 2
+
+[node name="Winner1" type="Label" parent="CanvasLayer/GameOver/MC/VB/Winners"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_6ak38")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Winner2" type="Label" parent="CanvasLayer/GameOver/MC/VB/Winners"]
+visible = false
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_dqd1i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Winner3" type="Label" parent="CanvasLayer/GameOver/MC/VB/Winners"]
+visible = false
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_rs27e")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Winner4" type="Label" parent="CanvasLayer/GameOver/MC/VB/Winners"]
+visible = false
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_l16o6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control4" type="Control" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Control4b" type="Control" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="CanvasLayer/GameOver/MC/VB"]
+layout_mode = 2
+text = "TR_SCORE"
+label_settings = SubResource("LabelSettings_cieqf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(590, 2)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Control5" type="Control" parent="CanvasLayer/GameOver/MC/VB"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="CanvasLayer/GameOver/MC/VB"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Name" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB"]
+custom_minimum_size = Vector2(375, 0)
+layout_mode = 2
+text = "Player1 ABCDEFG"
+label_settings = SubResource("LabelSettings_urhgx")
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "999999"
+label_settings = SubResource("LabelSettings_urhgx")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HB2" type="HBoxContainer" parent="CanvasLayer/GameOver/MC/VB"]
+visible = false
+custom_minimum_size = Vector2(375, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Name" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB2"]
+custom_minimum_size = Vector2(375, 0)
+layout_mode = 2
+text = "Player2 ABCDEFG"
+label_settings = SubResource("LabelSettings_urhgx")
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB2"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "999999"
+label_settings = SubResource("LabelSettings_urhgx")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HB3" type="HBoxContainer" parent="CanvasLayer/GameOver/MC/VB"]
+visible = false
+custom_minimum_size = Vector2(375, 0)
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Name" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB3"]
+custom_minimum_size = Vector2(375, 0)
+layout_mode = 2
+text = "Player3 ABCDEFG"
+label_settings = SubResource("LabelSettings_urhgx")
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB3"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "999999"
+label_settings = SubResource("LabelSettings_urhgx")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HB4" type="HBoxContainer" parent="CanvasLayer/GameOver/MC/VB"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Name" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB4"]
+custom_minimum_size = Vector2(375, 0)
+layout_mode = 2
+text = "Player4 ABCDEFG"
+label_settings = SubResource("LabelSettings_urhgx")
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="CanvasLayer/GameOver/MC/VB/HB4"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "999999"
+label_settings = SubResource("LabelSettings_urhgx")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="ReturnButton" type="Button" parent="CanvasLayer/GameOver"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -60.0
+offset_right = 100.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("10_ftk1l")
+text = "TR_RETURN_MENU"
+
+[node name="Options" type="Panel" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 65.0
+grow_horizontal = 2
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/Options"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HB" type="HBoxContainer" parent="CanvasLayer/Options/MC"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="MenuButton" type="Button" parent="CanvasLayer/Options/MC/HB"]
+custom_minimum_size = Vector2(225, 45)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("10_ftk1l")
+theme_override_font_sizes/font_size = 24
+text = "TR_QUIT"
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/Options/MC/HB"]
+visible = false
+custom_minimum_size = Vector2(225, 45)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("10_ftk1l")
+theme_override_font_sizes/font_size = 24
+text = "TR_RESET_TUTORIAL"
+
+[node name="ControlsButton" type="Button" parent="CanvasLayer/Options/MC/HB"]
+custom_minimum_size = Vector2(225, 45)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("10_ftk1l")
+theme_override_font_sizes/font_size = 24
+text = "TR_SHOW_CONTROLS"
+
+[node name="Tutorial" type="Panel" parent="CanvasLayer"]
+visible = false
+offset_top = 75.0
+offset_right = 1920.0
+offset_bottom = 364.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8q6xc")
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/Tutorial"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+
+[node name="VB" type="VBoxContainer" parent="CanvasLayer/Tutorial/MC"]
+layout_mode = 2
+
+[node name="HB" type="HBoxContainer" parent="CanvasLayer/Tutorial/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PreviousButton" type="Button" parent="CanvasLayer/Tutorial/MC/VB/HB"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_ftk1l")
+disabled = true
+text = "TR_PREVIOUS"
+
+[node name="NextButton" type="Button" parent="CanvasLayer/Tutorial/MC/VB/HB"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_ftk1l")
+text = "TR_NEXT"
+
+[node name="Text" type="Label" parent="CanvasLayer/Tutorial/MC/VB"]
+modulate = Color(0.691357, 0.691357, 0.691357, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("10_ftk1l")
+text = "1. Aim by using the directional arrows.
+2. Press and HOLD the Fire button to begin the firing phase.
+3. HOLD the fire button until you get the velocity that you want.
+4. You can adjust your aim while holding the fire button.
+5. Release the fire button to fire the bullet."
+label_settings = SubResource("LabelSettings_hjck4")
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/Tutorial/MC/VB"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="Players" type="Control" parent="CanvasLayer"]
+custom_minimum_size = Vector2(0, 136)
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Outline" type="Panel" parent="CanvasLayer/Players"]
+visible = false
+custom_minimum_size = Vector2(250, 110)
+layout_mode = 2
+offset_left = 832.0
+offset_right = 1082.0
+offset_bottom = 110.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6s3hx")
+
+[node name="HB" type="HBoxContainer" parent="CanvasLayer/Players"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="PlayerScore" type="Control" parent="CanvasLayer/Players/HB"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Players/HB/PlayerScore"]
+layout_mode = 0
+offset_right = 211.0
+offset_bottom = 55.0
+text = "Player 1"
+label_settings = SubResource("LabelSettings_6f4pr")
+
+[node name="Score" type="Label" parent="CanvasLayer/Players/HB/PlayerScore"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 58.0
+offset_right = 86.0
+offset_bottom = 98.0
+text = "0"
+label_settings = ExtResource("6_skhyx")
+
+[node name="PlayerScore2" type="Control" parent="CanvasLayer/Players/HB"]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Players/HB/PlayerScore2"]
+layout_mode = 0
+offset_right = 211.0
+offset_bottom = 55.0
+text = "Player 2"
+label_settings = SubResource("LabelSettings_623nk")
+
+[node name="Score" type="Label" parent="CanvasLayer/Players/HB/PlayerScore2"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 58.0
+offset_right = 86.0
+offset_bottom = 98.0
+text = "0"
+label_settings = ExtResource("6_skhyx")
+
+[node name="PlayerScore3" type="Control" parent="CanvasLayer/Players/HB"]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Players/HB/PlayerScore3"]
+layout_mode = 0
+offset_right = 211.0
+offset_bottom = 55.0
+text = "Player 3"
+label_settings = SubResource("LabelSettings_xstgk")
+
+[node name="Score" type="Label" parent="CanvasLayer/Players/HB/PlayerScore3"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 58.0
+offset_right = 86.0
+offset_bottom = 98.0
+text = "0"
+label_settings = ExtResource("6_skhyx")
+
+[node name="PlayerScore4" type="Control" parent="CanvasLayer/Players/HB"]
+visible = false
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Players/HB/PlayerScore4"]
+layout_mode = 0
+offset_right = 211.0
+offset_bottom = 55.0
+text = "Player 4"
+label_settings = SubResource("LabelSettings_w0i6i")
+
+[node name="Score" type="Label" parent="CanvasLayer/Players/HB/PlayerScore4"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 58.0
+offset_right = 86.0
+offset_bottom = 98.0
+text = "0"
+label_settings = ExtResource("6_skhyx")
+
+[node name="Controls" parent="CanvasLayer" instance=ExtResource("10_l2l81")]
+visible = false
+
+[node name="MuteButton" parent="CanvasLayer" instance=ExtResource("12_38krn")]
+offset_left = -105.0
+offset_right = -30.0
+
+[node name="Cursor" parent="." instance=ExtResource("13_6u6g3")]
+
+[connection signal="pressed" from="CanvasLayer/GameOver/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="mouse_entered" from="CanvasLayer/Options" to="." method="_on_options_mouse_entered"]
+[connection signal="mouse_exited" from="CanvasLayer/Options" to="." method="_on_options_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Options/MC/HB/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Options/MC/HB/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Options/MC/HB/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Tutorial/MC/VB/HB/PreviousButton" to="." method="_on_previous_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Tutorial/MC/VB/HB/NextButton" to="." method="_on_next_button_pressed"]

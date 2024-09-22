@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpjeh8m3h3bpe"]
+
+[ext_resource type="Texture2D" uid="uid://c40tbqwvdytap" path="res://Assets/Images/ram_game_image.webp" id="1_ddb5m"]
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="2_rr8kn"]
+[ext_resource type="Script" path="res://Scripts/game_select.gd" id="2_sl756"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bht0v"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l4ppn"]
+font = ExtResource("2_rr8kn")
+font_size = 36
+
+[node name="GameSelect" type="Panel"]
+custom_minimum_size = Vector2(256, 302)
+offset_right = 256.0
+offset_bottom = 302.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bht0v")
+script = ExtResource("2_sl756")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+offset_top = -0.5
+offset_right = 256.0
+offset_bottom = 42.5
+text = "Ready Aim Fire"
+label_settings = SubResource("LabelSettings_l4ppn")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+offset_top = 48.0
+offset_right = 256.0
+offset_bottom = 304.0
+texture = ExtResource("1_ddb5m")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

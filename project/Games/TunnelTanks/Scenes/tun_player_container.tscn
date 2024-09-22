@@ -1,0 +1,117 @@
+[gd_scene load_steps=14 format=3 uid="uid://biefg4fxkvtuc"]
+
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_player_container.gd" id="1_fufr8"]
+[ext_resource type="Texture2D" uid="uid://datiw518beurb" path="res://Games/TunnelTanks/Images/dirt_backdrop.png" id="1_yjyoq"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_sprite.gd" id="3_s4psb"]
+[ext_resource type="Shader" path="res://Shaders/no_black.gdshader" id="4_ulb66"]
+[ext_resource type="PackedScene" uid="uid://c1wc6c4pqdlwb" path="res://Games/TunnelTanks/Scenes/tun_tank.tscn" id="5_kvkcs"]
+[ext_resource type="Shader" path="res://Shaders/minimap.gdshader" id="7_q3o3e"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_mini_map.gd" id="8_cg1h3"]
+[ext_resource type="AudioStream" uid="uid://ckihabxmjf5v3" path="res://Games/TunnelTanks/Sounds/static.wav" id="8_h5063"]
+[ext_resource type="Texture2D" uid="uid://dtxnb11gmvo45" path="res://Assets/Images/pixel.png" id="9_tdlh6"]
+[ext_resource type="PackedScene" uid="uid://cmx6hoer0lnio" path="res://Games/TunnelTanks/Scenes/tun_player_ui_h.tscn" id="10_w6h4u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fd2ge"]
+shader = ExtResource("4_ulb66")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cu2kq"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_78w0y"]
+shader = ExtResource("7_q3o3e")
+
+[node name="TunPlayerContainerH" type="VBoxContainer"]
+offset_right = 512.0
+offset_bottom = 396.0
+script = ExtResource("1_fufr8")
+
+[node name="View" type="Control" parent="."]
+custom_minimum_size = Vector2(512, 256)
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="View"]
+custom_minimum_size = Vector2(512, 256)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="View/SubViewportContainer"]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(512, 256)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="View/SubViewportContainer/SubViewport"]
+texture_filter = 1
+
+[node name="Background0" type="Sprite2D" parent="View/SubViewportContainer/SubViewport/World"]
+texture_repeat = 2
+texture = ExtResource("1_yjyoq")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1920, 1080)
+script = ExtResource("3_s4psb")
+sprite_type = 0
+
+[node name="Background1" type="Sprite2D" parent="View/SubViewportContainer/SubViewport/World"]
+material = SubResource("ShaderMaterial_fd2ge")
+centered = false
+script = ExtResource("3_s4psb")
+
+[node name="Tank" parent="View/SubViewportContainer/SubViewport/World" instance=ExtResource("5_kvkcs")]
+
+[node name="MiniMapContainer" type="Panel" parent="View"]
+clip_contents = true
+custom_minimum_size = Vector2(104, 104)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -258.0
+offset_top = -208.0
+offset_right = -129.0
+offset_bottom = -104.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(2, 2)
+theme_override_styles/panel = SubResource("StyleBoxFlat_cu2kq")
+
+[node name="MiniMap" type="Sprite2D" parent="View/MiniMapContainer"]
+texture_filter = 2
+texture_repeat = 1
+material = SubResource("ShaderMaterial_78w0y")
+position = Vector2(2, 2)
+scale = Vector2(0.5, 0.5)
+centered = false
+region_enabled = true
+region_rect = Rect2(40, 40, 250, 200)
+script = ExtResource("8_cg1h3")
+
+[node name="Dot" type="Sprite2D" parent="View/MiniMapContainer/MiniMap"]
+modulate = Color(1, 0, 0, 1)
+texture_filter = 1
+position = Vector2(126, 100)
+scale = Vector2(4, 4)
+texture = ExtResource("9_tdlh6")
+centered = false
+
+[node name="StaticTexture" type="TextureRect" parent="View"]
+layout_mode = 1
+offset_right = 129.0
+offset_bottom = 129.0
+scale = Vector2(4, 4)
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="PlayerUi" parent="." instance=ExtResource("10_w6h4u")]
+layout_mode = 2
+
+[node name="StaticSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_h5063")

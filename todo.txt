@@ -1,0 +1,40 @@
+1.  Improve the UI on the menu page	*** COMPLETE ***
+2.  Add a Super Nuke Bullet			*** COMPLETE ***
+3.  Add a Grow Potion Bullet		*** COMPLETE ***
+4.  Add game over					*** COMPLETE ***
+5.  Add an advanced settings page, allowing the user to edit the stats of each bullet	*** COMPLETE ***
+6.  Add a tutorial that goes through all the game mechanics		*** COMPLETE ***
+	a. Basic targeting
+	b. Firing ammo - Hold the fire button, etc
+	c. Turning tank around
+7.  Create a new background
+8. Add CPU Opponents				*** COMPLETE ***
+	a. There will be a random chance that the tank will move a random amount of movement points
+	b. Each turn will randomly select a bullet
+	c. If the bullet is not the rocket boost
+		i. Randomly select a targeting and face the direction of target
+		ii. Will simulate a number of random velocities and angles
+			A. The tank will rotate to the lowest possible angle
+			B. The tank will rotate from the lowest possible angle to the highest possible angle
+			C. For each angle the tank will simulate a number of different velocities
+			D. It will store the results of each simulated velocity
+			E. It will then rotate to that angle and fire
+		iii. Then will fire with the velocity and angle of the velocity and angle that got closest to target
+	d. If the bullet is a rocket boost
+		i. Tank will fire the rocket boost for a random amount of time
+		ii. Tank will pick a direction, either forward or backword
+		iii. Tank will move in that direction a random amount of time.
+		iv. When moving there will be a random chance of giving additional boosts when moving
+
+
+* Fix slowness around nuke explosion		*** Fixed ***
+* Fix slowness when CPU aiming				*** minor improvement ***
+
+* Setup text so that it can be translated easily			**** COMPLETE ****
+* Add font files for all labels	
+* Update cursor to use axis instead of just action pressed events **** COMPLETE ****
+* When cluster bombs all fire at once it is too loud.
+* Add a previous and next button at the bottom of the tutorial text.  **** COMPLETE ****
+* Fix bug with laser giving too many points
+* Add custom colors to player select
+* Add reset button to player select			**** COMPLETE ****

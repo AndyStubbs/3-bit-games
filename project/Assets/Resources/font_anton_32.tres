@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://crd741d8v7t3s"]
+
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="1_j4t0s"]
+
+[resource]
+font = ExtResource("1_j4t0s")
+font_size = 32
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.87451)

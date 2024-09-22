@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcny528kw4v4"]
+
+[ext_resource type="Texture2D" uid="uid://dtxnb11gmvo45" path="res://Assets/Images/pixel.png" id="1_26ndp"]
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/wind.gd" id="2_c2gti"]
+
+[node name="Wind" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.545098)
+scale = Vector2(4, 4)
+texture = ExtResource("1_26ndp")
+script = ExtResource("2_c2gti")

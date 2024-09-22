@@ -1,0 +1,581 @@
+[gd_scene load_steps=49 format=3 uid="uid://opmrpetxsrlw"]
+
+[ext_resource type="Texture2D" uid="uid://bkuf0kbla5lu8" path="res://Games/ReadyAimFire/Images/tanks_horizontal_2.png" id="2_b5jrh"]
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/tank.gd" id="2_f7t6a"]
+[ext_resource type="Texture2D" uid="uid://cw5duso8jbwje" path="res://Games/ReadyAimFire/Images/tank_horizontal_cannon.png" id="3_j7j0m"]
+[ext_resource type="Texture2D" uid="uid://uhey4p88xqt1" path="res://Games/ReadyAimFire/Images/small_smoke.png" id="4_lycta"]
+[ext_resource type="Texture2D" uid="uid://di7avjp5khdbd" path="res://Games/ReadyAimFire/Images/laser.png" id="5_2ut4c"]
+[ext_resource type="AudioStream" uid="uid://dfgkmh42hjdi" path="res://Assets/Sounds/engine2.wav" id="5_5qhk0"]
+[ext_resource type="Texture2D" uid="uid://dtxnb11gmvo45" path="res://Assets/Images/pixel.png" id="5_cvi3q"]
+[ext_resource type="AudioStream" uid="uid://wemqyk0ewo3x" path="res://Assets/Sounds/fire.wav" id="6_bkmsw"]
+[ext_resource type="AudioStream" uid="uid://d1hwn8b7whwmf" path="res://Assets/Sounds/tick.wav" id="7_k0e2t"]
+[ext_resource type="Texture2D" uid="uid://c646qwkl8e40w" path="res://Games/ReadyAimFire/Images/booster_rocket.png" id="7_wfpek"]
+[ext_resource type="AudioStream" uid="uid://blmo82i1u6gdi" path="res://Assets/Sounds/charge.wav" id="8_hpcx2"]
+[ext_resource type="AudioStream" uid="uid://u1xwqlocv1ab" path="res://Assets/Sounds/select.wav" id="9_26gbr"]
+[ext_resource type="Texture2D" uid="uid://c8w26jrjb38dh" path="res://Games/ReadyAimFire/Images/tank_bullet_marker.png" id="9_j6fqb"]
+[ext_resource type="AudioStream" uid="uid://baxujjxp6pn1b" path="res://Assets/Sounds/potion_effect2.wav" id="9_pscr4"]
+[ext_resource type="Texture2D" uid="uid://ddlifjeab28fw" path="res://Games/ReadyAimFire/Images/copper_bullet.png" id="9_xqnpy"]
+[ext_resource type="AudioStream" uid="uid://73ayu3phcy6k" path="res://Assets/Sounds/potion_effect.wav" id="10_oul3u"]
+[ext_resource type="AudioStream" uid="uid://bltkjtgtua82s" path="res://Assets/Sounds/laser.wav" id="12_fifeb"]
+[ext_resource type="AudioStream" uid="uid://o2ffv7jubl6g" path="res://Assets/Sounds/rocket.wav" id="15_ldf4u"]
+[ext_resource type="AudioStream" uid="uid://bjmhjjnseal51" path="res://Assets/Sounds/wrong.wav" id="16_r75cu"]
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="19_nwixg"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="21_wxu8c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qlnk"]
+atlas = ExtResource("2_b5jrh")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q3vqe"]
+atlas = ExtResource("2_b5jrh")
+region = Rect2(0, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbiix"]
+atlas = ExtResource("2_b5jrh")
+region = Rect2(50, 0, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j163q"]
+atlas = ExtResource("2_b5jrh")
+region = Rect2(0, 50, 50, 50)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_022qn"]
+atlas = ExtResource("2_b5jrh")
+region = Rect2(50, 50, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wgxva"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qlnk")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q3vqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbiix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j163q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_022qn")
+}],
+"loop": true,
+"name": &"move",
+"speed": 12.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_0lo00"]
+offsets = PackedFloat32Array(0, 0.138947, 0.204211, 0.324211, 0.444211, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.996078, 0.976471, 0.0862745, 0.486275, 0.827579, 0, 0.0832462, 0.713726, 0.466667, 0.443137, 0.439216, 0.709804, 0.404511, 0.404511, 0.404511, 0.705882, 0.43134, 0.43134, 0.43134, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2kffs"]
+gradient = SubResource("Gradient_0lo00")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_oexfp"]
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(1, -0.25, 0)
+spread = 15.0
+initial_velocity_min = 25.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, 15, 0)
+scale_min = 0.5
+color = Color(1, 1, 1, 0.631373)
+color_ramp = SubResource("GradientTexture1D_2kffs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d7yu2"]
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(-1, -0.25, 0)
+spread = 15.0
+initial_velocity_min = 25.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, 15, 0)
+scale_min = 0.5
+color = Color(1, 1, 1, 0.631373)
+color_ramp = SubResource("GradientTexture1D_2kffs")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmkp2"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8na54"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuiyu"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57n1f"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8nco"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6i413"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqk6a"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7h52q"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfepd"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7k4f4"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mtxij"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfcjj"]
+atlas = ExtResource("7_wfpek")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6o28i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmkp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8na54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuiyu")
+}],
+"loop": true,
+"name": &"boost",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57n1f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8nco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6i413")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqk6a")
+}],
+"loop": false,
+"name": &"boost_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7h52q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfepd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7k4f4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mtxij")
+}],
+"loop": false,
+"name": &"boost_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qfcjj")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fopn1"]
+bg_color = Color(0.109804, 0.109804, 0.109804, 1)
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esl4p"]
+bg_color = Color(0.670588, 0.0588235, 0.0352941, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3788i"]
+font = ExtResource("19_nwixg")
+font_size = 45
+font_color = Color(0.0160892, 0.425856, 0.0253804, 1)
+outline_size = 8
+outline_color = Color(1, 1, 1, 0.92549)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.701961)
+
+[sub_resource type="LabelSettings" id="LabelSettings_t377p"]
+font = ExtResource("19_nwixg")
+font_size = 45
+font_color = Color(0.0588235, 0.0352941, 0.670588, 1)
+outline_size = 8
+outline_color = Color(1, 1, 1, 0.92549)
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 0.823529)
+
+[node name="Tank" type="Node2D" groups=["RAF_Tank"]]
+script = ExtResource("2_f7t6a")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Anim" type="AnimatedSprite2D" parent="Body"]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_wgxva")
+animation = &"idle"
+autoplay = "idle"
+offset = Vector2(0, -4)
+
+[node name="Cannon" type="Sprite2D" parent="Body/Anim"]
+position = Vector2(7, -7)
+scale = Vector2(2, 2)
+texture = ExtResource("3_j7j0m")
+offset = Vector2(2, 0)
+
+[node name="Laser" type="Line2D" parent="Body/Anim/Cannon"]
+visible = false
+z_index = 1
+z_as_relative = false
+points = PackedVector2Array(50, 0, 5, 0)
+width = 5.0
+texture = ExtResource("5_2ut4c")
+texture_mode = 2
+
+[node name="Marker2D" type="Marker2D" parent="Body/Anim/Cannon"]
+position = Vector2(4.75, 0)
+
+[node name="MuzzleFireRight" type="GPUParticles2D" parent="Body/Anim/Cannon/Marker2D"]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_oexfp")
+texture = ExtResource("4_lycta")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.18
+
+[node name="MuzzleFireLeft" type="GPUParticles2D" parent="Body/Anim/Cannon/Marker2D"]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_d7yu2")
+texture = ExtResource("4_lycta")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.18
+
+[node name="Target" type="Sprite2D" parent="Body/Anim/Cannon"]
+modulate = Color(1, 1, 1, 0.717647)
+position = Vector2(25, 0)
+texture = ExtResource("9_j6fqb")
+
+[node name="Area2D" type="Area2D" parent="Body"]
+
+[node name="CollisionRight" type="CollisionPolygon2D" parent="Body/Area2D"]
+visible = false
+polygon = PackedVector2Array(-19, 17, 18, 17, 32, 11, 37, 7, 37, -3, 31, -7, 17, -7, 15, -11, 9, -17, 5, -19, -15, -19, -15, -9, -29, -9, -35, -3, -35, 7, -30, 11)
+
+[node name="CollisionLeft" type="CollisionPolygon2D" parent="Body/Area2D"]
+visible = false
+polygon = PackedVector2Array(-19, 17, 19, 17, 31, 11, 35, 6, 35, -3, 29, -9, 15, -9, 15, -17, 13, -19, -5, -19, -13, -15, -17, -7, -31, -7, -37, -3, -37, 7, -33, 11)
+disabled = true
+
+[node name="CollisionRight4" type="CollisionPolygon2D" parent="Body/Area2D"]
+visible = false
+polygon = PackedVector2Array(-39, 36, 39, 36, 67, 24, 76, 15, 76, -7, 64, -16, 32, -16, 32, -24, 23, -32, 12, -40, -32, -40, -32, -20, -59, -20, -72, -8, -72, 15, -64, 24)
+disabled = true
+
+[node name="CollisionLeft4" type="CollisionPolygon2D" parent="Body/Area2D"]
+visible = false
+polygon = PackedVector2Array(-48, 31, -40, 36, 40, 36, 56, 28, 72, 16, 72, -8, 59, -20, 32, -20, 32, -40, -12, -40, -27, -32, -32, -24, -32, -16, -64, -16, -72, -11, -76, -7, -76, 15, -68, 23, -60, 29)
+disabled = true
+
+[node name="CollisionRight6" type="CollisionPolygon2D" parent="Body/Area2D"]
+visible = false
+polygon = PackedVector2Array(-60, 54, 60, 54, 90, 42, 114, 24, 114, -12, 108, -18, 96, -24, 48, -24, 49, -48, 36, -48, 30, -54, 18, -60, -48, -60, -48, -30, -89, -30, -108, -12, -108, 24, -84, 41)
+disabled = true
+
+[node name="CollisionLeft6" type="CollisionPolygon2D" parent="Body/Area2D"]
+visible = false
+polygon = PackedVector2Array(-114, 24, -90, 41, -60, 54, 60, 53, 108, 24, 108, -11, 90, -30, 48, -30, 48, -54, 42, -60, -18, -60, -42, -48, -48, -36, -48, -24, -96, -24, -108, -18, -114, -12)
+disabled = true
+
+[node name="Ground" type="Node2D" parent="Body"]
+
+[node name="Ground0" type="Marker2D" parent="Body/Ground"]
+position = Vector2(37, 7)
+
+[node name="Sprite2D" type="Sprite2D" parent="Body/Ground/Ground0"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground1" type="Marker2D" parent="Body/Ground"]
+position = Vector2(28, 13)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Body/Ground/Ground1"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground2" type="Marker2D" parent="Body/Ground"]
+position = Vector2(19, 17)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Body/Ground/Ground2"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground3" type="Marker2D" parent="Body/Ground"]
+position = Vector2(11, 17)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Body/Ground/Ground3"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground4" type="Marker2D" parent="Body/Ground"]
+position = Vector2(0, 17)
+
+[node name="Sprite2D5" type="Sprite2D" parent="Body/Ground/Ground4"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground5" type="Marker2D" parent="Body/Ground"]
+position = Vector2(-10, 17)
+
+[node name="Sprite2D6" type="Sprite2D" parent="Body/Ground/Ground5"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground6" type="Marker2D" parent="Body/Ground"]
+position = Vector2(-19, 17)
+
+[node name="Sprite2D7" type="Sprite2D" parent="Body/Ground/Ground6"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground7" type="Marker2D" parent="Body/Ground"]
+position = Vector2(-26, 13)
+
+[node name="Sprite2D8" type="Sprite2D" parent="Body/Ground/Ground7"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Ground8" type="Marker2D" parent="Body/Ground"]
+position = Vector2(-35, 7)
+
+[node name="Sprite2D9" type="Sprite2D" parent="Body/Ground/Ground8"]
+visible = false
+scale = Vector2(5, 5)
+texture = ExtResource("5_cvi3q")
+
+[node name="Boosters" type="Node2D" parent="Body"]
+
+[node name="Booster1" type="AnimatedSprite2D" parent="Body/Boosters"]
+position = Vector2(-14, 7)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6o28i")
+animation = &"idle"
+
+[node name="Booster2" type="AnimatedSprite2D" parent="Body/Boosters"]
+position = Vector2(14, 7)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6o28i")
+animation = &"idle"
+
+[node name="Potion2Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_pscr4")
+volume_db = 6.0
+bus = &"Sound"
+
+[node name="PotionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_oul3u")
+bus = &"Sound"
+
+[node name="EngineSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_5qhk0")
+bus = &"Sound"
+
+[node name="FireSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_bkmsw")
+bus = &"Sound"
+
+[node name="RotateSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_k0e2t")
+bus = &"Sound"
+
+[node name="ChargeSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_hpcx2")
+bus = &"Sound"
+
+[node name="SelectBulletSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_26gbr")
+bus = &"Sound"
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_fifeb")
+bus = &"Sound"
+
+[node name="RocketSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_ldf4u")
+bus = &"Sound"
+
+[node name="WrongSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_r75cu")
+volume_db = 10.321
+bus = &"Sound"
+
+[node name="PowerBar" type="ProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.423529)
+z_index = 1
+offset_left = -49.0
+offset_top = 38.0
+offset_right = 51.0
+offset_bottom = 68.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fopn1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_esl4p")
+show_percentage = false
+
+[node name="LastBar" type="ColorRect" parent="PowerBar"]
+modulate = Color(1, 1, 1, 0.376471)
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 30.0
+
+[node name="CurrentBar" type="ColorRect" parent="PowerBar"]
+modulate = Color(1, 1, 1, 0.776471)
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 30.0
+
+[node name="AngleLabel" type="Label" parent="."]
+z_index = 1
+offset_left = -125.0
+offset_top = -35.0
+offset_right = -46.0
+offset_bottom = 33.0
+text = "45°"
+label_settings = SubResource("LabelSettings_3788i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MovementLabel" type="Label" parent="."]
+z_index = 1
+offset_left = -110.0
+offset_top = 20.0
+offset_right = -70.0
+offset_bottom = 88.0
+text = "0"
+label_settings = SubResource("LabelSettings_t377p")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BulletImage" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(72, 54)
+texture = ExtResource("9_xqnpy")
+
+[node name="BulletSelect" type="ItemList" parent="."]
+z_index = 1
+offset_left = -150.0
+offset_top = -200.0
+offset_right = 150.0
+offset_bottom = -50.0
+focus_mode = 0
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("21_wxu8c")
+theme_override_font_sizes/font_size = 21
+allow_search = false
+text_overrun_behavior = 0
+
+[node name="Spots" type="Node2D" parent="."]
+visible = false
+
+[node name="Spot" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(50, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot2" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(75, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot3" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(100, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot4" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(125, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot5" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(150, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot6" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(175, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot7" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(200, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot8" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(200, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot9" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(200, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")
+
+[node name="Spot10" type="Sprite2D" parent="Spots"]
+modulate = Color(0.650892, 0.620847, 0.673499, 1)
+position = Vector2(200, -45)
+scale = Vector2(4, 4)
+texture = ExtResource("9_j6fqb")

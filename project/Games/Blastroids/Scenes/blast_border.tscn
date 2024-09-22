@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://14j0fh14n05x"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_border.gd" id="1_xfr73"]
+[ext_resource type="Texture2D" uid="uid://ot1tegdv6d3v" path="res://Games/Blastroids/Images/blank.png" id="2_q1raw"]
+[ext_resource type="Shader" path="res://Games/Blastroids/Scripts/v_drops.gdshader" id="2_ud1c2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4klkr"]
+shader = ExtResource("2_ud1c2")
+shader_parameter/color = Color(0.345227, 0.498298, 0.864909, 1)
+shader_parameter/speed = 0.1
+shader_parameter/density = 100.0
+shader_parameter/compression = 0.2
+shader_parameter/trail_size = 50.0
+shader_parameter/brightness = 5.0
+shader_parameter/flip_direction = true
+shader_parameter/rotate_90 = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_47juk"]
+size = Vector2(100, 300)
+
+[node name="BlastBorder" type="Node2D"]
+z_index = -1
+script = ExtResource("1_xfr73")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_4klkr")
+texture = ExtResource("2_q1raw")
+
+[node name="Area2D" type="Area2D" parent="."]
+gravity_space_override = 1
+gravity_point_center = Vector2(1, 0)
+gravity_direction = Vector2(1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_47juk")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_47juk")

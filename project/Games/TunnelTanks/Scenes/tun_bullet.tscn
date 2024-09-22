@@ -1,0 +1,111 @@
+[gd_scene load_steps=12 format=3 uid="uid://bh8dkg0qvvi0y"]
+
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_bullet.gd" id="1_ch0cv"]
+[ext_resource type="Texture2D" uid="uid://cdg8437853kho" path="res://Games/TunnelTanks/Images/bullet.png" id="2_71lc7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_44rys"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(12, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xqv1"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(0, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0h4p"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(6, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjb6h"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(6, 12, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5ysh"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(6, 6, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scd26"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(0, 6, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aan68"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(12, 6, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21ogm"]
+atlas = ExtResource("2_71lc7")
+region = Rect2(0, 12, 6, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jjx2d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_44rys")
+}],
+"loop": true,
+"name": &"E",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xqv1")
+}],
+"loop": true,
+"name": &"N",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0h4p")
+}],
+"loop": true,
+"name": &"NE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rjb6h")
+}],
+"loop": true,
+"name": &"NW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g5ysh")
+}],
+"loop": true,
+"name": &"S",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scd26")
+}],
+"loop": true,
+"name": &"SE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aan68")
+}],
+"loop": true,
+"name": &"SW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21ogm")
+}],
+"loop": true,
+"name": &"W",
+"speed": 5.0
+}]
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_ch0cv")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jjx2d")
+animation = &"W"
+centered = false

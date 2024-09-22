@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://b52yyvl5growe"]
+
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/ammo_select.gd" id="1_7334d"]
+[ext_resource type="StyleBox" uid="uid://dhp41llow1jki" path="res://Assets/Resources/hover_selected_style_box.tres" id="1_mfynd"]
+[ext_resource type="Texture2D" uid="uid://ddlifjeab28fw" path="res://Games/ReadyAimFire/Images/copper_bullet.png" id="3_mquk6"]
+[ext_resource type="FontFile" uid="uid://36rg8oqf28wi" path="res://Assets/Fonts/Anton-Regular.ttf" id="4_ljuhf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4kmpp"]
+font = ExtResource("4_ljuhf")
+
+[node name="AmmoSelect" type="Panel"]
+custom_minimum_size = Vector2(190, 45)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1730.0
+offset_bottom = -1035.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_mfynd")
+script = ExtResource("1_7334d")
+
+[node name="HB" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(150, 45)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AmmoImage" type="Sprite2D" parent="HB"]
+position = Vector2(20, 22)
+texture = ExtResource("3_mquk6")
+
+[node name="Control" type="Control" parent="HB"]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AmmoLabel" type="Label" parent="HB"]
+layout_mode = 2
+text = "Copper Bullet"
+label_settings = SubResource("LabelSettings_4kmpp")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

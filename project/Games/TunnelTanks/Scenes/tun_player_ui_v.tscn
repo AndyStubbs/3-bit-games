@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://dliejsux41qkq"]
+
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_player_ui.gd" id="1_wq44n"]
+[ext_resource type="Texture2D" uid="uid://bk2jtdy4ine47" path="res://Games/TunnelTanks/Images/player_ui_v.png" id="2_aibc8"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/v_bar.gd" id="3_uo6vk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cvvri"]
+font_size = 48
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jpmg4"]
+bg_color = Color(1, 0.847059, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y03wr"]
+bg_color = Color(0.309804, 0.709804, 1, 1)
+
+[node name="PlayerUiV" type="CenterContainer"]
+custom_minimum_size = Vector2(100, 500)
+offset_right = 100.0
+offset_bottom = 500.0
+script = ExtResource("1_wq44n")
+
+[node name="HB" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="HB"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="ScoreText" type="Label" parent="HB/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_cvvri")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HB"]
+layout_mode = 2
+texture = ExtResource("2_aibc8")
+
+[node name="EnergyBar" type="Panel" parent="HB/TextureRect"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 72.0
+offset_right = 80.0
+offset_bottom = 359.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jpmg4")
+script = ExtResource("3_uo6vk")
+
+[node name="ShieldBar" type="Panel" parent="HB/TextureRect"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 72.0
+offset_right = 36.0
+offset_bottom = 359.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y03wr")
+script = ExtResource("3_uo6vk")

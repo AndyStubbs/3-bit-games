@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://3bi76ef4riks"]
+
+[ext_resource type="Script" path="res://Games/ReadyAimFire/Scripts/part.gd" id="1_vh65r"]
+[ext_resource type="Texture2D" uid="uid://bvtrpe8dx154p" path="res://Games/ReadyAimFire/Images/big_pixel.png" id="2_2cap2"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_vh65r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_2cap2")

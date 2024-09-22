@@ -1,0 +1,131 @@
+[gd_scene load_steps=15 format=3 uid="uid://c1wc6c4pqdlwb"]
+
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/tun_tank.gd" id="1_uyi8c"]
+[ext_resource type="Texture2D" uid="uid://ci1ch7hy0box3" path="res://Games/TunnelTanks/Images/tanks.png" id="2_06aj2"]
+[ext_resource type="Texture2D" uid="uid://yjerfcwoback" path="res://Games/TunnelTanks/Images/charge_icon.png" id="3_pg0pn"]
+[ext_resource type="Script" path="res://Games/TunnelTanks/Scripts/charge_sprite.gd" id="4_niamh"]
+[ext_resource type="Texture2D" uid="uid://b1sxm161nmrin" path="res://Games/TunnelTanks/Images/shield_icon.png" id="5_f6dt6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fv2f"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(20, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e24cw"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(0, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0prqc"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4x7w"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(10, 20, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjmgp"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(10, 10, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8mnm"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(0, 10, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lj2ex"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(20, 10, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwkt7"]
+atlas = ExtResource("2_06aj2")
+region = Rect2(0, 20, 10, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ppdli"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fv2f")
+}],
+"loop": true,
+"name": &"E",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e24cw")
+}],
+"loop": true,
+"name": &"N",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0prqc")
+}],
+"loop": true,
+"name": &"NE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4x7w")
+}],
+"loop": true,
+"name": &"NW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjmgp")
+}],
+"loop": true,
+"name": &"S",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8mnm")
+}],
+"loop": true,
+"name": &"SE",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lj2ex")
+}],
+"loop": true,
+"name": &"SW",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwkt7")
+}],
+"loop": true,
+"name": &"W",
+"speed": 5.0
+}]
+
+[node name="Tank" type="Node2D"]
+position = Vector2(256, 256)
+script = ExtResource("1_uyi8c")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ppdli")
+animation = &"N"
+centered = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ChargeSprite" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(1, -2)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_pg0pn")
+script = ExtResource("4_niamh")
+
+[node name="ShieldSprite" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(8, -2)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("5_f6dt6")
+script = ExtResource("4_niamh")

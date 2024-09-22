@@ -1,0 +1,380 @@
+[gd_scene load_steps=15 format=3 uid="uid://y5f3aijgvm8l"]
+
+[ext_resource type="Texture2D" uid="uid://be8yqnlp535tw" path="res://Games/Blastroids/Images/blast_player_ui.png" id="2_pn52s"]
+[ext_resource type="Texture2D" uid="uid://bdxekhukir3ik" path="res://Games/Blastroids/Images/blast_player_weapons_ui.png" id="3_kdfbb"]
+[ext_resource type="Texture2D" uid="uid://c07i7gmpsud84" path="res://Games/Blastroids/Images/ui_blast_laser.png" id="4_yk6h5"]
+[ext_resource type="Texture2D" uid="uid://cx2sybg5vwq1p" path="res://Games/Blastroids/Images/ui_blast_laser_markers.png" id="5_riwqe"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="6_nibdd"]
+[ext_resource type="Texture2D" uid="uid://ci5tfwuv41urq" path="res://Games/Blastroids/Images/spaceship3_outline.png" id="7_15uv3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hk3n7"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2l3i"]
+bg_color = Color(0.819608, 0, 0, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wrpwq"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8e2jv"]
+bg_color = Color(0.309804, 0.709804, 1, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e52ho"]
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fuk3v"]
+bg_color = Color(1, 0.847059, 0, 0.784314)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trtfe"]
+bg_color = Color(0, 0, 0, 0.635294)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8kbov"]
+bg_color = Color(0, 0, 0, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+
+[node name="Cont" type="SubViewportContainer"]
+offset_top = 18.0
+offset_right = 960.0
+offset_bottom = 1042.0
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(959, 1024)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="SubViewport"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
+
+[node name="PlayerUI" type="Control" parent="SubViewport/CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 56.0
+
+[node name="ShipData" type="TextureRect" parent="SubViewport/CanvasLayer/PlayerUI"]
+layout_mode = 1
+offset_right = 361.0
+offset_bottom = 100.0
+texture = ExtResource("2_pn52s")
+
+[node name="HealthBar" type="ProgressBar" parent="SubViewport/CanvasLayer/PlayerUI/ShipData"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 8.0
+offset_right = 343.0
+offset_bottom = 24.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hk3n7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_j2l3i")
+value = 100.0
+show_percentage = false
+
+[node name="ShieldsBar" type="ProgressBar" parent="SubViewport/CanvasLayer/PlayerUI/ShipData"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 42.0
+offset_right = 343.0
+offset_bottom = 58.0
+theme_override_styles/background = SubResource("StyleBoxFlat_wrpwq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8e2jv")
+value = 100.0
+show_percentage = false
+
+[node name="EnergyBar" type="ProgressBar" parent="SubViewport/CanvasLayer/PlayerUI/ShipData"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 76.0
+offset_right = 343.0
+offset_bottom = 92.0
+theme_override_styles/background = SubResource("StyleBoxFlat_e52ho")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fuk3v")
+value = 100.0
+show_percentage = false
+
+[node name="WeaponsData" type="TextureRect" parent="SubViewport/CanvasLayer/PlayerUI"]
+layout_mode = 0
+offset_left = 600.0
+offset_right = 900.0
+offset_bottom = 66.0
+texture = ExtResource("3_kdfbb")
+
+[node name="WeaponImage" type="TextureRect" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 12.0
+offset_right = 47.0
+offset_bottom = 52.0
+texture = ExtResource("4_yk6h5")
+
+[node name="WeaponMarker" type="TextureRect" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/WeaponImage"]
+modulate = Color(0.568627, 0.0627451, 0.0627451, 1)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_riwqe")
+
+[node name="WeaponsBar" type="ProgressBar" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 8.0
+offset_right = 282.0
+offset_bottom = 24.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hk3n7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_j2l3i")
+value = 100.0
+show_percentage = false
+
+[node name="AmmoCount" type="Label" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/WeaponsBar"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_nibdd")
+text = "15"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData"]
+custom_minimum_size = Vector2(100, 32)
+anchors_preset = 0
+offset_left = 92.0
+offset_top = 39.0
+offset_right = 332.0
+offset_bottom = 89.0
+
+[node name="HB" type="HBoxContainer" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_right = 120.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel1" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel1"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("4_yk6h5")
+
+[node name="SpriteMarkers" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel1"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("5_riwqe")
+
+[node name="Panel2" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel2"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("4_yk6h5")
+
+[node name="SpriteMarkers" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel2"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("5_riwqe")
+
+[node name="Panel3" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel3"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("4_yk6h5")
+
+[node name="SpriteMarkers" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel3"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("5_riwqe")
+
+[node name="Panel4" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel4"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("4_yk6h5")
+
+[node name="SpriteMarkers" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel4"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("5_riwqe")
+
+[node name="Panel5" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel5"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("4_yk6h5")
+
+[node name="SpriteMarkers" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel5"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("5_riwqe")
+
+[node name="Panel6" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_trtfe")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel6"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("4_yk6h5")
+
+[node name="SpriteMarkers" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/WeaponsData/Control/HB/Panel6"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(16, 16)
+texture = ExtResource("5_riwqe")
+
+[node name="Lives" type="Control" parent="SubViewport/CanvasLayer/PlayerUI"]
+custom_minimum_size = Vector2(180, 0)
+anchors_preset = 0
+offset_left = 40.0
+offset_top = 960.0
+offset_right = 440.0
+offset_bottom = 1060.0
+
+[node name="HB" type="HBoxContainer" parent="SubViewport/CanvasLayer/PlayerUI/Lives"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Life1" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life1"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Life2" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life2"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Life3" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life3"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Life4" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life4"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Life5" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life5"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Life6" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life6"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Life7" type="Control" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB"]
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewport/CanvasLayer/PlayerUI/Lives/HB/Life7"]
+modulate = Color(1, 1, 1, 0.8)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("7_15uv3")
+
+[node name="Panel" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI"]
+layout_mode = 0
+offset_left = 725.0
+offset_top = 800.0
+offset_right = 929.0
+offset_bottom = 1004.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8kbov")
+
+[node name="MiniMap" type="SubViewportContainer" parent="SubViewport/CanvasLayer/PlayerUI/Panel"]
+clip_children = 2
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1501.0
+offset_bottom = 1501.0
+scale = Vector2(0.1, 0.1)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewport/CanvasLayer/PlayerUI/Panel/MiniMap"]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2000, 2000)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="SubViewport/CanvasLayer/PlayerUI/Panel/MiniMap/SubViewport"]

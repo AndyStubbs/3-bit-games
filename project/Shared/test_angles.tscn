@@ -1,0 +1,110 @@
+[gd_scene load_steps=4 format=3 uid="uid://bipnsi3oxhosn"]
+
+[ext_resource type="Script" path="res://Scripts/test_angles.gd" id="1_q0iuf"]
+[ext_resource type="Texture2D" uid="uid://dtc8afgna6x2" path="res://Assets/Images/sphere.png" id="2_qdp5o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6wloj"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(960, 520)
+script = ExtResource("1_q0iuf")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(1000, 1000)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6wloj")
+
+[node name="Center" type="Sprite2D" parent="."]
+texture = ExtResource("2_qdp5o")
+
+[node name="Degs" type="Node2D" parent="."]
+
+[node name="Deg0" type="Sprite2D" parent="Degs"]
+position = Vector2(100, 0)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg0"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg45" type="Sprite2D" parent="Degs"]
+position = Vector2(100, 100)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg45"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg90" type="Sprite2D" parent="Degs"]
+position = Vector2(0, 100)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg90"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg135" type="Sprite2D" parent="Degs"]
+position = Vector2(-100, 100)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg135"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg180" type="Sprite2D" parent="Degs"]
+position = Vector2(-100, 0)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg180"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg225" type="Sprite2D" parent="Degs"]
+position = Vector2(-100, -100)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg225"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg270" type="Sprite2D" parent="Degs"]
+position = Vector2(0, -100)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg270"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg315" type="Sprite2D" parent="Degs"]
+position = Vector2(100, -100)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg315"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"
+
+[node name="Deg360" type="Sprite2D" parent="Degs"]
+position = Vector2(200, 0)
+texture = ExtResource("2_qdp5o")
+
+[node name="Label" type="Label" parent="Degs/Deg360"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "45"

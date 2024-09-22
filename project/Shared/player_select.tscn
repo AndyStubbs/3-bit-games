@@ -1,0 +1,135 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyhh1j60dt6t0"]
+
+[ext_resource type="Script" path="res://Scripts/player_select.gd" id="1_ggdcj"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="2_yemxo"]
+[ext_resource type="Texture2D" uid="uid://bbgl54t8uxods" path="res://Games/TunnelTanks/Images/ui_tun_tank_v.png" id="3_vg30j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b4sdp"]
+bg_color = Color(0.0587043, 0.352779, 0.535411, 1)
+
+[node name="PlayerSelect" type="Panel"]
+custom_minimum_size = Vector2(234, 164)
+offset_right = 233.0
+offset_bottom = 164.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_b4sdp")
+script = ExtResource("1_ggdcj")
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VB" type="VBoxContainer" parent="MC"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MC/VB"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="PlayerEnabled" type="CheckButton" parent="MC/VB/Control"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 44.0
+offset_bottom = 12.5
+grow_vertical = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_yemxo")
+text = "TR_ENABLED"
+
+[node name="ResetButton" type="Button" parent="MC/VB/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_yemxo")
+text = "TR_RESET"
+
+[node name="VB" type="VBoxContainer" parent="MC/VB"]
+layout_mode = 2
+focus_mode = 1
+
+[node name="NameText" type="LineEdit" parent="MC/VB/VB"]
+layout_mode = 2
+focus_mode = 1
+theme_override_fonts/font = ExtResource("2_yemxo")
+text = "Player 1"
+max_length = 16
+
+[node name="ControlSelect" type="OptionButton" parent="MC/VB/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_yemxo")
+item_count = 4
+popup/item_0/text = "TR_WASD"
+popup/item_1/text = "TR_ARROWS"
+popup/item_1/id = 1
+popup/item_2/text = "TR_ALL_CONTROLS"
+popup/item_2/id = 2
+popup/item_3/text = "TR_CPU"
+popup/item_3/id = 3
+
+[node name="HB" type="HBoxContainer" parent="MC/VB/VB"]
+layout_mode = 2
+alignment = 1
+
+[node name="LeftButton" type="Button" parent="MC/VB/VB/HB"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_yemxo")
+text = "<-"
+
+[node name="Control" type="Control" parent="MC/VB/VB/HB"]
+custom_minimum_size = Vector2(58, 0)
+layout_mode = 2
+
+[node name="PlayerImage" type="Sprite2D" parent="MC/VB/VB/HB"]
+position = Vector2(112, 22)
+rotation = 1.5708
+scale = Vector2(7, 7)
+texture = ExtResource("3_vg30j")
+
+[node name="PlayerImage2" type="Sprite2D" parent="MC/VB/VB/HB"]
+visible = false
+position = Vector2(112, 22)
+rotation = 1.5708
+scale = Vector2(7, 7)
+texture = ExtResource("3_vg30j")
+
+[node name="Control2" type="Control" parent="MC/VB/VB/HB"]
+custom_minimum_size = Vector2(58, 0)
+layout_mode = 2
+
+[node name="RightButton" type="Button" parent="MC/VB/VB/HB"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_yemxo")
+text = "->"
+
+[connection signal="toggled" from="MC/VB/Control/PlayerEnabled" to="." method="_on_player_enabled_toggled"]
+[connection signal="pressed" from="MC/VB/Control/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="text_changed" from="MC/VB/VB/NameText" to="." method="_on_name_text_text_changed"]
+[connection signal="text_submitted" from="MC/VB/VB/NameText" to="." method="_on_name_text_text_submitted"]
+[connection signal="item_selected" from="MC/VB/VB/ControlSelect" to="." method="_on_control_select_item_selected"]
+[connection signal="pressed" from="MC/VB/VB/HB/LeftButton" to="." method="_on_left_button_pressed"]
+[connection signal="pressed" from="MC/VB/VB/HB/RightButton" to="." method="_on_right_button_pressed"]

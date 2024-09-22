@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://mpfkp7fudvnp"]
+
+[ext_resource type="Texture2D" uid="uid://dadar3uordke5" path="res://Assets/Images/star.png" id="1_0kjgr"]
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_star.gd" id="2_h0hkv"]
+
+[node name="Star" type="Sprite2D"]
+texture = ExtResource("1_0kjgr")
+script = ExtResource("2_h0hkv")

@@ -14,7 +14,9 @@ var ship_color: Color = Color.BLUE
 var ui_color: Color
 var cpu_ai: BlastCpuAi
 var is_cpu: bool = false
-var rotation_speed = TAU
+var rotation_speed = PI / 2
+var max_rotation_speed = TAU
+var min_roation_speed = PI / 2
 var game: BlastGame
 var thrust_force: float = 4000
 var dampening_factor: float = 0.0005
@@ -67,7 +69,7 @@ var energy: float = 10000:
 		energy = value
 		if energy_bar:
 			energy_bar.value = ( energy / max_energy ) * 100
-var min_energy: float = 100
+var min_energy: float = max_energy / 100
 var shield_charge_rate: float = 50
 var thrust_drain: float = 150
 var life_support_energy: float = 10
@@ -511,8 +513,12 @@ func toggle_weapon_down() -> void:
 func process_rotation() -> void:
 	if get_input( "Left_" + controls ):
 		angular_velocity = -rotation_speed
-	if get_input( "Right_" + controls ):
+		rotation_speed = minf( rotation_speed + PI / 16, max_rotation_speed )
+	elif get_input( "Right_" + controls ):
 		angular_velocity = rotation_speed
+		rotation_speed = minf( rotation_speed + PI / 16, max_rotation_speed )
+	else:
+		rotation_speed = min_roation_speed
 
 
 func process_firing( delta: float ) -> void:
@@ -583,12 +589,8 @@ func process_energy( delta: float ) -> void:
 	if is_thrusting:
 		energy -= thrust_drain * delta
 	
-	if is_alternate_tick:
-		recharge_shields( delta )
-		recharge_lasers( delta )
-	else:
-		recharge_lasers( delta )
-		recharge_shields( delta )
+	recharge_lasers( delta )
+	recharge_shields( delta )
 	
 	# Drain Life Support
 	energy -= life_support_energy * delta
@@ -603,8 +605,8 @@ func process_energy( delta: float ) -> void:
 		shields -= shield_charge
 		energy += shield_charge
 		
-		# Charge from lasers
-		if laser_energy > max_laser_energy / 3:
+		# Charge from lasers - Make sure can fire next laser
+		if laser_energy > weapon_data.DRAIN * delta * 2:
 			var laser_charge = ( laser_charge_rate * delta ) / 2
 			if laser_charge > laser_energy:
 				laser_charge = laser_energy

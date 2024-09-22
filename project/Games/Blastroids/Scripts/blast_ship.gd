@@ -142,8 +142,8 @@ func update_main_ship( delta: float ) -> void:
 	# Show stats
 	#$Label.text = "%d / %d / %d" % [ ship_body.shields, ship_body.health, ship_body.energy ]
 	#$Label.text = "%d" % ship_body.speed
-	$Label.text = "%d" % sqrt( ship_body.speed )
-	#$Label.text = "%d" % rad_to_deg( ship_body.rotation )
+	#$Label.text = "%d" % sqrt( ship_body.speed )
+	$Label.text = "%d" % rad_to_deg( ship_body.rotation_speed )
 	#$Label.text = "%d" % rad_to_deg( Globals.normalize_angle( ship_body.rotation ) )
 	#$Label.text = "%d - %d" % [
 		#rad_to_deg( Globals.normalize_angle( ship_body.rotation ) ),

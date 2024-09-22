@@ -162,7 +162,7 @@ func load_controller_setting() -> void:
 func update_image_colors() -> void:
 	if game_type == GAME_TYPE.BLAST:
 		player_image.texture = Globals.BLAST_IMAGES[ player_settings.image_id ][ 0 ]
-		var color = Globals.BLAST_COLORS[ player_settings.colors ]
+		var color = Globals.BLAST_COLORS[ player_settings.colors ][ 0 ]
 		player_image2.texture = Globals.BLAST_IMAGES[ player_settings.image_id ][ 1 ]
 		player_image2.modulate = color
 		return

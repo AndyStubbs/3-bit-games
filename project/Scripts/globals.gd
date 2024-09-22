@@ -16,16 +16,16 @@ const PLAYER_COLORS: Array = [
 	[ Color( 0.0, 0.1, 0.1 ), Color( "#bcbcbc" ),     Color( "#585858" )  ],	# WHITE
 ]
 const BLAST_COLORS: Array = [
-	Color( 0.2, 0.2, 0.9 ),		# BLUE
-	Color( 0.5, 0.5, 0.0 ),		# YELLOW
-	Color( 0.6, 0.2, 0.6 ),		# PINK
-	Color( 0.0, 0.6, 0.0 ),		# GREEN
-	Color( 0.9, 0.2, 0.2 ),		# RED
-	Color( 0.1, 0.7, 0.7 ),		# CYAN,
-	Color( "#bf7908" ),			# ORANGE
-	Color( 0.1, 0.1, 0.1 ),		# BLACK
-	Color( "#8728df" ),			# PURPLE
-	Color( "#686868" ),			# WHITE
+	[ Color( 0.2, 0.2, 0.9 ), Color( 0.3, 0.3, 0.95 ) ],	# BLUE
+	[ Color( 0.5, 0.5, 0.0 ), Color( 0.9, 0.9, 0.0 ) ], 	# YELLOW
+	[ Color( 0.6, 0.2, 0.6 ), Color( 0.8, 0.3, 0.8 ) ],		# PINK
+	[ Color( 0.0, 0.6, 0.0 ), Color( 0.0, 0.9, 0.0 ) ],		# GREEN
+	[ Color( 0.9, 0.2, 0.2 ), Color( 0.95, 0.3, 0.3 ) ],	# RED
+	[ Color( 0.1, 0.7, 0.7 ), Color( 0.1, 0.9, 0.9 ) ],		# CYAN,
+	[ Color( "#bf7908" ), Color( "#ffa938" ) ],				# ORANGE
+	[ Color( 0.1, 0.1, 0.1 ), Color( 0.5, 0.5, 0.5 ) ],		# BLACK
+	[ Color( "#8728df" ), Color( "#8728df" ) ],				# PURPLE
+	[ Color( "#686868" ), Color( "#BCBCBC" ) ]				# WHITE
 ]
 const RAF_IMAGES: Array = [
 	preload( "res://Games/ReadyAimFire/Images/ui_tank_horizontal.png" )

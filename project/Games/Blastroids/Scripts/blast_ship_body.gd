@@ -133,7 +133,7 @@ func init( new_game: BlastGame ) -> void:
 	for child in lives_box.get_children():
 		var child_sprite: Sprite2D = child.get_child( 0 )
 		child_sprite.texture = lives_image
-		child_sprite.modulate = ship_color
+		child_sprite.modulate = ui_color
 		child_sprite.modulate.a = 0.8
 	lives = Blast.settings.lives
 	add_weapon( BlastGame.WEAPONS.LASER )
@@ -144,8 +144,8 @@ func init( new_game: BlastGame ) -> void:
 
 
 func setup_ship( settings: Dictionary ) -> void:
-	ship_color = Globals.BLAST_COLORS[ settings.colors ]
-	ui_color = ship_color.lightened( 0.25 )
+	ship_color = Globals.BLAST_COLORS[ settings.colors ][ 0 ]
+	ui_color = Globals.BLAST_COLORS[ settings.colors ][ 1 ]
 	if settings.name_changed:
 		display_name = settings.name
 	else:
@@ -346,7 +346,7 @@ func fire_lasers( delta: float ) -> void:
 			bullet.sprite.scale = weapon_data.SCALE
 			bullet.sprite.texture = weapon_data.IMAGE
 			bullet.init( self )
-			bullet.fire( laser_velocity, ship_color, weapon_data.DAMAGE, rotation )
+			bullet.fire( laser_velocity, ui_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "spread":
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = GUN_X + 7
@@ -360,7 +360,7 @@ func fire_lasers( delta: float ) -> void:
 				bullet.sprite.texture = weapon_data.IMAGE
 				bullet.init( self )
 				var vel =  linear_velocity + Vector2.from_angle( rotation + a ) * weapon_data.SPEED
-				bullet.fire( vel, ship_color, weapon_data.DAMAGE, rotation )
+				bullet.fire( vel, ui_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "charge":
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = GUN_X + blast_charge_size * 10
@@ -373,7 +373,7 @@ func fire_lasers( delta: float ) -> void:
 			bullet.sprite.texture = weapon_data.IMAGE
 			bullet.init( self )
 			bullet.fire(
-				laser_velocity, ship_color, weapon_data.DAMAGE * blast_charge_size * 2, rotation
+				laser_velocity, ui_color, weapon_data.DAMAGE * blast_charge_size * 2, rotation
 			)
 	if weapon_data.AMMO_TYPE == "physical" and ammo[ weapon ] == 0:
 		weapon_store.erase( weapon )

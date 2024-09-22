@@ -71,7 +71,7 @@ func init_main_ship() -> void:
 			ship_vector_front.modulate = ship.ui_color
 			ship_vector.add_child( ship_vector_front )
 			ship_vector.texture = ship_body.game.TRI_IMAGE
-			ship_vector.modulate.h += 0.15
+			#ship_vector.modulate.h += 0.15
 			ship_vector.self_modulate.a = 0
 			ship_vectors.add_child( ship_vector )
 			enemies.append( ship )

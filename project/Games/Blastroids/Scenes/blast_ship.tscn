@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dvdig2uuyxaro"]
+[gd_scene load_steps=21 format=3 uid="uid://dvdig2uuyxaro"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship.gd" id="1_xfd4a"]
 [ext_resource type="Texture2D" uid="uid://dsuvukl4b1wkm" path="res://Games/Blastroids/Images/spaceship3_0.png" id="2_3ecx7"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cvsp2k7nknxbq" path="res://Games/Blastroids/Images/triangle2.png" id="4_c4vh4"]
 [ext_resource type="Texture2D" uid="uid://dqjt825j2gcjh" path="res://Games/Blastroids/Images/spaceship3_markers2.png" id="5_8qmco"]
 [ext_resource type="Texture2D" uid="uid://ciwwc0tvdug7y" path="res://Games/Blastroids/Images/blast_charge.png" id="6_ebk61"]
+[ext_resource type="Texture2D" uid="uid://yjerfcwoback" path="res://Games/TunnelTanks/Images/charge_icon.png" id="7_4g7w5"]
 
 [sub_resource type="Gradient" id="Gradient_e7rvf"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -169,6 +170,11 @@ texture_filter = 2
 position = Vector2(30, 22)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("6_ebk61")
+
+[node name="LowEnergySprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.75)
+position = Vector2(0, 50)
+texture = ExtResource("7_4g7w5")
 
 [node name="ShieldsParticles" type="GPUParticles2D" parent="."]
 emitting = false

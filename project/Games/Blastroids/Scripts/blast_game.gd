@@ -55,7 +55,7 @@ const WEAPONS_DATA: Dictionary = {
 		"MASS": 0,
 		"DAMAGE": 50,
 		"COOLDOWN": 150,
-		"DRAIN": 4000,
+		"DRAIN": 2000,
 		"SPIN": 0,
 		"SPEED": 1000,
 		"SCALE": Vector2( 2, 2 )
@@ -71,7 +71,7 @@ const WEAPONS_DATA: Dictionary = {
 		"MASS": 1000,
 		"DAMAGE": 25,
 		"COOLDOWN": 300,
-		"DRAIN": 6000,
+		"DRAIN": 3000,
 		"SPIN": 50,
 		"SPEED": 500,
 		"SCALE": Vector2( 1.5, 1.5 )
@@ -107,7 +107,7 @@ const WEAPONS_DATA: Dictionary = {
 		"MASS": 0,
 		"DAMAGE": 30,
 		"COOLDOWN": 200,
-		"DRAIN": 8000,
+		"DRAIN": 4000,
 		"SPIN": 0,
 		"SPEED": 1000,
 		"SCALE": Vector2( 2, 2 )
@@ -124,7 +124,7 @@ const WEAPONS_DATA: Dictionary = {
 		"DAMAGE": 50,
 		"COOLDOWN": 150,
 		"DRAIN": 0,
-		"CHARGE_DRAIN": 250,
+		"CHARGE_DRAIN": 125,
 		"SPIN": 0,
 		"SPEED": 500,
 		"SCALE": Vector2( 1, 1 )

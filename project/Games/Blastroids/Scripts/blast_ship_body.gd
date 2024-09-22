@@ -41,9 +41,9 @@ var lives: int = 3:
 					lives_box.get_child( i ).show()
 				else:
 					lives_box.get_child( i ).hide()
-var max_laser_energy: float = 1000
-var laser_charge_rate: float = 150
-var laser_energy: float = 1000:
+var max_laser_energy: float = 500
+var laser_charge_rate: float = 75
+var laser_energy: float = 500:
 	set( value ):
 		laser_energy = value
 		if weapons_bar:

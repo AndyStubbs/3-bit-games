@@ -26,6 +26,7 @@ var enemies: Array = []
 @onready var sprite_markers: Sprite2D = $Sprite2D/Sprite2D
 @onready var ship_vectors: Node2D = $Vector/Ships
 @onready var gun_charges: Node2D = $Sprite2D/GunCharges
+@onready var low_energy_sprite: Sprite2D = $LowEnergySprite
 
 
 func init_stars( star_scene: PackedScene ) -> void:
@@ -138,6 +139,11 @@ func update_main_ship( delta: float ) -> void:
 	vector_sprite.rotation = ship_body.linear_velocity.angle()
 	camera_pos = pos
 	camera.position = camera.position.lerp( camera_pos, 0.5 * delta )
+	
+	if ship_body.energy < ship_body.min_energy * 2.0:
+		low_energy_sprite.modulate.a = minf( low_energy_sprite.modulate.a + delta, 1.0 )
+	else:
+		low_energy_sprite.modulate.a = maxf( low_energy_sprite.modulate.a - delta, 0.0 )
 	
 	# Show stats
 	#$Label.text = "%d / %d / %d" % [ ship_body.shields, ship_body.health, ship_body.energy ]

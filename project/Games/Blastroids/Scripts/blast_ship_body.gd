@@ -48,6 +48,8 @@ var laser_energy: float = 1000:
 			weapons_bar.value = ( laser_energy / max_laser_energy ) * 100
 var shields_radius: float = 30.0
 var max_shields: float = 1000
+var min_shields: float = 100
+var is_shields_down: bool = false
 var shields: float = 1000:
 	set( value ):
 		shields = value
@@ -97,6 +99,7 @@ var stats: Dictionary = {
 	"missile_kills": 0
 }
 var lives_image
+var body_collision: CollisionPolygon2D
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -110,12 +113,14 @@ var lives_image
 @onready var hit_sound: AudioStreamPlayer = $Sounds/Hit
 @onready var hit_sound2: AudioStreamPlayer = $Sounds/Hit2
 @onready var hit_sound3: AudioStreamPlayer = $Sounds/Hit3
+@onready var hit_sound4: AudioStreamPlayer = $Sounds/Hit4
 @onready var collide_sound: AudioStreamPlayer = $Sounds/Collide
 @onready var select_sound: AudioStreamPlayer = $Sounds/Select
 @onready var charge_sound: AudioStreamPlayer = $Sounds/ChargeSound
 @onready var explosion_sound: AudioStreamPlayer = $Sounds/ExplosionSound
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var sprite_markers: Sprite2D = $Sprite2D/Sprite2D
+@onready var shields_collision: CollisionShape2D = $ShieldsCollision
 
 
 func init( new_game: BlastGame ) -> void:
@@ -154,6 +159,10 @@ func setup_ship( settings: Dictionary ) -> void:
 	sprite_markers.texture = Globals.BLAST_IMAGES[ settings.image_id ][ 1 ]
 	sprite_markers.modulate = ship_color
 	lives_image = Globals.BLAST_IMAGES[ settings.image_id ][ 2 ]
+	if settings.image_id == 0:
+		body_collision = $BodyCollision1
+	else:
+		body_collision = $BodyCollision2
 
 
 func setup_weapon() -> void:
@@ -618,6 +627,12 @@ func recharge_shields( delta: float ) -> void:
 			charge = max_shields - shields
 		shields += charge
 		energy -= charge
+	if not is_shields_down and shields < min_shields:
+		shields_collision.set_deferred( "disabled", true )
+		body_collision.set_deferred( "disabled", false )
+	if is_shields_down and shields >= min_shields:
+		shields_collision.set_deferred( "disabled", false )
+		body_collision.set_deferred( "disabled", true )
 
 
 func recharge_lasers( delta: float ) -> void:
@@ -637,13 +652,19 @@ func recharge_lasers( delta: float ) -> void:
 func hit( damage: float, fired_from: BlastShipBody ) -> void:
 	if is_destroyed or is_invulnerable:
 		return
-	if not hit_sound.playing:
-		hit_sound.play()
-	elif not hit_sound2.playing:
-		hit_sound2.play()
-	elif not hit_sound3.playing:
-		hit_sound3.play()
 	shields -= damage
+	if shields > 0:
+		if not hit_sound.playing:
+			hit_sound.play()
+		else:
+			hit_sound2.play()
+		for clone in clones:
+			clone.raise_shields()
+	else:
+		if not hit_sound3.playing:
+			hit_sound3.play()
+		else:
+			hit_sound4.play()
 	if shields < 0:
 		health += shields
 		shields = 0
@@ -651,9 +672,6 @@ func hit( damage: float, fired_from: BlastShipBody ) -> void:
 			if fired_from != null:
 				fired_from.stats.ship_kills += 1
 			destroy()
-	if shields > 0:
-		for clone in clones:
-			clone.raise_shields()
 
 
 func pickup( boost: float ) -> void:

@@ -8,8 +8,8 @@ var scenes: Dictionary = {
 
 var rock_names: Dictionary
 var settings: Dictionary = {
-	"rock_density": 0.025,
-	#"rock_density": 0.001,
+	#"rock_density": 0.025,
+	"rock_density": 0.001,
 	"rect": Rect2( -5000, -5000, 10000, 10000 ),
 	"lives": 3
 }

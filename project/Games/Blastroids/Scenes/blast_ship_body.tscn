@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://10i1qjfhmetd"]
+[gd_scene load_steps=21 format=3 uid="uid://10i1qjfhmetd"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship_body.gd" id="1_u0bsr"]
 [ext_resource type="Texture2D" uid="uid://dsuvukl4b1wkm" path="res://Games/Blastroids/Images/spaceship3_0.png" id="2_477gp"]
@@ -10,9 +10,10 @@
 [ext_resource type="AudioStream" uid="uid://7k4je673lp0r" path="res://Assets/Sounds/laser_short_3.wav" id="7_8vcg3"]
 [ext_resource type="AudioStream" uid="uid://cboxcnfar5jr5" path="res://Assets/Sounds/ship_hit.wav" id="8_rfy71"]
 [ext_resource type="AudioStream" uid="uid://wa6w5fkpx1hc" path="res://Assets/Sounds/ship_hit2.wav" id="9_lvhjq"]
-[ext_resource type="AudioStream" uid="uid://cv24og2lgetpu" path="res://Assets/Sounds/ship_hit3.wav" id="10_vt0qi"]
 [ext_resource type="AudioStream" uid="uid://bv66yxwarga0s" path="res://Assets/Sounds/ship_collide2.wav" id="10_xr00q"]
+[ext_resource type="AudioStream" uid="uid://b5nbq8moy5egm" path="res://Assets/Sounds/hit_body1.wav" id="11_6px5u"]
 [ext_resource type="AudioStream" uid="uid://u1xwqlocv1ab" path="res://Assets/Sounds/select.wav" id="12_beo2e"]
+[ext_resource type="AudioStream" uid="uid://17jw1g06582q" path="res://Assets/Sounds/hit_body2.wav" id="12_wh508"]
 [ext_resource type="AudioStream" uid="uid://c6lkhefy7g0iw" path="res://Assets/Sounds/charge2.wav" id="13_t0cbb"]
 [ext_resource type="AudioStream" uid="uid://cyw3lufs1hukc" path="res://Assets/Sounds/explosion.wav" id="14_wr8xf"]
 [ext_resource type="AudioStream" uid="uid://cqalw1ktlp1mi" path="res://Assets/Sounds/next_turn_2.wav" id="15_qavu0"]
@@ -36,14 +37,26 @@ script = ExtResource("1_u0bsr")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_5y3kg")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_477gp")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
 texture = ExtResource("3_e1t4l")
+
+[node name="ShieldsCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_5y3kg")
+
+[node name="BodyCollision1" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2(2, 0)
+rotation = 1.5708
+polygon = PackedVector2Array(-8.74228e-07, -20, -4, -16, -6, -11, -7, -7, -7, -3, -13, -3, -13, -7, -15, -9, -21, -9, -21, 9.53674e-07, -21, 5, -19, 6, -15, 6, -13, 4, -13, 2, -7, 2, -7, 10, -8, 11, -8, 18, -10, 20, -10, 28, 12, 28, 12, 20, 10, 18, 10, 11, 9, 10, 9, 1, 15, 0.999999, 15, 4, 17, 6, 21, 6, 23, 4, 23, -1, 23, -9, 17, -9, 15, -7, 15, -3, 9, -3, 9, -7, 6, -16, 2, -20)
+disabled = true
+
+[node name="BodyCollision2" type="CollisionPolygon2D" parent="."]
+visible = false
+polygon = PackedVector2Array(27, -1, 13, -10, 7, -17, 6, -29, 0, -29, -3, -27, -3, -15, -8, -11, -12, -10, -18, -9, -25, -7, -25, -3, -19, -2, -19, 1, -25, 3, -25, 7, -16, 9, -8, 10, -3, 14, -3, 26, 0, 29, 6, 29, 7, 17, 12, 10, 27, 1)
+disabled = true
 
 [node name="GunPoints" type="Node2D" parent="."]
 
@@ -57,6 +70,7 @@ position = Vector2(28, 22)
 position = Vector2(26, 0)
 
 [node name="NavMarker" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(0.027451, 1, 0, 1)
 texture_filter = 1
 texture = ExtResource("3_knoh3")
@@ -98,14 +112,24 @@ bus = &"Sound"
 
 [node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_rfy71")
+max_polyphony = 2
 bus = &"Sound"
 
 [node name="Hit2" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_lvhjq")
+max_polyphony = 2
 bus = &"Sound"
 
 [node name="Hit3" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("10_vt0qi")
+stream = ExtResource("11_6px5u")
+volume_db = 6.0
+max_polyphony = 2
+bus = &"Sound"
+
+[node name="Hit4" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("12_wh508")
+volume_db = 6.0
+max_polyphony = 2
 bus = &"Sound"
 
 [node name="Collide" type="AudioStreamPlayer" parent="Sounds"]

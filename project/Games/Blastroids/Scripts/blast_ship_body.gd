@@ -2,7 +2,12 @@ extends RigidBody2D
 class_name BlastShipBody
 
 
-const GUN_X = 28
+const GUN_POINTS: Array = [
+	#[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
+	[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
+	#[ Vector2( 34, -6 ), Vector2( 34, 6 ) ],
+	[ Vector2( 28, -6 ), Vector2( 28, 6 ) ],
+]
 
 
 @export var world_id: int = 0
@@ -102,6 +107,7 @@ var stats: Dictionary = {
 }
 var lives_image
 var body_collision: CollisionPolygon2D
+var base_gun_points: Array
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -163,8 +169,12 @@ func setup_ship( settings: Dictionary ) -> void:
 	lives_image = Globals.BLAST_IMAGES[ settings.image_id ][ 2 ]
 	if settings.image_id == 0:
 		body_collision = $BodyCollision1
+		base_gun_points = GUN_POINTS[ 0 ]
 	else:
 		body_collision = $BodyCollision2
+		base_gun_points = GUN_POINTS[ 1 ]
+	gun_points.get_child( 0 ).position = base_gun_points[ 0 ]
+	gun_points.get_child( 1 ).position = base_gun_points[ 1 ]
 
 
 func setup_weapon() -> void:
@@ -347,7 +357,7 @@ func fire_lasers( delta: float ) -> void:
 		missile.fire( laser_velocity, ship_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "energy":
 		for gun_point in gun_points.get_children():
-			gun_point.position.x = GUN_X + 7
+			gun_point.position.x = base_gun_points[ 0 ].x + 7
 			var bullet: BlastLaser = weapon_data.SCENE.instantiate()
 			bullet.mass = weapon_data.MASS
 			bullet.position = gun_point.global_position
@@ -359,7 +369,7 @@ func fire_lasers( delta: float ) -> void:
 			bullet.fire( laser_velocity, ui_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "spread":
 		for gun_point in gun_points.get_children():
-			gun_point.position.x = GUN_X + 7
+			gun_point.position.x = base_gun_points[ 0 ].x + 7
 			for a in [ -PI / 8, 0, PI / 8 ]:
 				var bullet: BlastLaser = weapon_data.SCENE.instantiate()
 				bullet.mass = weapon_data.MASS
@@ -373,7 +383,7 @@ func fire_lasers( delta: float ) -> void:
 				bullet.fire( vel, ui_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "charge":
 		for gun_point in gun_points.get_children():
-			gun_point.position.x = GUN_X + blast_charge_size * 10
+			gun_point.position.x = base_gun_points[ 0 ].x + blast_charge_size * 10
 			var bullet: BlastLaser = weapon_data.SCENE.instantiate()
 			bullet.mass = weapon_data.MASS
 			bullet.position = gun_point.global_position

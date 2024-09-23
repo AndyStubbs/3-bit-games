@@ -108,6 +108,7 @@ var stats: Dictionary = {
 var lives_image
 var body_collision: CollisionPolygon2D
 var base_gun_points: Array
+var energy_tween: Tween
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -764,7 +765,6 @@ func _physics_process( delta: float ) -> void:
 	process_thrust( delta )
 	process_energy( delta )
 	update_clones( delta )
-	
 	is_alternate_tick = !is_alternate_tick
 
 

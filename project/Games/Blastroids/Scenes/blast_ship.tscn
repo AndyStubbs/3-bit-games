@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cvsp2k7nknxbq" path="res://Games/Blastroids/Images/triangle2.png" id="4_c4vh4"]
 [ext_resource type="Texture2D" uid="uid://dqjt825j2gcjh" path="res://Games/Blastroids/Images/spaceship3_markers2.png" id="5_8qmco"]
 [ext_resource type="Texture2D" uid="uid://ciwwc0tvdug7y" path="res://Games/Blastroids/Images/blast_charge.png" id="6_ebk61"]
-[ext_resource type="Texture2D" uid="uid://yjerfcwoback" path="res://Games/TunnelTanks/Images/charge_icon.png" id="7_4g7w5"]
+[ext_resource type="Texture2D" uid="uid://61bx8ffdfayx" path="res://Games/Blastroids/Images/charge_icon.png" id="7_rdedr"]
 
 [sub_resource type="Gradient" id="Gradient_e7rvf"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -174,7 +174,7 @@ texture = ExtResource("6_ebk61")
 [node name="LowEnergySprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(0, 50)
-texture = ExtResource("7_4g7w5")
+texture = ExtResource("7_rdedr")
 
 [node name="ShieldsParticles" type="GPUParticles2D" parent="."]
 emitting = false

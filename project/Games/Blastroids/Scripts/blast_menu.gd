@@ -14,19 +14,26 @@ func update_settings() -> void:
 	Blast.settings.rock_density = asteroid_count.selected
 	Blast.settings.crate_density = crate_count.selected
 	Blast.settings.lives_count = lives_count.selected
+	if Blast.settings.map_type == 2 and Blast.settings.map_size < 4:
+		Blast.settings.map_type = 0
+		map_types.select( Blast.settings.map_type )
+	elif Blast.settings.map_type == 1 and Blast.settings.map_size < 2:
+		Blast.settings.map_type = 0
+		map_types.select( Blast.settings.map_type )
+	Blast.save_settings()
 	update_ui_state()
 
 
 func update_ui_state() -> void:
-	if Blast.settings.map_size <= 3:
-		map_types.set_item_disabled( 1, false )
-		map_types.set_item_disabled( 2, true )
-	elif Blast.settings.map_size <= 2:
-		map_types.set_item_disabled( 1, true )
-		map_types.set_item_disabled( 2, true )
-	else:
+	if Blast.settings.map_size > 3:
 		map_types.set_item_disabled( 1, false )
 		map_types.set_item_disabled( 2, false )
+	elif Blast.settings.map_size > 1:
+		map_types.set_item_disabled( 1, false )
+		map_types.set_item_disabled( 2, true )
+	else:
+		map_types.set_item_disabled( 1, true )
+		map_types.set_item_disabled( 2, true )
 
 
 func _ready() -> void:
@@ -35,6 +42,7 @@ func _ready() -> void:
 	asteroid_count.select( Blast.settings.rock_density )
 	crate_count.select( Blast.settings.crate_density )
 	lives_count.select( Blast.settings.lives_count )
+	update_ui_state()
 
 
 func _on_start_button_pressed() -> void:

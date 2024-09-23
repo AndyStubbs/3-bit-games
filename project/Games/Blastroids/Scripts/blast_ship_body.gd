@@ -562,6 +562,7 @@ func process_thrust( delta: float ) -> void:
 	if get_input( "Down_" + controls ):
 		if speed > 10:
 			var ta = linear_velocity.angle() + PI
+			rotation_speed = max_rotation_speed
 			var rotation_change = get_target_rotation( ta, delta )
 			if rotation_change != 0:
 				angular_velocity = rotation_change

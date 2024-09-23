@@ -39,6 +39,7 @@ const BOMB_PICKUP_IMAGE = preload( "res://Games/Blastroids/Images/blast_bomb_pic
 const BOMB_MARKER = preload( "res://Games/Blastroids/Images/blast_bomb_markers.png" )
 const PICKUP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_pickup.tscn" )
 const ROCK_SCENE = preload( "res://Games/Blastroids/Scenes/blast_rock_body.tscn" )
+const CRATE_SCENE = preload( "res://Games/Blastroids/Scenes/blast_crate.tscn" )
 const SHIP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_ship.tscn" )
 const TRI_IMAGE = preload( "res://Games/Blastroids/Images/triangle.png" )
 const TRI_IMAGE_BACK = preload( "res://Games/Blastroids/Images/triangle_back.png" )
@@ -220,7 +221,6 @@ func init() -> void:
 	
 	# Create Rocks
 	var num_rocks = Blast.get_num_rocks()
-	print( num_rocks )
 	for i in range( num_rocks ):
 		var rock: BlastRockBody = ROCK_SCENE.instantiate()
 		rock.position = get_random_start_pos()
@@ -228,9 +228,32 @@ func init() -> void:
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 		rock.rock_size = rock_sizes.pick_random()
 		bodies.add_child( rock )
-	var player_id: int = 0
+	
+	# Create Crates
+	var crate_size = 50
+	var num_crates = Blast.get_num_crates()
+	for i in range( num_crates ):
+		var is_big_lot = randf_range( 0, 1 ) > 0.9
+		var bonus_crates = 1
+		if is_big_lot:
+			bonus_crates += clampi( randi_range( -20, 8 ), 1, 8 )
+		if bonus_crates == 7:
+			bonus_crates = 6
+		var cols = [ 0, 1, 2, 3, 2, 5, 3, 4, 4, 3 ][ bonus_crates ]
+		var pos = get_random_start_pos( crate_size * cols )
+		var x = 0
+		var y = 0
+		for j in range( bonus_crates ):
+			var crate: BlastCrate = CRATE_SCENE.instantiate()
+			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
+			bodies.add_child( crate )
+			x += 1
+			if x >= cols:
+				x = 0
+				y += 1
 	
 	# Initialize all bodies
+	var player_id: int = 0
 	for body in bodies.get_children():
 		if body.has_method( "fire_lasers" ):
 			var player = Globals.players[ player_id ]
@@ -239,22 +262,14 @@ func init() -> void:
 			player_id += 1
 		if body.has_method( "init" ):
 			body.init( self )
-		#if body.has_method( "fire_lasers" ):
-			#var player = Globals.players[ player_id ]
-			#if player.name_changed:
-				#body.display_name = player.name
-			#else:
-				#body.display_name = tr( player.name )
-			#ships.append( body )
-			#player_id += 1
 
 
-func get_random_start_pos() -> Vector2:
+func get_random_start_pos( buffer: float = 0 ) -> Vector2:
 	var rect: Rect2 = Blast.get_rect()
-	var min_x: float = rect.position.x
-	var min_y: float = rect.position.y
-	var max_x: float = rect.position.x + rect.size.x
-	var max_y: float = rect.position.y + rect.size.y
+	var min_x: float = rect.position.x + buffer
+	var min_y: float = rect.position.y + buffer
+	var max_x: float = rect.position.x + rect.size.x - buffer * 2
+	var max_y: float = rect.position.y + rect.size.y - buffer * 2
 	return Vector2(
 		randf_range( min_x, max_x ),
 		randf_range( min_y, max_y )

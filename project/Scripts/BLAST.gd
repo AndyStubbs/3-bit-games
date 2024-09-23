@@ -18,11 +18,11 @@ const ROCKS: Array = [
 ]
 const MAP_TYPES: Array = [ 0, 1, 2 ]
 const CRATES: Array = [
-	[ 0,   6,  12,  27,  50 ],
-	[ 0,  12,  30,  60, 120 ],
-	[ 0,  30,  60, 120, 220 ],
-	[ 0,  50, 100, 150, 300 ],
-	[ 0,  80, 150, 300, 500 ],
+	[ 0,   3,   6,   9,  12 ],
+	[ 0,   6,   9,  12,  15 ],
+	[ 0,   9,  12,  15,  20 ],
+	[ 0,  12,  15,  20,  30 ],
+	[ 0,  15,  20,  30,  50 ],
 ]
 const LIVES: Array = [ 1, 2, 3, 4, 5, 6, 7 ]
 
@@ -44,6 +44,10 @@ var settings: Dictionary = {
 
 func get_num_rocks() -> int:
 	return ROCKS[ settings.map_size ][ settings.rock_density ]
+
+
+func get_num_crates() -> int:
+	return CRATES[ settings.map_size ][ settings.crate_density ]
 
 
 func get_rect() -> Rect2:

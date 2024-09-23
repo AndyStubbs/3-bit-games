@@ -44,6 +44,7 @@ const SHIP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_ship.tscn" )
 const TRI_IMAGE = preload( "res://Games/Blastroids/Images/triangle.png" )
 const TRI_IMAGE_BACK = preload( "res://Games/Blastroids/Images/triangle_back.png" )
 const BORDER_SCENE = preload( "res://Games/Blastroids/Scenes/blast_border.tscn" )
+const PLANET_SCENE = preload( "res://Games/Blastroids/Scenes/blast_planet.tscn" )
 const WEAPONS_DATA: Dictionary = {
 	WEAPONS.LASER: {
 		"SCENE": LASER_SCENE,
@@ -218,6 +219,14 @@ func init() -> void:
 	)
 	border_bottom.gravity = Vector2( 0, -1 )
 	bodies.add_child( border_bottom )
+	
+	# Create solar stytem
+	var planet = PLANET_SCENE.instantiate()
+	planet.position = Vector2(
+		rect.position.x + rect.size.x / 2,
+		rect.position.y + rect.size.y / 2
+	)
+	bodies.add_child( planet )
 	
 	# Create Rocks
 	var num_rocks = Blast.get_num_rocks()

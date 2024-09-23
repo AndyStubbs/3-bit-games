@@ -142,7 +142,7 @@ func init( new_game: BlastGame ) -> void:
 		child_sprite.texture = lives_image
 		child_sprite.modulate = ui_color
 		child_sprite.modulate.a = 0.8
-	lives = Blast.settings.lives
+	lives = Blast.settings.lives_count + 1
 	add_weapon( BlastGame.WEAPONS.LASER )
 	weapon_index = 0
 	select_weapon()
@@ -274,12 +274,11 @@ func init_clones() -> void:
 		minimap.add_child( minimap_clone )
 		if i == world_id:
 			var camera: Camera2D = Camera2D.new()
-			var buffer: int = 1000
-			var rect: Rect2 = Blast.settings.rect
-			camera.limit_left = roundi( rect.position.x ) + buffer
-			camera.limit_right = roundi( rect.position.x + rect.size.x )
-			camera.limit_top = roundi( rect.position.y ) + buffer
-			camera.limit_bottom = roundi( rect.position.y + rect.size.y )
+			var rect: Rect2 = Blast.get_rect()
+			camera.limit_left = roundi( rect.position.x ) - 100
+			camera.limit_right = roundi( rect.position.x + rect.size.x ) + 100
+			camera.limit_top = roundi( rect.position.y ) - 100
+			camera.limit_bottom = roundi( rect.position.y + rect.size.y ) + 100
 			minimap_clone.add_child( camera )
 
 

@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://6alqj2rempg2"]
+[gd_scene load_steps=6 format=3 uid="uid://6alqj2rempg2"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_menu.gd" id="1_bgg41"]
 [ext_resource type="PackedScene" uid="uid://dyhh1j60dt6t0" path="res://Shared/player_select.tscn" id="1_yedil"]
 [ext_resource type="Texture2D" uid="uid://b6bv4frxy18or" path="res://Games/Blastroids/Images/background_0.webp" id="2_33dug"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="4_4rcpt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr8yo"]
+bg_color = Color(0, 0, 0, 1)
 
 [node name="BlastMenu" type="Node"]
 script = ExtResource("1_bgg41")
@@ -62,50 +66,301 @@ theme_override_constants/margin_bottom = 32
 [node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC"]
 layout_mode = 2
 
-[node name="HB" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
+[node name="HbPlayerSelects" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
 layout_mode = 2
 theme_override_constants/separation = 32
 alignment = 1
 
-[node name="PlayerSelect" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+[node name="PlayerSelect" parent="MC/VB/MC/PL/MC/VB/HbPlayerSelects" instance=ExtResource("1_yedil")]
 layout_mode = 2
 game_type = 2
 
-[node name="PlayerSelect2" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+[node name="PlayerSelect2" parent="MC/VB/MC/PL/MC/VB/HbPlayerSelects" instance=ExtResource("1_yedil")]
 layout_mode = 2
 game_type = 2
 player_id = 1
 
-[node name="PlayerSelect3" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+[node name="PlayerSelect3" parent="MC/VB/MC/PL/MC/VB/HbPlayerSelects" instance=ExtResource("1_yedil")]
 layout_mode = 2
 game_type = 2
 player_id = 2
 
-[node name="PlayerSelect4" parent="MC/VB/MC/PL/MC/VB/HB" instance=ExtResource("1_yedil")]
+[node name="PlayerSelect4" parent="MC/VB/MC/PL/MC/VB/HbPlayerSelects" instance=ExtResource("1_yedil")]
 layout_mode = 2
 game_type = 2
 player_id = 3
 
 [node name="Control" type="Control" parent="MC/VB/MC/PL/MC/VB"]
-custom_minimum_size = Vector2(0, 300)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="HB2" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
+[node name="HbOptions" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Panel" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+text = "Map Size"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MapSizes" type="OptionButton" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+selected = 2
+item_count = 5
+popup/item_0/text = "TR_TINY"
+popup/item_1/text = "TR_SMALL"
+popup/item_1/id = 1
+popup/item_2/text = "TR_NORMAL"
+popup/item_2/id = 2
+popup/item_3/text = "TR_LARGE"
+popup/item_3/id = 3
+popup/item_4/text = "TR_HUGE"
+popup/item_4/id = 4
+
+[node name="Panel2" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel2/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel2/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+text = "Map Type"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MapTypes" type="OptionButton" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel2/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+selected = 0
+item_count = 3
+popup/item_0/text = "Normal"
+popup/item_1/text = "Planet"
+popup/item_1/id = 1
+popup/item_1/disabled = true
+popup/item_2/text = "Solar System"
+popup/item_2/id = 2
+popup/item_2/disabled = true
+
+[node name="Panel3" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel3/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel3/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+text = "Asteroids"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AsteroidCount" type="OptionButton" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel3/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+selected = 2
+item_count = 5
+popup/item_0/text = "TR_NONE"
+popup/item_1/text = "TR_FEW"
+popup/item_1/id = 1
+popup/item_2/text = "TR_SOME"
+popup/item_2/id = 2
+popup/item_3/text = "TR_MANY"
+popup/item_3/id = 3
+popup/item_4/text = "TR_MAX"
+popup/item_4/id = 4
+
+[node name="Panel4" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel4"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+text = "Crates"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CrateCount" type="OptionButton" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+selected = 2
+item_count = 5
+popup/item_0/text = "TR_NONE"
+popup/item_1/text = "TR_FEW"
+popup/item_1/id = 1
+popup/item_2/text = "TR_SOME"
+popup/item_2/id = 2
+popup/item_3/text = "TR_MANY"
+popup/item_3/id = 3
+popup/item_4/text = "TR_MAX"
+popup/item_4/id = 4
+
+[node name="Panel5" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+text = "Lives"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LivesCount" type="OptionButton" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+selected = 2
+item_count = 7
+popup/item_0/text = "1"
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+popup/item_3/text = "4"
+popup/item_3/id = 3
+popup/item_4/text = "5"
+popup/item_4/id = 4
+popup/item_5/text = "6"
+popup/item_5/id = 5
+popup/item_6/text = "7"
+popup/item_6/id = 6
+
+[node name="Control2" type="Control" parent="MC/VB/MC/PL/MC/VB"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="HbMainButtons" type="HBoxContainer" parent="MC/VB/MC/PL/MC/VB"]
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="StartButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HB2"]
-custom_minimum_size = Vector2(350, 0)
+[node name="StartButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HbMainButtons"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 24
 text = "TR_START"
 
-[node name="ReturnButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HB2"]
-custom_minimum_size = Vector2(350, 0)
+[node name="ReturnButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HbMainButtons"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 24
 text = "TR_BACK"
 
-[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HB2/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HB2/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel/MC/VB/MapSizes" to="." method="_on_map_sizes_item_selected"]
+[connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel2/MC/VB/MapTypes" to="." method="_on_map_types_item_selected"]
+[connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel3/MC/VB/AsteroidCount" to="." method="_on_asteroid_count_item_selected"]
+[connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC/VB/CrateCount" to="." method="_on_crate_count_item_selected"]
+[connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC/VB/LivesCount" to="." method="_on_lives_count_item_selected"]
+[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/ReturnButton" to="." method="_on_return_button_pressed"]

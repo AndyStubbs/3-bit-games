@@ -171,24 +171,38 @@ func init() -> void:
 	rock_sizes.append_array( fill_array( "medium", 3 ) )
 	rock_sizes.append_array( fill_array( "small", 3 ) )
 	rock_sizes.append_array( fill_array( "tiny", 3 ) )
-	var rect: Rect2 = Blast.settings.rect
+	
+	var rect: Rect2 = Blast.get_rect()
 	
 	# Create left borders
 	var border_left: BlastBorder = BORDER_SCENE.instantiate()
-	border_left.rect = Rect2( rect.position.x, rect.position.y, BUFFER, rect.size.y + BUFFER )
+	border_left.rect = Rect2(
+		rect.position.x - BUFFER,
+		rect.position.y - BUFFER,
+		BUFFER,
+		rect.size.y + BUFFER * 2
+	)
 	border_left.gravity = Vector2( 1, 0 )
 	bodies.add_child( border_left )
 	
 	# Create top border
 	var border_top: BlastBorder = BORDER_SCENE.instantiate()
-	border_top.rect = Rect2( rect.position.x, rect.position.y, rect.size.x + BUFFER, BUFFER )
+	border_top.rect = Rect2(
+		rect.position.x - BUFFER,
+		rect.position.y - BUFFER,
+		rect.size.x + BUFFER * 2,
+		BUFFER
+	)
 	border_top.gravity = Vector2( 0, 1 )
 	bodies.add_child( border_top )
 	
 	# Create right borders
 	var border_right: BlastBorder = BORDER_SCENE.instantiate()
 	border_right.rect = Rect2(
-		rect.position.x + rect.size.x, rect.position.y, BUFFER, rect.size.y + BUFFER
+		rect.position.x + rect.size.x,
+		rect.position.y - BUFFER,
+		BUFFER,
+		rect.size.y + BUFFER * 2
 	)
 	border_right.gravity = Vector2( -1, 0 )
 	bodies.add_child( border_right )
@@ -196,13 +210,17 @@ func init() -> void:
 	# Create bottom border
 	var border_bottom: BlastBorder = BORDER_SCENE.instantiate()
 	border_bottom.rect = Rect2(
-		rect.position.x, rect.position.y + rect.size.y, rect.size.x + BUFFER, BUFFER
+		rect.position.x - BUFFER,
+		rect.position.y + rect.size.y,
+		rect.size.x + BUFFER * 2,
+		BUFFER
 	)
 	border_bottom.gravity = Vector2( 0, -1 )
 	bodies.add_child( border_bottom )
 	
 	# Create Rocks
-	var num_rocks = Blast.settings.rock_density * ( rect.size.x + rect.size.y )
+	var num_rocks = Blast.get_num_rocks()
+	print( num_rocks )
 	for i in range( num_rocks ):
 		var rock: BlastRockBody = ROCK_SCENE.instantiate()
 		rock.position = get_random_start_pos()
@@ -232,10 +250,14 @@ func init() -> void:
 
 
 func get_random_start_pos() -> Vector2:
-	var rect: Rect2 = Blast.settings.rect
+	var rect: Rect2 = Blast.get_rect()
+	var min_x: float = rect.position.x
+	var min_y: float = rect.position.y
+	var max_x: float = rect.position.x + rect.size.x
+	var max_y: float = rect.position.y + rect.size.y
 	return Vector2(
-		randf_range( rect.position.x + BUFFER, rect.position.x + rect.size.x - BUFFER * 2 ),
-		randf_range( rect.position.y + BUFFER, rect.position.y + rect.size.y - BUFFER * 2 )
+		randf_range( min_x, max_x ),
+		randf_range( min_y, max_y )
 	)
 
 
@@ -378,3 +400,8 @@ func _ready() -> void:
 				)
 			)
 	init()
+
+
+func _physics_process( _delta: float ) -> void:
+	if Input.is_action_just_pressed( "Exit" ):
+		get_tree().change_scene_to_packed( Blast.scenes.menu )

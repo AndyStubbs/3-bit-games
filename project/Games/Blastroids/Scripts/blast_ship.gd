@@ -50,10 +50,10 @@ func init_stars( star_scene: PackedScene ) -> void:
 
 func init_main_ship() -> void:
 	var buffer: int = 500
-	var rect: Rect2 = Blast.settings.rect
-	camera.limit_left = roundi( rect.position.x ) + buffer
+	var rect: Rect2 = Blast.get_rect()
+	camera.limit_left = roundi( rect.position.x ) - buffer
 	camera.limit_right = roundi( rect.position.x + rect.size.x ) + buffer
-	camera.limit_top = roundi( rect.position.y ) + buffer
+	camera.limit_top = roundi( rect.position.y ) - buffer
 	camera.limit_bottom = roundi( rect.position.y + rect.size.y ) + buffer
 	var star_scene = load( "res://Games/Blastroids/Scenes/blast_star.tscn" )
 	init_stars( star_scene )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dl3rxtqyxc6lo"]
+[gd_scene load_steps=12 format=3 uid="uid://dl3rxtqyxc6lo"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game.gd" id="1_ish2g"]
 [ext_resource type="PackedScene" uid="uid://10i1qjfhmetd" path="res://Games/Blastroids/Scenes/blast_ship_body.tscn" id="2_4de21"]
@@ -6,7 +6,6 @@
 [ext_resource type="FontFile" uid="uid://du4fcyuvxpb56" path="res://Assets/Fonts/ProtestGuerrilla-Regular.ttf" id="3_la5p5"]
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game_over.gd" id="3_ypayv"]
 [ext_resource type="AudioStream" uid="uid://0s2eoi25wo8" path="res://Assets/Sounds/pickup_01.wav" id="4_moumk"]
-[ext_resource type="PackedScene" uid="uid://crhtwwp1ps7u1" path="res://Games/Blastroids/Scenes/blast_crate.tscn" id="4_xka0d"]
 [ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="5_28w2k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amygs"]
@@ -183,33 +182,6 @@ render_target_update_mode = 0
 position = Vector2(180, 0)
 world_id = 1
 controls = "CPU"
-
-[node name="BlastCrate" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(0, -100)
-
-[node name="BlastCrate2" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(0, -200)
-
-[node name="BlastCrate3" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(0, -300)
-
-[node name="BlastCrate4" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(0, -400)
-
-[node name="BlastCrate5" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(0, -500)
-
-[node name="BlastCrate6" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(200, -500)
-
-[node name="BlastCrate7" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(300, -500)
-
-[node name="BlastCrate8" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(400, -500)
-
-[node name="BlastCrate9" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("4_xka0d")]
-position = Vector2(500, -500)
 
 [node name="Sounds" type="Node" parent="."]
 

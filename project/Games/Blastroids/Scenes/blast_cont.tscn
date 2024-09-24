@@ -357,17 +357,17 @@ texture = ExtResource("7_15uv3")
 layout_mode = 0
 offset_left = 580.0
 offset_top = 800.0
-offset_right = 939.0
-offset_bottom = 1004.0
+offset_right = 941.0
+offset_bottom = 1006.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8kbov")
 
 [node name="MiniMap" type="SubViewportContainer" parent="SubViewport/CanvasLayer/PlayerUI/Panel"]
 clip_children = 2
 layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 1921.0
-offset_bottom = 1081.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 3559.0
+offset_bottom = 2003.0
 scale = Vector2(0.1, 0.1)
 
 [node name="SubViewport" type="SubViewport" parent="SubViewport/CanvasLayer/PlayerUI/Panel/MiniMap"]

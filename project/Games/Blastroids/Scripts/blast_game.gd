@@ -168,6 +168,7 @@ var rigid_bodies: Array = []
 
 func init() -> void:
 	ui_items.append( get_node( "Players/PL/HB/ColorRect" ) )
+	init_containers()
 	init_borders()
 	init_map()
 	init_rocks()
@@ -196,6 +197,49 @@ func init() -> void:
 		await get_tree().physics_frame
 		for body in rigid_bodies:
 			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
+
+
+func init_containers() -> void:
+	var base_size: Vector2 = Vector2( 355.6, 200.0 )
+	var map_scale: float = 0.1
+	if Blast.settings.map_size == 0:
+		map_scale = 0.1
+	elif Blast.settings.map_size == 1:
+		map_scale = 0.09
+	elif Blast.settings.map_size == 2:
+		map_scale = 0.08
+	elif Blast.settings.map_size == 3:
+		map_scale = 0.07
+	elif Blast.settings.map_size == 4:
+		map_scale = 0.06
+	
+	var rect: Rect2 = Blast.get_rect()
+	var grid_size = minf( rect.size.x / 10, rect.size.y / 10 )
+	for minimap: Node2D in minimaps:
+		var subviewport: SubViewport = minimap.get_parent()
+		var subviewport_container: SubViewportContainer = subviewport.get_parent()
+		subviewport.size = base_size / map_scale
+		subviewport_container.size = base_size / map_scale
+		subviewport_container.scale = Vector2( map_scale, map_scale )
+		
+		# Create grid
+		var y = rect.position.y
+		for x2 in range( rect.position.x, rect.size.x, grid_size ):
+			var line = Line2D.new()
+			line.add_point( Vector2( x2, y ) )
+			line.add_point( Vector2( x2, y + rect.size.y + grid_size ) )
+			line.modulate = Color( 0.1, 0.1, 0.75, 0.75 )
+			line.width = 3 / map_scale
+			minimap.add_child( line )
+		
+		var x = rect.position.x
+		for y2 in range( rect.position.y, rect.size.y, grid_size ):
+			var line = Line2D.new()
+			line.add_point( Vector2( x, y2 ) )
+			line.add_point( Vector2( x + rect.size.x + grid_size, y2 ) )
+			line.modulate = Color( 0.1, 0.1, 0.75, 0.75 )
+			line.width = 3 / map_scale
+			minimap.add_child( line )
 
 
 func init_borders() -> void:

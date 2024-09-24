@@ -35,7 +35,7 @@ func init_clones() -> void:
 		var mini_clone: Sprite2D = Sprite2D.new()
 		mini_clone.scale = sprite.scale
 		mini_clone.texture = sprite.texture
-		mini_clone.material = game.create_minimap_material( Color.DIM_GRAY )
+		mini_clone.material = game.create_minimap_material( Color( 0.3, 0.3, 1.0 ) )
 		minimap.add_child( mini_clone )
 		minimap_clones.append( mini_clone )
 

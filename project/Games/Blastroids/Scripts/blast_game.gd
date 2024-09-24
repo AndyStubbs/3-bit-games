@@ -168,13 +168,37 @@ var rigid_bodies: Array = []
 
 func init() -> void:
 	ui_items.append( get_node( "Players/PL/HB/ColorRect" ) )
-	var rock_sizes: Array = []
-	rock_sizes.append_array( fill_array( "huge", 5 ) )
-	rock_sizes.append_array( fill_array( "large", 4 ) )
-	rock_sizes.append_array( fill_array( "medium", 3 ) )
-	rock_sizes.append_array( fill_array( "small", 3 ) )
-	rock_sizes.append_array( fill_array( "tiny", 3 ) )
+	init_borders()
+	init_map()
+	init_rocks()
+	init_crates()
 	
+	# Initialize all bodies
+	var player_id: int = 0
+	for body in bodies.get_children():
+		if body.has_method( "fire_lasers" ):
+			var player = Globals.players[ player_id ]
+			body.setup_ship( player )
+			ships.append( body )
+			rigid_bodies.append( body )
+			player_id += 1
+		if body.has_method( "init" ):
+			body.init( self )
+	
+	# Recalculate linear velocity after first few frames
+	if Blast.settings.map_type == 1:
+		await get_tree().physics_frame
+		for body in rigid_bodies:
+			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
+		await get_tree().physics_frame
+		for body in rigid_bodies:
+			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
+		await get_tree().physics_frame
+		for body in rigid_bodies:
+			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
+
+
+func init_borders() -> void:
 	var rect: Rect2 = Blast.get_rect()
 	
 	# Create left borders
@@ -220,6 +244,10 @@ func init() -> void:
 	)
 	border_bottom.gravity = Vector2( 0, -1 )
 	bodies.add_child( border_bottom )
+
+
+func init_map() -> void:
+	var rect: Rect2 = Blast.get_rect()
 	
 	# Create solar stytem
 	if Blast.settings.map_type == 1:
@@ -234,6 +262,15 @@ func init() -> void:
 			radius = rect.size.y / 2
 		planet.collision_shape.shape.radius = radius
 		planets.append( planet )
+
+
+func init_rocks() -> void:
+	var rock_sizes: Array = []
+	rock_sizes.append_array( fill_array( "huge", 5 ) )
+	rock_sizes.append_array( fill_array( "large", 4 ) )
+	rock_sizes.append_array( fill_array( "medium", 3 ) )
+	rock_sizes.append_array( fill_array( "small", 3 ) )
+	rock_sizes.append_array( fill_array( "tiny", 3 ) )
 	
 	# Create Rocks
 	var num_rocks = Blast.get_num_rocks()
@@ -255,6 +292,9 @@ func init() -> void:
 		else:
 			rock.linear_velocity = Vector2.from_angle( randf_range( 0, TAU ) ) * 100
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
+
+
+func init_crates() -> void:
 	
 	# Create Crates
 	var crate_size = 50
@@ -275,35 +315,12 @@ func init() -> void:
 			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
 			bodies.add_child( crate )
 			rigid_bodies.append( crate )
-			crate.linear_velocity = calc_orbit_velocity( crate, planets[ 0 ].area )
+			if Blast.settings.map_type == 1:
+				crate.linear_velocity = calc_orbit_velocity( crate, planets[ 0 ].area )
 			x += 1
 			if x >= cols:
 				x = 0
 				y += 1
-	
-	# Initialize all bodies
-	var player_id: int = 0
-	for body in bodies.get_children():
-		if body.has_method( "fire_lasers" ):
-			var player = Globals.players[ player_id ]
-			body.setup_ship( player )
-			ships.append( body )
-			rigid_bodies.append( body )
-			player_id += 1
-		if body.has_method( "init" ):
-			body.init( self )
-	
-	# Recalculate linear velocity after first few frames
-	if Blast.settings.map_type == 1:
-		await get_tree().physics_frame
-		for body in rigid_bodies:
-			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
-		await get_tree().physics_frame
-		for body in rigid_bodies:
-			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
-		await get_tree().physics_frame
-		for body in rigid_bodies:
-			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
 
 
 func calc_orbit_velocity( body: RigidBody2D, planet: Area2D ) -> Vector2:

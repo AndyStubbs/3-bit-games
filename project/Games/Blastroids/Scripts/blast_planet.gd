@@ -49,7 +49,6 @@ func _physics_process( delta: float ) -> void:
 	for body in atmosphere_bodies:
 		var distance = abs( radius - position.distance_to( body.position ) )
 		var damage = distance * distance * delta * 0.15
-		print( damage )
 		body.burn( damage )
 
 

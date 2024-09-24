@@ -135,6 +135,7 @@ bus = &"Sound"
 
 [node name="Burn" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("13_3b6fo")
+volume_db = -15.0
 bus = &"Sound"
 
 [node name="Collide" type="AudioStreamPlayer" parent="Sounds"]

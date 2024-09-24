@@ -353,6 +353,21 @@ rotation = -1.5708
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("7_15uv3")
 
+[node name="Control" type="Control" parent="SubViewport/CanvasLayer/PlayerUI"]
+anchors_preset = 0
+offset_left = 590.0
+offset_top = 760.0
+offset_right = 630.0
+offset_bottom = 800.0
+
+[node name="CoordinatesLabel" type="Label" parent="SubViewport/CanvasLayer/PlayerUI/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("6_nibdd")
+theme_override_font_sizes/font_size = 28
+text = "(0, 0)"
+
 [node name="Panel" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI"]
 layout_mode = 0
 offset_left = 580.0

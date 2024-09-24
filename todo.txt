@@ -16,3 +16,5 @@
 	b. Play a different sound if only one weapon available and attempted to change weapons.
 10. Add a lower power mode to lasers, this will allow lasers to fire easier when
 	energy is lower.  Try changing the color of the lasers and laser bar in low power mode.
+11. Fix bug with player not getting credit for kill when enemy runs out of energy after
+	getting hit by player

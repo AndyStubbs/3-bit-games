@@ -3,6 +3,8 @@ class_name BlastShip
 
 
 const STAR_DENSITY = 6553
+const ZOOM_DX = 0.075
+const ZOOM_SIZE = 0.3
 
 
 @export var is_main_ship: bool = false
@@ -147,7 +149,21 @@ func update_main_ship( delta: float ) -> void:
 	else:
 		low_energy_sprite.modulate.a = maxf( low_energy_sprite.modulate.a - delta, 0.0 )
 	
+	# Adjust camera zoom to zoom out when moving fast
+	var speed_factor = ( ( 15 - clampf( log( ship_body.speed ), 10, 15 ) ) / 5 ) * ZOOM_SIZE
+	var zoom_factor = 1 - ( ZOOM_SIZE - speed_factor )
+	var zdx: float = ZOOM_DX * delta
+	if camera.zoom.x + zdx < zoom_factor:
+		camera.zoom.x += zdx
+	elif camera.zoom.x - zdx > zoom_factor:
+		camera.zoom.x -= zdx
+	else:
+		camera.zoom.x = zoom_factor
+	camera.zoom.y = camera.zoom.x
+	
 	# Show stats
+	$Label.text = "%s" % camera.zoom.x
+	#$Label.text = "%s" % log( ship_body.speed )
 	#$Label.text = "%d / %d / %d" % [ ship_body.shields, ship_body.health, ship_body.energy ]
 	#$Label.text = "%d" % ship_body.speed
 	#$Label.text = "%d" % sqrt( ship_body.speed )
@@ -157,10 +173,10 @@ func update_main_ship( delta: float ) -> void:
 		#rad_to_deg( Globals.normalize_angle( ship_body.rotation ) ),
 		#rad_to_deg( Globals.normalize_angle( ship_body.linear_velocity.angle() ) )
 	#]
-	$Label.text = "(%d, %d)" % [
-		roundi( ship_body.position.x / 100 ),
-		roundi( ship_body.position.y / 100 )
-	]
+	#$Label.text = "(%d, %d)" % [
+		#roundi( ship_body.position.x / 100 ),
+		#roundi( ship_body.position.y / 100 )
+	#]
 
 
 func raise_shields() -> void:

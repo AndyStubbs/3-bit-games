@@ -87,6 +87,7 @@ var weapons_bar: ProgressBar
 var lives_box: HBoxContainer
 var weapon_box: HBoxContainer
 var ammo_label: Label
+var coordinates_label: Label
 var is_alternate_tick: bool = false
 var weapon: BlastGame.WEAPONS:
 	set( value ):
@@ -145,6 +146,7 @@ func init( new_game: BlastGame ) -> void:
 	weapons_bar = ui.get_node( "WeaponsData/WeaponsBar" )
 	ammo_label = ui.get_node( "WeaponsData/WeaponsBar/AmmoCount" )
 	weapon_box = ui.get_node( "WeaponsData/Control/HB" )
+	coordinates_label = ui.get_node( "Control/CoordinatesLabel" )
 	lives_box = game.uis[ world_id ].get_node( "Lives/HB" )
 	for child in lives_box.get_children():
 		var child_sprite: Sprite2D = child.get_child( 0 )
@@ -788,6 +790,10 @@ func _physics_process( delta: float ) -> void:
 	update_clones( delta )
 	is_alternate_tick = !is_alternate_tick
 	is_burning = false
+	coordinates_label.text = "(%d, %d)" % [
+		roundi( position.x / 100 ),
+		roundi( position.y / 100 )
+	]
 
 
 func _on_body_entered( node: Node2D ) -> void:

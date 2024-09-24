@@ -159,6 +159,7 @@ var uis: Array
 var ships: Array = []
 var minimaps: Array = []
 var ui_items: Array = []
+var planets: Array = []
 
 
 @onready var bodies = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
@@ -227,6 +228,7 @@ func init() -> void:
 		rect.position.y + rect.size.y / 2
 	)
 	bodies.add_child( planet )
+	planets.append( planet )
 	
 	# Create Rocks
 	var num_rocks = Blast.get_num_rocks()
@@ -237,6 +239,7 @@ func init() -> void:
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 		rock.rock_size = rock_sizes.pick_random()
 		bodies.add_child( rock )
+		rock.linear_velocity = calc_orbit_velocity( rock, planets[ 0 ].area )
 	
 	# Create Crates
 	var crate_size = 50
@@ -256,6 +259,7 @@ func init() -> void:
 			var crate: BlastCrate = CRATE_SCENE.instantiate()
 			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
 			bodies.add_child( crate )
+			crate.linear_velocity = calc_orbit_velocity( crate, planets[ 0 ].area )
 			x += 1
 			if x >= cols:
 				x = 0
@@ -271,6 +275,27 @@ func init() -> void:
 			player_id += 1
 		if body.has_method( "init" ):
 			body.init( self )
+
+
+func calc_orbit_velocity( body: RigidBody2D, planet: Area2D ) -> Vector2:
+	var speed_multiplier = 1.0
+	var distance_to_planet = ( planet.position - body.position ).length()
+
+	# Get the gravity and unit distance from the planet
+	var gravity_strength = planet.gravity
+	var gravity_point_unit_distance = planet.gravity_point_unit_distance
+
+	# Calculate the effective gravity at the current distance using the inverse square law
+	var effective_gravity = gravity_strength * pow( gravity_point_unit_distance / distance_to_planet, 2 )
+
+	# Calculate the orbit speed using v = sqrt(effective_gravity * distance_to_planet)
+	var orbit_speed = sqrt( effective_gravity * distance_to_planet ) * speed_multiplier
+
+	# Calculate the direction to orbit (perpendicular to the vector from the planet to the object)
+	var direction = ( body.position - planet.position ).normalized()
+	
+	# Rotate by 90 degrees to get the perpendicular direction for a circular orbit
+	return direction.rotated( deg_to_rad( 90 ) ) * orbit_speed
 
 
 func get_random_start_pos( buffer: float = 0 ) -> Vector2:

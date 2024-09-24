@@ -1,4 +1,5 @@
 extends Node2D
+class_name BlastPlanet
 
 
 var clones: Array = []
@@ -7,7 +8,9 @@ var game: BlastGame
 var atmosphere_bodies: Array = []
 var radius: float = 100
 
+
 @onready var sprite = $Sprite2D
+@onready var area = $Area2D
 
 
 func init( new_game: BlastGame ) -> void:

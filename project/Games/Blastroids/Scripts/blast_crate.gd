@@ -27,9 +27,10 @@ var weapon: BlastGame.WEAPONS
 
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var hit_sound: AudioStreamPlayer = $Hit
-@onready var hit_sound2: AudioStreamPlayer = $Hit2
-@onready var explode_sound: AudioStreamPlayer = $Explode
+@onready var hit_sound: AudioStreamPlayer = $Sounds/Hit
+@onready var hit_sound2: AudioStreamPlayer = $Sounds/Hit2
+@onready var burn_sound: AudioStreamPlayer = $Sounds/BurnSound
+@onready var explode_sound: AudioStreamPlayer = $Sounds/Explode
 
 
 func init( new_game: BlastGame ) -> void:
@@ -70,6 +71,16 @@ func hit( damage: float, fired_from: BlastShipBody ) -> void:
 		destroy()
 
 
+func burn( damage: float ) -> void:
+	if is_destroyed:
+		return
+	hit_points -= damage
+	if not burn_sound.playing:
+		burn_sound.play()
+	if hit_points <= 0:
+		destroy( true )
+
+
 func draw_damage() -> void:
 	var cracks = roundi( ( ( last_hit_points - hit_points ) / max_hit_points ) * num_cracks )
 	if cracks == 0:
@@ -85,11 +96,12 @@ func draw_damage() -> void:
 	sprite.texture.update( img )
 
 
-func destroy() -> void:
+func destroy( is_burned: bool = false) -> void:
 	if is_destroyed:
 		return
 	is_destroyed = true
-	explode_sound.play()
+	if not is_burned:
+		explode_sound.play()
 	var num_explosions = 10
 	var exp_size = 1.5
 	var duration = num_explosions * 0.1 + 0.1
@@ -100,7 +112,8 @@ func destroy() -> void:
 	var radius = sqrt( rect.size.x * rect.size.x + rect.size.y * rect.size.y ) * 0.5
 	await game.create_explosions( num_explosions, radius, self, exp_size )
 	set_collision_layer_value( 1, false )
-	breakup_rock()
+	if not is_burned:
+		breakup_rock()
 	freeze = true
 	await get_tree().physics_frame
 	if tween.is_running():

@@ -109,6 +109,7 @@ var lives_image
 var body_collision: CollisionPolygon2D
 var base_gun_points: Array
 var energy_tween: Tween
+var is_burning: bool = false
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -123,6 +124,7 @@ var energy_tween: Tween
 @onready var hit_sound2: AudioStreamPlayer = $Sounds/Hit2
 @onready var hit_sound3: AudioStreamPlayer = $Sounds/Hit3
 @onready var hit_sound4: AudioStreamPlayer = $Sounds/Hit4
+@onready var burn_sound: AudioStreamPlayer = $Sounds/Burn
 @onready var collide_sound: AudioStreamPlayer = $Sounds/Collide
 @onready var select_sound: AudioStreamPlayer = $Sounds/Select
 @onready var charge_sound: AudioStreamPlayer = $Sounds/ChargeSound
@@ -402,12 +404,13 @@ func fire_lasers( delta: float ) -> void:
 		toggle_weapon_down()
 
 
-func destroy() -> void:
+func destroy( is_burned: bool = false ) -> void:
 	if is_destroyed:
 		return
 	speed = 0
 	is_destroyed = true
-	explosion_sound.play()
+	if not is_burned:
+		explosion_sound.play()
 	for clone in clones:
 		var clone_sprite: Sprite2D = clone.get_node( "Sprite2D" )
 		var tween = create_tween()
@@ -415,9 +418,10 @@ func destroy() -> void:
 	for clone in minimap_clones:
 		clone.modulate.a = 0
 	modulate.a = 0.5
-	await game.create_explosions( 10, shields_radius, self, 1.5 )
-	var count: int = roundi( ( energy / max_energy ) * 30 )
-	game.create_pickups( position, linear_velocity, count, 100, 5 )
+	if not is_burned:
+		await game.create_explosions( 10, shields_radius, self, 1.5 )
+		var count: int = roundi( ( energy / max_energy ) * 30 )
+		game.create_pickups( position, linear_velocity, count, 100, 5 )
 	disable()
 	lives -= 1
 	await get_tree().create_timer( 1.5 ).timeout
@@ -448,6 +452,8 @@ func reset_ship() -> void:
 		shapecast.target_position = Vector2.ZERO
 		shapecast.force_shapecast_update()
 		is_clear = not shapecast.is_colliding()
+	if Blast.settings.map_type == 1:
+		linear_velocity = game.calc_orbit_velocity( self, game.planets[ 0 ].area )
 	modulate.a = 1.0
 	$Sounds/StartSound.play()
 	var duration: float = 1.5
@@ -687,6 +693,21 @@ func hit( damage: float, fired_from: BlastShipBody ) -> void:
 			destroy()
 
 
+func burn( damage: float ) -> void:
+	if is_destroyed or is_invulnerable:
+		return
+	is_burning = true
+	if not burn_sound.playing:
+		burn_sound.play()
+	shields -= damage
+	if shields < 0:
+		health += shields
+		shields = 0
+		if health <= 0:
+			is_burning = false
+			destroy( true )
+
+
 func pickup( boost: float ) -> void:
 	var energy_charge = boost
 	if energy + boost > max_energy:
@@ -766,6 +787,7 @@ func _physics_process( delta: float ) -> void:
 	process_energy( delta )
 	update_clones( delta )
 	is_alternate_tick = !is_alternate_tick
+	is_burning = false
 
 
 func _on_body_entered( node: Node2D ) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://10i1qjfhmetd"]
+[gd_scene load_steps=22 format=3 uid="uid://10i1qjfhmetd"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship_body.gd" id="1_u0bsr"]
 [ext_resource type="Texture2D" uid="uid://ggpbb6a2uedl" path="res://Games/Blastroids/Images/spaceship4_0.png" id="2_3xxbo"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://b5nbq8moy5egm" path="res://Assets/Sounds/hit_body1.wav" id="11_6px5u"]
 [ext_resource type="AudioStream" uid="uid://u1xwqlocv1ab" path="res://Assets/Sounds/select.wav" id="12_beo2e"]
 [ext_resource type="AudioStream" uid="uid://17jw1g06582q" path="res://Assets/Sounds/hit_body2.wav" id="12_wh508"]
+[ext_resource type="AudioStream" uid="uid://dnoudo8w8g6tk" path="res://Assets/Sounds/burn.wav" id="13_3b6fo"]
 [ext_resource type="AudioStream" uid="uid://c6lkhefy7g0iw" path="res://Assets/Sounds/charge2.wav" id="13_t0cbb"]
 [ext_resource type="AudioStream" uid="uid://cyw3lufs1hukc" path="res://Assets/Sounds/explosion.wav" id="14_wr8xf"]
 [ext_resource type="AudioStream" uid="uid://cqalw1ktlp1mi" path="res://Assets/Sounds/next_turn_2.wav" id="15_qavu0"]
@@ -130,6 +131,10 @@ bus = &"Sound"
 stream = ExtResource("12_wh508")
 volume_db = 6.0
 max_polyphony = 2
+bus = &"Sound"
+
+[node name="Burn" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_3b6fo")
 bus = &"Sound"
 
 [node name="Collide" type="AudioStreamPlayer" parent="Sounds"]

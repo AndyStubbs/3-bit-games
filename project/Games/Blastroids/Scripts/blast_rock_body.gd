@@ -46,7 +46,7 @@ const DATA = {
 }
 
 
-@export var rock_size: String = "large"
+@export var rock_size: String = "medium"
 
 
 var rock_width: float = 50.0
@@ -65,13 +65,16 @@ var texture: ImageTexture
 var is_energy_dense: bool = false
 var energy_dense_chance: float = 0.1
 var energy_tween: Tween
+var is_loaded: bool = false
+var shape_cast: ShapeCast2D
 
 
 @onready var poly: CollisionPolygon2D = $CollisionPolygon2D
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var hit_sound: AudioStreamPlayer = $Hit
-@onready var hit_sound2: AudioStreamPlayer = $Hit2
-@onready var explode_sound: AudioStreamPlayer = $Explode
+@onready var hit_sound: AudioStreamPlayer = $Sounds/Hit
+@onready var hit_sound2: AudioStreamPlayer = $Sounds/Hit2
+@onready var burn_sound: AudioStreamPlayer = $Sounds/Burn
+@onready var explode_sound: AudioStreamPlayer = $Sounds/Explode
 
 
 func init( new_game: BlastGame ) -> void:
@@ -94,9 +97,9 @@ func init( new_game: BlastGame ) -> void:
 		minimap_clones.append( minimap_clone )
 
 
-func load_rock( size: String ) -> void:
-	var rock_id = str( Blast.rock_names[ size ].pick_random() )
-	var file_name = "res://Games/Blastroids/Rocks/" + size + "/rock-" + rock_id
+func load_rock() -> void:
+	var rock_id = str( Blast.rock_names[ rock_size ].pick_random() )
+	var file_name = "res://Games/Blastroids/Rocks/" + rock_size + "/rock-" + rock_id
 	var load_file = FileAccess.open( file_name + ".json", FileAccess.READ )
 	var json_string = load_file.get_as_text()
 	var data = JSON.parse_string( json_string )
@@ -124,6 +127,12 @@ func load_rock( size: String ) -> void:
 	poly.position = Vector2( -rock_width / 2, -rock_height / 2 )
 	sprite.texture = load( file_name + ".png" )
 	img = sprite.texture.get_image()
+	is_loaded = true
+	shape_cast = $ShapeCast2D
+	if rock_width > rock_height:
+		shape_cast.shape.radius = rock_width / 2
+	else:
+		shape_cast.shape.radius = rock_height / 2
 
 
 func calc_mass() -> void:
@@ -145,6 +154,16 @@ func hit( damage: float, fired_from: BlastShipBody ) -> void:
 		destroy()
 
 
+func burn( damage: float ) -> void:
+	if is_destroyed:
+		return
+	hit_points -= damage
+	if not burn_sound.playing:
+		burn_sound.play()
+	if hit_points <= 0:
+		destroy( true )
+
+
 func draw_damage() -> void:
 	var cracks = roundi( ( ( last_hit_points - hit_points ) / max_hit_points ) * num_cracks )
 	if cracks == 0:
@@ -160,10 +179,11 @@ func draw_damage() -> void:
 	sprite.texture.update( img )
 
 
-func destroy() -> void:
+func destroy( is_burned: bool = false ) -> void:
 	if is_destroyed:
 		return
-	explode_sound.play()
+	if not is_burned:
+		explode_sound.play()
 	var num_explosions = DATA[ rock_size ].exp_num
 	var exp_size = DATA[ rock_size ].exp_size
 	var duration = num_explosions * 0.1 + 0.1
@@ -175,7 +195,8 @@ func destroy() -> void:
 	await game.create_explosions( num_explosions, radius, self, exp_size )
 	set_collision_layer_value( 1, false )
 	set_collision_mask_value( 1, false )
-	breakup_rock()
+	if not is_burned:
+		breakup_rock()
 	await get_tree().physics_frame
 	if tween.is_running():
 		await tween.finished
@@ -237,10 +258,12 @@ func _ready() -> void:
 	hit_points = DATA[ rock_size ].hit_points
 	last_hit_points = hit_points
 	max_hit_points = hit_points
-	load_rock( rock_size )
+	if not is_loaded:
+		load_rock()
 	calc_mass()
 	await get_tree().create_timer( 0.1 ).timeout
 	set_collision_layer_value( 1, true )
+	set_collision_mask_value( 1, true )
 
 
 func _physics_process( _delta: float ) -> void:

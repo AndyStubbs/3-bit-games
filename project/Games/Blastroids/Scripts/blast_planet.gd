@@ -11,6 +11,7 @@ var radius: float = 100
 
 @onready var sprite = $Sprite2D
 @onready var area = $Area2D
+@onready var collision_shape = $Area2D/CollisionShape2D
 
 
 func init( new_game: BlastGame ) -> void:
@@ -49,14 +50,14 @@ func _physics_process( delta: float ) -> void:
 		var distance = abs( radius - position.distance_to( body.position ) )
 		var damage = distance * distance * delta * 0.15
 		print( damage )
-		body.hit( damage, null )
+		body.burn( damage )
 
 
 func _on_atmosphere_area_body_entered( body: Node2D ) -> void:
-	if body.has_method( "hit" ):
+	if body.has_method( "burn" ):
 		atmosphere_bodies.append( body )
 
 
 func _on_atmosphere_area_body_exited( body: Node2D ) -> void:
-	if body.has_method( "hit" ):
+	if body.has_method( "burn" ):
 		atmosphere_bodies.erase( body )

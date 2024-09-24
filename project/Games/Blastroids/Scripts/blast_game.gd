@@ -160,7 +160,7 @@ var ships: Array = []
 var minimaps: Array = []
 var ui_items: Array = []
 var planets: Array = []
-
+var rigid_bodies: Array = []
 
 @onready var bodies = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
 @onready var pickup_sound = $Sounds/PickupSound
@@ -222,24 +222,39 @@ func init() -> void:
 	bodies.add_child( border_bottom )
 	
 	# Create solar stytem
-	var planet = PLANET_SCENE.instantiate()
-	planet.position = Vector2(
-		rect.position.x + rect.size.x / 2,
-		rect.position.y + rect.size.y / 2
-	)
-	bodies.add_child( planet )
-	planets.append( planet )
+	if Blast.settings.map_type == 1:
+		var planet = PLANET_SCENE.instantiate()
+		planet.position = Vector2(
+			rect.position.x + rect.size.x / 2,
+			rect.position.y + rect.size.y / 2
+		)
+		bodies.add_child( planet )
+		var radius = rect.size.x / 2
+		if rect.size.y < rect.size.x:
+			radius = rect.size.y / 2
+		planet.collision_shape.shape.radius = radius
+		planets.append( planet )
 	
 	# Create Rocks
 	var num_rocks = Blast.get_num_rocks()
+	if Blast.settings.map_type == 1:
+		num_rocks = roundi( num_rocks * 0.5 )
 	for i in range( num_rocks ):
 		var rock: BlastRockBody = ROCK_SCENE.instantiate()
-		rock.position = get_random_start_pos()
-		rock.linear_velocity = Vector2.from_angle( randf_range( 0, TAU ) ) * 100
-		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 		rock.rock_size = rock_sizes.pick_random()
+		rock.set_collision_mask_value( 1, false )
 		bodies.add_child( rock )
-		rock.linear_velocity = calc_orbit_velocity( rock, planets[ 0 ].area )
+		rigid_bodies.append( rock )
+		var is_placed: bool = false
+		while not is_placed:
+			rock.position = get_random_start_pos()
+			rock.shape_cast.force_shapecast_update()
+			is_placed = not rock.shape_cast.is_colliding()
+		if Blast.settings.map_type == 1:
+			rock.linear_velocity = calc_orbit_velocity( rock, planets[ 0 ].area )
+		else:
+			rock.linear_velocity = Vector2.from_angle( randf_range( 0, TAU ) ) * 100
+		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 	
 	# Create Crates
 	var crate_size = 50
@@ -259,6 +274,7 @@ func init() -> void:
 			var crate: BlastCrate = CRATE_SCENE.instantiate()
 			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
 			bodies.add_child( crate )
+			rigid_bodies.append( crate )
 			crate.linear_velocity = calc_orbit_velocity( crate, planets[ 0 ].area )
 			x += 1
 			if x >= cols:
@@ -272,9 +288,22 @@ func init() -> void:
 			var player = Globals.players[ player_id ]
 			body.setup_ship( player )
 			ships.append( body )
+			rigid_bodies.append( body )
 			player_id += 1
 		if body.has_method( "init" ):
 			body.init( self )
+	
+	# Recalculate linear velocity after first few frames
+	if Blast.settings.map_type == 1:
+		await get_tree().physics_frame
+		for body in rigid_bodies:
+			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
+		await get_tree().physics_frame
+		for body in rigid_bodies:
+			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
+		await get_tree().physics_frame
+		for body in rigid_bodies:
+			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
 
 
 func calc_orbit_velocity( body: RigidBody2D, planet: Area2D ) -> Vector2:
@@ -304,10 +333,24 @@ func get_random_start_pos( buffer: float = 0 ) -> Vector2:
 	var min_y: float = rect.position.y + buffer
 	var max_x: float = rect.position.x + rect.size.x - buffer * 2
 	var max_y: float = rect.position.y + rect.size.y - buffer * 2
-	return Vector2(
-		randf_range( min_x, max_x ),
-		randf_range( min_y, max_y )
-	)
+	if Blast.settings.map_type == 0:
+		return Vector2(
+			randf_range( min_x, max_x ),
+			randf_range( min_y, max_y )
+		)
+	elif Blast.settings.map_type == 1:
+		var radius = rect.size.x * 0.45
+		if rect.size.y < rect.size.x:
+			radius = rect.size.y * 0.45
+		var p = planets[ 0 ]
+		var a = randf_range( 0, TAU )
+		var r = randf_range( p.radius + 500, radius - 500 )
+		return Vector2( cos( a ) * r, sin( a ) * r )
+	else:
+		return Vector2(
+			randf_range( min_x, max_x ),
+			randf_range( min_y, max_y )
+		)
 
 
 func fill_array( item, size ) -> Array:

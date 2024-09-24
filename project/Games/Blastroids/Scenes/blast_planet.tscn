@@ -28,7 +28,6 @@ gravity_direction = Vector2(0, 0)
 gravity = 9.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("CircleShape2D_0klmj")
 
 [node name="Camera2D" type="Camera2D" parent="Area2D"]

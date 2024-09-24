@@ -27,6 +27,7 @@ var enemies: Array = []
 @onready var ship_vectors: Node2D = $Vector/Ships
 @onready var gun_charges: Node2D = $Sprite2D/GunCharges
 @onready var low_energy_sprite: Sprite2D = $LowEnergySprite
+@onready var burn_particles: GPUParticles2D = $BurnParticles
 
 
 func init_stars( star_scene: PackedScene ) -> void:
@@ -96,6 +97,7 @@ func update( delta: float ) -> void:
 		for child in gun_charges.get_children():
 			child.scale = Vector2( ship_body.blast_charge_size, ship_body.blast_charge_size )
 			child.position.x = 28 + ship_body.blast_charge_size * 10
+	burn_particles.emitting = ship_body.is_burning
 	if is_main_ship:
 		update_main_ship( delta )
 

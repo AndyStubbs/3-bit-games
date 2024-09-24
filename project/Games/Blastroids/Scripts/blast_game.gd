@@ -223,23 +223,54 @@ func init_containers() -> void:
 		subviewport_container.scale = Vector2( map_scale, map_scale )
 		
 		# Create grid
-		var y = rect.position.y
-		for x2 in range( rect.position.x, rect.size.x, grid_size ):
-			var line = Line2D.new()
-			line.add_point( Vector2( x2, y ) )
-			line.add_point( Vector2( x2, y + rect.size.y + grid_size ) )
-			line.modulate = Color( 0.1, 0.1, 0.75, 0.75 )
-			line.width = 3 / map_scale
-			minimap.add_child( line )
 		
+		# Vertical lines
+		var y = rect.position.y
+		for x2 in range( grid_size, rect.size.x / 2, grid_size ):
+			for i in range( 2 ):
+				var flip: float = 1
+				if i == 1:
+					flip = -1
+				var line = Line2D.new()
+				line.add_point( Vector2( x2 * flip, y ) )
+				line.add_point( Vector2( x2 * flip, rect.size.y / 2 ) )
+				line.modulate = Color( 0.1, 0.1, 0.75, 0.75 )
+				line.width = 3 / map_scale
+				minimap.add_child( line )
+		
+		# Horizontal Lines
 		var x = rect.position.x
-		for y2 in range( rect.position.y, rect.size.y, grid_size ):
-			var line = Line2D.new()
-			line.add_point( Vector2( x, y2 ) )
-			line.add_point( Vector2( x + rect.size.x + grid_size, y2 ) )
-			line.modulate = Color( 0.1, 0.1, 0.75, 0.75 )
-			line.width = 3 / map_scale
-			minimap.add_child( line )
+		for y2 in range( grid_size, rect.size.y, grid_size ):
+			for i in range( 2 ):
+				var flip: float = 1
+				if i == 1:
+					flip = -1
+				var line = Line2D.new()
+				line.add_point( Vector2( x, y2 * flip ) )
+				line.add_point( Vector2( x + rect.size.x, y2 * flip ) )
+				line.modulate = Color( 0.1, 0.1, 0.75, 0.75 )
+				line.width = 3 / map_scale
+				minimap.add_child( line )
+		
+		# Draw vertical bold lines
+		var xs: Array = [ -rect.size.x / 2, 0, rect.size.x / 2 ]
+		for i in range( xs.size() ):
+			var line3 = Line2D.new()
+			line3.add_point( Vector2( xs[ i ], y ) )
+			line3.add_point( Vector2( xs[ i ], rect.size.y / 2 ) )
+			line3.modulate = Color( 0.2, 0.2, 0.9, 1 )
+			line3.width = 3 / map_scale
+			minimap.add_child( line3 )
+		
+		# Draw horizontal bold line
+		var ys: Array = [ -rect.size.y / 2, 0, rect.size.y / 2 ]
+		for i in range( 3 ):
+			var line4 = Line2D.new()
+			line4.add_point( Vector2( x, ys[ i ] ) )
+			line4.add_point( Vector2( x + rect.size.x, ys[ i ] ) )
+			line4.modulate = Color( 0.2, 0.2, 0.9, 1 )
+			line4.width = 3 / map_scale
+			minimap.add_child( line4 )
 
 
 func init_borders() -> void:

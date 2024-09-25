@@ -1,8 +1,7 @@
 1. Add burn-up graphics and sounds for objects entering atmosphere.									**** COMPLETE ****
 2. Fix orbital velocities on load with planets														**** COMPLETE ****
 3. Add lines to minimap to show coordinates, they will show movement of ship.						**** COMPLETE ****
-	a. Thick center lines and border lines															
-	b. Think grid lines
+	a. Thick center lines and border lines															**** COMPLETE ****	
 4. Only load planet when planet setting is selected													**** COMPLETE ****
 5. Add solar system map.
 6. Improve AI behavior

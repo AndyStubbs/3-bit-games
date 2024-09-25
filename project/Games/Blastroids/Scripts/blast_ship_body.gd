@@ -454,8 +454,8 @@ func reset_ship() -> void:
 		shapecast.target_position = Vector2.ZERO
 		shapecast.force_shapecast_update()
 		is_clear = not shapecast.is_colliding()
-	if Blast.settings.map_type == 1:
-		linear_velocity = game.calc_orbit_velocity( self, game.planets[ 0 ].area )
+	if Blast.settings.map_type > 0:
+		linear_velocity = game.get_orbit_velocity( self )
 	modulate.a = 1.0
 	$Sounds/StartSound.play()
 	var duration: float = 1.5

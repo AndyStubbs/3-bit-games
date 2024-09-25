@@ -52,9 +52,11 @@ func get_num_crates() -> int:
 
 func get_rect() -> Rect2:
 	var rect: Rect2 = Rect2( -1920, -1080, 3840, 2160 )
-	if settings.map_type == 1:
+	if settings.map_type > 0:
 		rect = Rect2( -1920, -1920, 3840, 3840 )
 	var mult = ( settings.map_size + 1 )
+	if settings.map_type == 2:
+		mult += 2
 	return Rect2( rect.position * mult, rect.size * mult )
 
 

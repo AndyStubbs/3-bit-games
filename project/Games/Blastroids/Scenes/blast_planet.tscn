@@ -1,25 +1,25 @@
 [gd_scene load_steps=6 format=3 uid="uid://ceraxjp8kfuop"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_planet.gd" id="1_j6v0q"]
-[ext_resource type="Texture2D" uid="uid://ibwp87f17870" path="res://Games/Blastroids/Images/earth.png" id="1_x4yrm"]
+[ext_resource type="Texture2D" uid="uid://byga0y14t6786" path="res://Games/Blastroids/Images/mars.webp" id="2_l88hp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0klmj"]
-radius = 2500.0
+radius = 1800.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g23qq"]
-radius = 450.0
+radius = 385.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2bcj"]
-radius = 100.0
+radius = 40.0
 
 [node name="BlastPlanet" type="Node2D"]
 script = ExtResource("1_j6v0q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
-texture = ExtResource("1_x4yrm")
+texture = ExtResource("2_l88hp")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="GravityArea" type="Area2D" parent="."]
 gravity_space_override = 1
 gravity_point = true
 gravity_point_unit_distance = 2500.0
@@ -27,10 +27,10 @@ gravity_point_center = Vector2(0, 0)
 gravity_direction = Vector2(0, 0)
 gravity = 9.8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea"]
 shape = SubResource("CircleShape2D_0klmj")
 
-[node name="Camera2D" type="Camera2D" parent="Area2D"]
+[node name="Camera2D" type="Camera2D" parent="GravityArea"]
 zoom = Vector2(0.75, 0.75)
 
 [node name="AtmosphereArea" type="Area2D" parent="."]
@@ -44,5 +44,7 @@ shape = SubResource("CircleShape2D_g23qq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("CircleShape2D_u2bcj")
 
+[connection signal="body_entered" from="GravityArea" to="." method="_on_gravity_area_body_entered"]
+[connection signal="body_exited" from="GravityArea" to="." method="_on_gravity_area_body_exited"]
 [connection signal="body_entered" from="AtmosphereArea" to="." method="_on_atmosphere_area_body_entered"]
 [connection signal="body_exited" from="AtmosphereArea" to="." method="_on_atmosphere_area_body_exited"]

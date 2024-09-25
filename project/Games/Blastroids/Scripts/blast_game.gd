@@ -161,6 +161,8 @@ var minimaps: Array = []
 var ui_items: Array = []
 var planets: Array = []
 var rigid_bodies: Array = []
+var init_time: float
+
 
 @onready var bodies = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
 @onready var pickup_sound = $Sounds/PickupSound
@@ -185,18 +187,6 @@ func init() -> void:
 			player_id += 1
 		if body.has_method( "init" ):
 			body.init( self )
-	
-	# Recalculate linear velocity after first few frames
-	if Blast.settings.map_type == 1:
-		await get_tree().physics_frame
-		for body in rigid_bodies:
-			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
-		await get_tree().physics_frame
-		for body in rigid_bodies:
-			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
-		await get_tree().physics_frame
-		for body in rigid_bodies:
-			body.linear_velocity = calc_orbit_velocity( body, planets[ 0 ].area )
 
 
 func init_containers() -> void:
@@ -211,7 +201,8 @@ func init_containers() -> void:
 	elif Blast.settings.map_size == 3:
 		map_scale = 0.07
 	elif Blast.settings.map_size == 4:
-		map_scale = 0.06
+		#map_scale = 0.06
+		map_scale = 0.04
 	
 	var rect: Rect2 = Blast.get_rect()
 	var grid_size = minf( rect.size.x / 10, rect.size.y / 10 )
@@ -324,19 +315,70 @@ func init_borders() -> void:
 func init_map() -> void:
 	var rect: Rect2 = Blast.get_rect()
 	
-	# Create solar stytem
+	var radius = rect.size.x / 2
+	if rect.size.y < rect.size.x:
+		radius = rect.size.y / 2
+	
+	# Earth System
 	if Blast.settings.map_type == 1:
 		var planet = PLANET_SCENE.instantiate()
+		planet.load( "earth" )
 		planet.position = Vector2(
 			rect.position.x + rect.size.x / 2,
 			rect.position.y + rect.size.y / 2
 		)
 		bodies.add_child( planet )
-		var radius = rect.size.x / 2
-		if rect.size.y < rect.size.x:
-			radius = rect.size.y / 2
-		planet.collision_shape.shape.radius = radius
+		planet.gravity_collision_shape.shape.radius = radius
 		planets.append( planet )
+	
+	# Inner solar system
+	elif Blast.settings.map_type == 2:
+		
+		# The Sun
+		var sun = PLANET_SCENE.instantiate()
+		sun.load( "sun" )
+		sun.position = Vector2(
+			rect.position.x + rect.size.x / 2,
+			rect.position.y + rect.size.y / 2
+		)
+		bodies.add_child( sun )
+		sun.gravity_collision_shape.shape.radius = radius
+		planets.append( sun )
+		
+		# Mercury
+		var mercury = PLANET_SCENE.instantiate()
+		mercury.load( "mercury" )
+		bodies.add_child( mercury )
+		planets.append( mercury )
+		mercury.setup_orbit( sun, 3000 )
+		
+		# Venus
+		var venus = PLANET_SCENE.instantiate()
+		venus.load( "venus" )
+		bodies.add_child( venus )
+		planets.append( venus )
+		venus.setup_orbit( sun, 4000 )
+		
+		# Earth
+		var earth = PLANET_SCENE.instantiate()
+		earth.load( "earth" )
+		bodies.add_child( earth )
+		planets.append( earth )
+		earth.setup_orbit( sun, 5000 )
+		
+		# The Moon
+		var moon = PLANET_SCENE.instantiate()
+		moon.load( "moon" )
+		bodies.add_child( moon )
+		planets.append( moon )
+		moon.setup_orbit( earth, 750 )
+		
+		# Mars
+		var mars = PLANET_SCENE.instantiate()
+		mars.load( "mars" )
+		bodies.add_child( mars )
+		planets.append( mars )
+		mars.setup_orbit( sun, 6000 )
 
 
 func init_rocks() -> void:
@@ -359,12 +401,10 @@ func init_rocks() -> void:
 		rigid_bodies.append( rock )
 		var is_placed: bool = false
 		while not is_placed:
-			rock.position = get_random_start_pos()
+			rock.position = get_random_start_pos( 0, true )
 			rock.shape_cast.force_shapecast_update()
 			is_placed = not rock.shape_cast.is_colliding()
-		if Blast.settings.map_type == 1:
-			rock.linear_velocity = calc_orbit_velocity( rock, planets[ 0 ].area )
-		else:
+		if Blast.settings.map_type == 0:
 			rock.linear_velocity = Vector2.from_angle( randf_range( 0, TAU ) ) * 100
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 
@@ -390,21 +430,24 @@ func init_crates() -> void:
 			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
 			bodies.add_child( crate )
 			rigid_bodies.append( crate )
-			if Blast.settings.map_type == 1:
-				crate.linear_velocity = calc_orbit_velocity( crate, planets[ 0 ].area )
 			x += 1
 			if x >= cols:
 				x = 0
 				y += 1
 
 
-func calc_orbit_velocity( body: RigidBody2D, planet: Area2D ) -> Vector2:
+func get_orbit_velocity( body: RigidBody2D ) -> Vector2:
+	return calc_orbit_velocity_from_planet( body, planets[ 0 ] )
+
+
+func calc_orbit_velocity_from_planet( body: RigidBody2D, planet: BlastPlanet ) -> Vector2:
+	var area = planet.gravity_area
 	var speed_multiplier = 1.0
 	var distance_to_planet = ( planet.position - body.position ).length()
 
 	# Get the gravity and unit distance from the planet
-	var gravity_strength = planet.gravity
-	var gravity_point_unit_distance = planet.gravity_point_unit_distance
+	var gravity_strength = area.gravity
+	var gravity_point_unit_distance = area.gravity_point_unit_distance
 
 	# Calculate the effective gravity at the current distance using the inverse square law
 	var effective_gravity = gravity_strength * pow( gravity_point_unit_distance / distance_to_planet, 2 )
@@ -419,30 +462,36 @@ func calc_orbit_velocity( body: RigidBody2D, planet: Area2D ) -> Vector2:
 	return direction.rotated( deg_to_rad( 90 ) ) * orbit_speed
 
 
-func get_random_start_pos( buffer: float = 0 ) -> Vector2:
+func get_random_start_pos( buffer: float = 0, is_rock: bool = false ) -> Vector2:
 	var rect: Rect2 = Blast.get_rect()
 	var min_x: float = rect.position.x + buffer
 	var min_y: float = rect.position.y + buffer
 	var max_x: float = rect.position.x + rect.size.x - buffer * 2
 	var max_y: float = rect.position.y + rect.size.y - buffer * 2
+	var pos: Vector2
 	if Blast.settings.map_type == 0:
-		return Vector2(
+		pos = Vector2(
 			randf_range( min_x, max_x ),
 			randf_range( min_y, max_y )
 		)
-	elif Blast.settings.map_type == 1:
-		var radius = rect.size.x * 0.45
-		if rect.size.y < rect.size.x:
-			radius = rect.size.y * 0.45
-		var p = planets[ 0 ]
-		var a = randf_range( 0, TAU )
-		var r = randf_range( p.radius + 500, radius - 500 )
-		return Vector2( cos( a ) * r, sin( a ) * r )
 	else:
-		return Vector2(
-			randf_range( min_x, max_x ),
-			randf_range( min_y, max_y )
-		)
+		var sun = planets[ 0 ]
+		var min_radius = sun.radius + 500
+		var max_radius = sun.gravity_collision_shape.shape.radius
+		if is_rock:
+			min_radius = 10000
+		var is_placed: bool = false
+		var safe_distance: float = 1000 * 1000
+		while not is_placed:
+			var a = randf_range( 0, TAU )
+			var r = randf_range( min_radius, max_radius )
+			pos = Vector2( cos( a ) * r, sin( a ) * r )
+			is_placed = true
+			for planet in planets:
+				var distance = pos.distance_squared_to( planet.position )
+				if distance < safe_distance:
+					is_placed = false
+	return pos
 
 
 func fill_array( item, size ) -> Array:
@@ -584,8 +633,12 @@ func _ready() -> void:
 				)
 			)
 	init()
+	init_time = Time.get_ticks_msec() + 1000
 
 
 func _physics_process( _delta: float ) -> void:
 	if Input.is_action_just_pressed( "Exit" ):
 		get_tree().change_scene_to_packed( Blast.scenes.menu )
+	if Blast.settings.map_type > 0 and Time.get_ticks_msec() < init_time:
+		for body: RigidBody2D in rigid_bodies:
+			body.linear_velocity = get_orbit_velocity( body )

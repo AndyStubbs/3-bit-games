@@ -10,6 +10,8 @@ enum WEAPONS {
 const SHIP_BODY = preload( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" )
 const PL_ONE = preload( "res://Games/Blastroids/Scenes/pl_one.tscn" )
 const PL_TWO = preload( "res://Games/Blastroids/Scenes/pl_two.tscn" )
+const PL_THREE = preload( "res://Games/Blastroids/Scenes/pl_three.tscn" )
+const PLAYER_UI_SMALL = preload( "res://Games/Blastroids/Images/blast_player_ui_small.png" )
 const BUFFER = 1000
 const BORDER_SHADER = preload( "res://Games/Blastroids/Scripts/v_drops.gdshader" )
 const MINIMAP_SHADER = preload( "res://Shaders/outline.gdshader" )
@@ -631,8 +633,10 @@ func setup_players() -> void:
 	var pl: Panel
 	if players.size() == 1:
 		pl = PL_ONE.instantiate()
-	else:
+	elif players.size() == 2:
 		pl = PL_TWO.instantiate()
+	else:
+		pl = PL_THREE.instantiate()
 	$Players.add_child( pl )
 	
 	var bodies2 = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cy6ldm2vsyd1y"]
 
-[ext_resource type="Script" path="res://Games/Blastroids/Scripts/players_one.gd" id="1_8a8qd"]
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/pl_one.gd" id="1_8a8qd"]
 [ext_resource type="PackedScene" uid="uid://y5f3aijgvm8l" path="res://Games/Blastroids/Scenes/blast_cont.tscn" id="2_ggwdk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpu2v"]

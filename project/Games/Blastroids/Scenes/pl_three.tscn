@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvxbl10sp3rus"]
+[gd_scene load_steps=4 format=3 uid="uid://2uk6x44fc863"]
 
-[ext_resource type="PackedScene" uid="uid://y5f3aijgvm8l" path="res://Games/Blastroids/Scenes/blast_cont.tscn" id="1_ibuer"]
-[ext_resource type="Script" path="res://Games/Blastroids/Scripts/pl_two.gd" id="1_qppif"]
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/pl_three.gd" id="1_cl84v"]
+[ext_resource type="PackedScene" uid="uid://y5f3aijgvm8l" path="res://Games/Blastroids/Scenes/blast_cont.tscn" id="2_08y2h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpu2v"]
 bg_color = Color(0, 0, 0, 1)
@@ -13,7 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bpu2v")
-script = ExtResource("1_qppif")
+script = ExtResource("1_cl84v")
 
 [node name="HB" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -24,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 1
 
-[node name="Cont" parent="HB" instance=ExtResource("1_ibuer")]
+[node name="Cont" parent="HB" instance=ExtResource("2_08y2h")]
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="HB"]
@@ -32,5 +32,13 @@ custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 color = Color(1, 1, 1, 0.751)
 
-[node name="Cont2" parent="HB" instance=ExtResource("1_ibuer")]
+[node name="Cont2" parent="HB" instance=ExtResource("2_08y2h")]
+layout_mode = 2
+
+[node name="ColorRect2" type="ColorRect" parent="HB"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0.751)
+
+[node name="Cont3" parent="HB" instance=ExtResource("2_08y2h")]
 layout_mode = 2

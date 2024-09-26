@@ -19,3 +19,4 @@
 	b. When low energy go after crates or energy rocks
 	c. Go after pickups
 	d. Randomly change weapons from time to time.
+16. Fix bug with unable to push ships, probably linear damp?

@@ -1,8 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://dl3rxtqyxc6lo"]
+[gd_scene load_steps=9 format=3 uid="uid://dl3rxtqyxc6lo"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game.gd" id="1_ish2g"]
-[ext_resource type="PackedScene" uid="uid://10i1qjfhmetd" path="res://Games/Blastroids/Scenes/blast_ship_body.tscn" id="2_4de21"]
-[ext_resource type="PackedScene" uid="uid://y5f3aijgvm8l" path="res://Games/Blastroids/Scenes/blast_cont.tscn" id="2_tlaso"]
 [ext_resource type="FontFile" uid="uid://du4fcyuvxpb56" path="res://Assets/Fonts/ProtestGuerrilla-Regular.ttf" id="3_la5p5"]
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game_over.gd" id="3_ypayv"]
 [ext_resource type="AudioStream" uid="uid://0s2eoi25wo8" path="res://Assets/Sounds/pickup_01.wav" id="4_moumk"]
@@ -10,9 +8,6 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amygs"]
 bg_color = Color(0.277528, 0.277528, 0.277528, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpu2v"]
-bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7wbes"]
 bg_color = Color(0, 0, 0, 0.762)
@@ -49,34 +44,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_amygs")
 
 [node name="Players" type="CanvasLayer" parent="."]
 layer = 2
-
-[node name="PL" type="Panel" parent="Players"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bpu2v")
-
-[node name="HB" type="HBoxContainer" parent="Players/PL"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 1
-
-[node name="Cont" parent="Players/PL/HB" instance=ExtResource("2_tlaso")]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="Players/PL/HB"]
-custom_minimum_size = Vector2(1, 0)
-layout_mode = 2
-color = Color(1, 1, 1, 0.751)
-
-[node name="Cont2" parent="Players/PL/HB" instance=ExtResource("2_tlaso")]
-layout_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 3
@@ -175,13 +142,6 @@ render_target_update_mode = 0
 [node name="World" type="Node2D" parent="CanvasLayer/SubViewportContainer/WorldViewport"]
 
 [node name="Bodies" type="Node2D" parent="CanvasLayer/SubViewportContainer/WorldViewport/World"]
-
-[node name="ShipBody" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("2_4de21")]
-
-[node name="ShipBody2" parent="CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies" instance=ExtResource("2_4de21")]
-position = Vector2(180, 0)
-world_id = 1
-controls = "CPU"
 
 [node name="Sounds" type="Node" parent="."]
 

@@ -38,7 +38,8 @@ var settings: Dictionary = {
 	"map_type": 0,
 	"rock_density": 2,
 	"crate_density": 2,
-	"lives_count": 2
+	"lives_count": 2,
+	"added_cpus": 4
 }
 
 

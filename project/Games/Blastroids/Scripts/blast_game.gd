@@ -7,6 +7,9 @@ enum WEAPONS {
 }
 
 
+const SHIP_BODY = preload( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" )
+const PL_ONE = preload( "res://Games/Blastroids/Scenes/pl_one.tscn" )
+const PL_TWO = preload( "res://Games/Blastroids/Scenes/pl_two.tscn" )
 const BUFFER = 1000
 const BORDER_SHADER = preload( "res://Games/Blastroids/Scripts/v_drops.gdshader" )
 const MINIMAP_SHADER = preload( "res://Shaders/outline.gdshader" )
@@ -169,7 +172,8 @@ var init_time: float
 
 
 func init() -> void:
-	ui_items.append( get_node( "Players/PL/HB/ColorRect" ) )
+	var pl = $Players/PL
+	ui_items.append_array( pl.get_ui_items() )
 	init_containers()
 	init_borders()
 	init_map()
@@ -177,14 +181,10 @@ func init() -> void:
 	init_crates()
 	
 	# Initialize all bodies
-	var player_id: int = 0
 	for body in bodies.get_children():
 		if body.has_method( "fire_lasers" ):
-			var player = Globals.players[ player_id ]
-			body.setup_ship( player )
 			ships.append( body )
 			rigid_bodies.append( body )
-			player_id += 1
 		if body.has_method( "init" ):
 			body.init( self )
 
@@ -622,7 +622,41 @@ func set_game_over() -> void:
 		$CanvasLayer/GameOver.start( self )
 
 
+func setup_players() -> void:
+	var players: Array = []
+	for player in Globals.players:
+		if player.enabled:
+			players.append( player )
+	var pl: Panel
+	if players.size() == 1:
+		pl = PL_ONE.instantiate()
+	else:
+		pl = PL_TWO.instantiate()
+	$Players.add_child( pl )
+	
+	var bodies2 = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
+	var world_id = 0
+	for player in players:
+		var ship_body = SHIP_BODY.instantiate()
+		ship_body.world_id = world_id
+		bodies2.add_child( ship_body )
+		ship_body.setup_ship( player )
+		world_id += 1
+	for i in Blast.settings.added_cpus:
+		var ship_body = SHIP_BODY.instantiate()
+		ship_body.world_id = -1
+		bodies2.add_child( ship_body )
+		ship_body.setup_ship( {
+			"colors": null,
+			"name": "CPU " + str( i + 1 ),
+			"controls": "CPU",
+			"image_id": null,
+			"name_changed": false
+		} )
+
+
 func _ready() -> void:
+	setup_players()
 	PhysicsServer2D.area_set_param(
 		get_viewport().find_world_2d().space,
 		PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
@@ -630,7 +664,7 @@ func _ready() -> void:
 	)
 	worlds = []
 	uis = []
-	for child in $Players/PL/HB.get_children():
+	for child in $Players/PL.get_containers():
 		if child is SubViewportContainer:
 			worlds.append( child.get_node( "SubViewport/World" ) )
 			uis.append( child.get_node( "SubViewport/CanvasLayer/PlayerUI" ) )

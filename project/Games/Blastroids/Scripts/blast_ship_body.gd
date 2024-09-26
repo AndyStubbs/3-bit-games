@@ -3,9 +3,7 @@ class_name BlastShipBody
 
 
 const GUN_POINTS: Array = [
-	#[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
 	[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
-	#[ Vector2( 34, -6 ), Vector2( 34, 6 ) ],
 	[ Vector2( 28, -6 ), Vector2( 28, 6 ) ],
 ]
 
@@ -138,6 +136,17 @@ var is_burning: bool = false
 func init( new_game: BlastGame ) -> void:
 	nav_marker.reparent( get_parent() )
 	game = new_game
+	if world_id > -1:
+		init_ui()
+	lives = Blast.settings.lives_count + 1
+	add_weapon( BlastGame.WEAPONS.LASER )
+	weapon_index = 0
+	select_weapon()
+	init_clones()
+	reset_ship()
+
+
+func init_ui() -> void:
 	var ui = game.uis[ world_id ]
 	game.ui_items.append( ui )
 	health_bar = ui.get_node( "ShipData/HealthBar" )
@@ -153,26 +162,31 @@ func init( new_game: BlastGame ) -> void:
 		child_sprite.texture = lives_image
 		child_sprite.modulate = ui_color
 		child_sprite.modulate.a = 0.8
-	lives = Blast.settings.lives_count + 1
-	add_weapon( BlastGame.WEAPONS.LASER )
-	weapon_index = 0
-	select_weapon()
-	init_clones()
-	reset_ship()
 
 
 func setup_ship( settings: Dictionary ) -> void:
-	ship_color = Globals.BLAST_COLORS[ settings.colors ][ 0 ]
-	ui_color = Globals.BLAST_COLORS[ settings.colors ][ 1 ]
+	var settings_colors: int = 0
+	var settings_image_id: int = 0
+	if settings.colors == null:
+		settings_colors = randi_range( 0, Globals.BLAST_COLORS.size() - 1 )
+	else:
+		settings_colors = settings.colors
+	if settings.image_id == null:
+		settings_image_id = randi_range( 0, Globals.BLAST_IMAGES.size() - 1 )
+	else:
+		settings_image_id = settings.image_id
+	ship_color = Globals.BLAST_COLORS[ settings_colors ][ 0 ]
+	ui_color = Globals.BLAST_COLORS[ settings_colors ][ 1 ]
 	if settings.name_changed:
 		display_name = settings.name
 	else:
 		display_name = tr( settings.name )
-	sprite.texture = Globals.BLAST_IMAGES[ settings.image_id ][ 0 ]
-	sprite_markers.texture = Globals.BLAST_IMAGES[ settings.image_id ][ 1 ]
+	controls = settings.controls
+	sprite.texture = Globals.BLAST_IMAGES[ settings_image_id ][ 0 ]
+	sprite_markers.texture = Globals.BLAST_IMAGES[ settings_image_id ][ 1 ]
 	sprite_markers.modulate = ship_color
-	lives_image = Globals.BLAST_IMAGES[ settings.image_id ][ 2 ]
-	if settings.image_id == 0:
+	lives_image = Globals.BLAST_IMAGES[ settings_image_id ][ 2 ]
+	if settings_image_id == 0:
 		body_collision = $BodyCollision1
 		base_gun_points = GUN_POINTS[ 0 ]
 	else:
@@ -180,6 +194,10 @@ func setup_ship( settings: Dictionary ) -> void:
 		base_gun_points = GUN_POINTS[ 1 ]
 	gun_points.get_child( 0 ).position = base_gun_points[ 0 ]
 	gun_points.get_child( 1 ).position = base_gun_points[ 1 ]
+	is_cpu = controls == "CPU"
+	if is_cpu:
+		cpu_ai = BlastCpuAi.new()
+		cpu_ai.init( self )
 
 
 func setup_weapon() -> void:
@@ -197,6 +215,8 @@ func setup_weapon() -> void:
 
 func select_weapon() -> void:
 	weapon = weapon_store[ weapon_index ]
+	if world_id == -1:
+		return
 	var ui = game.uis[ world_id ]
 	var weapon_store_ui: HBoxContainer = ui.get_node( "WeaponsData/Control/HB" )
 	for i in range( weapon_store_ui.get_child_count() ):
@@ -215,6 +235,8 @@ func select_weapon() -> void:
 
 
 func update_ammo() -> void:
+	if world_id == -1:
+		return
 	if weapon_data.AMMO_TYPE == "physical":
 		ammo_label.show()
 		ammo_label.text = "%d" % ammo[ weapon ]
@@ -241,6 +263,8 @@ func add_weapon( new_weapon: BlastGame.WEAPONS ) -> void:
 
 
 func show_hide_weapons() -> void:
+	if world_id == -1:
+		return
 	for panel in weapon_box.get_children():
 		panel.get_child( 0 ).hide()
 		panel.get_child( 1 ).hide()
@@ -769,10 +793,6 @@ func set_collisions( is_enabled: bool ) -> void:
 
 
 func _ready() -> void:
-	is_cpu = controls == "CPU"
-	if is_cpu:
-		cpu_ai = BlastCpuAi.new()
-		cpu_ai.init( self )
 	last_pos = position
 
 
@@ -793,6 +813,8 @@ func _physics_process( delta: float ) -> void:
 	update_clones( delta )
 	is_alternate_tick = !is_alternate_tick
 	is_burning = false
+	if world_id == -1:
+		return
 	coordinates_label.text = "(%d, %d)" % [
 		roundi( position.x / 100 ),
 		roundi( position.y / 100 )

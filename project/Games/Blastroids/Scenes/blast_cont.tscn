@@ -49,7 +49,7 @@ offset_bottom = 1042.0
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(959, 1024)
+size = Vector2i(959, 1080)
 render_target_update_mode = 4
 
 [node name="World" type="Node2D" parent="SubViewport"]
@@ -274,9 +274,9 @@ texture = ExtResource("5_riwqe")
 custom_minimum_size = Vector2(180, 0)
 anchors_preset = 0
 offset_left = 40.0
-offset_top = 960.0
+offset_top = 1025.0
 offset_right = 440.0
-offset_bottom = 1060.0
+offset_bottom = 1125.0
 
 [node name="HB" type="HBoxContainer" parent="SubViewport/CanvasLayer/PlayerUI/Lives"]
 layout_mode = 0
@@ -356,9 +356,9 @@ texture = ExtResource("7_15uv3")
 [node name="Control" type="Control" parent="SubViewport/CanvasLayer/PlayerUI"]
 anchors_preset = 0
 offset_left = 590.0
-offset_top = 760.0
+offset_top = 800.0
 offset_right = 630.0
-offset_bottom = 800.0
+offset_bottom = 840.0
 
 [node name="CoordinatesLabel" type="Label" parent="SubViewport/CanvasLayer/PlayerUI/Control"]
 layout_mode = 0
@@ -371,9 +371,9 @@ text = "(0, 0)"
 [node name="Panel" type="Panel" parent="SubViewport/CanvasLayer/PlayerUI"]
 layout_mode = 0
 offset_left = 580.0
-offset_top = 800.0
+offset_top = 840.0
 offset_right = 941.0
-offset_bottom = 1006.0
+offset_bottom = 1046.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8kbov")
 
 [node name="MiniMap" type="SubViewportContainer" parent="SubViewport/CanvasLayer/PlayerUI/Panel"]

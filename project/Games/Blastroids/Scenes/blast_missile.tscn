@@ -1,9 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://caviusf8qtrg5"]
+[gd_scene load_steps=18 format=3 uid="uid://caviusf8qtrg5"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_missile.gd" id="1_6e8b5"]
 [ext_resource type="Texture2D" uid="uid://y41qpgn83wvo" path="res://Games/ReadyAimFire/Images/self_guided_missile.png" id="1_b3qqa"]
 [ext_resource type="Texture2D" uid="uid://dtc8afgna6x2" path="res://Assets/Images/sphere.png" id="2_fnvvi"]
 [ext_resource type="Texture2D" uid="uid://pqicdh6fphgo" path="res://Games/Blastroids/Images/blast_missile_markers.png" id="4_1h3pe"]
+[ext_resource type="AudioStream" uid="uid://o2ffv7jubl6g" path="res://Assets/Sounds/rocket.wav" id="5_nq5pm"]
+[ext_resource type="AudioStream" uid="uid://xcsh1pisq3yv" path="res://Assets/Sounds/explosion2.wav" id="6_vjsdw"]
+[ext_resource type="AudioStream" uid="uid://csdpp14v8c6nv" path="res://Assets/Sounds/big_explosion.mp3" id="7_ht80b"]
 
 [sub_resource type="Gradient" id="Gradient_optp8"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -82,3 +85,18 @@ texture = ExtResource("1_b3qqa")
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
 texture = ExtResource("4_1h3pe")
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="RocketSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("5_nq5pm")
+volume_db = -8.0
+bus = &"Sound"
+
+[node name="ExplodeSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("6_vjsdw")
+bus = &"Sound"
+
+[node name="ExplodeSound2" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("7_ht80b")
+bus = &"Sound"

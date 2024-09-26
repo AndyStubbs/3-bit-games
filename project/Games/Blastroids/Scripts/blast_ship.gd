@@ -32,6 +32,7 @@ var body_hit_sounds: Array
 @onready var gun_charges: Node2D = $Sprite2D/GunCharges
 @onready var low_energy_sprite: Sprite2D = $LowEnergySprite
 @onready var burn_particles: GPUParticles2D = $BurnParticles
+@onready var start_sound: AudioStreamPlayer2D = $Sounds/StartSound
 @onready var thrust_sound: AudioStreamPlayer2D = $Sounds/ThrustSound
 @onready var laser_sound: AudioStreamPlayer2D = $Sounds/LaserSound
 @onready var laser_sound2: AudioStreamPlayer2D = $Sounds/LaserSound

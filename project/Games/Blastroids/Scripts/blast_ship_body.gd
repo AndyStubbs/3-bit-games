@@ -468,9 +468,10 @@ func reset_ship() -> void:
 	if Blast.settings.map_type > 0:
 		linear_velocity = game.get_orbit_velocity( self )
 	modulate.a = 1.0
-	$Sounds/StartSound.play()
 	var duration: float = 1.5
 	for clone in clones:
+		if clone.is_main_ship:
+			clone.start_sound.play()
 		var clone_sprite: Sprite2D = clone.get_node( "Sprite2D" )
 		var tween = create_tween()
 		var blinks: Array = [ 1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1 ]

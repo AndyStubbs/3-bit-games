@@ -24,9 +24,6 @@ var fired_from_ship: BlastShipBody
 
 @onready var sprite = $Sprite2D
 @onready var marker = $Sprite2D/Sprite2D
-@onready var rocket_sound: AudioStreamPlayer = $RocketSound
-@onready var explode_sound: AudioStreamPlayer = $ExplodeSound
-@onready var big_explode_sound: AudioStreamPlayer = $ExplodeSound2
 
 
 func init( fired_from: BlastShipBody ) -> void:
@@ -76,13 +73,11 @@ func update_clones() -> void:
 		if start_thrust:
 			for gpu: GPUParticles2D in rocket.get_children():
 				gpu.emitting = true
+			clone.rocket_sound.play()
 		elif end_thrust:
 			for gpu: GPUParticles2D in rocket.get_children():
 				gpu.emitting = false
-	if start_thrust:
-		rocket_sound.play()
-	elif end_thrust:
-		rocket_sound.stop()
+			clone.rocket_sound.stop()
 
 
 func get_clones() -> Array:
@@ -161,9 +156,11 @@ func destroy( body_hit = null ) -> void:
 		return
 	is_destroyed = true
 	if explosion_scale.x > 2:
-		big_explode_sound.play()
+		for clone in clones:
+			clone.explode_sound2.play()
 	else:
-		explode_sound.play()
+		for clone in clones:
+			clone.explode_sound.play()
 	
 	# Add Area explosion
 	if is_bomb:
@@ -178,24 +175,35 @@ func destroy( body_hit = null ) -> void:
 					var d = damage * ( dist / exp_size )
 					print( "Hit for: %s" % d )
 					body.hit( d, fired_from_ship )
+	
+	# Create Explosion
 	for world in game.worlds:
 		var explosion = BlastGame.EXPLOSION_SCENE.instantiate()
 		explosion.scale = explosion_scale
 		world.add_child( explosion )
 		explosion.position = position
+	
+	# Stop Rocket Sounds
 	for clone: BlastMissile in clones:
-		clone.queue_free()
-	clones = []
+		clone.rocket_sound.stop()
+	
+	# Stop everthing
 	is_destroyed = true
 	set_collision_layer_value( 1, false )
 	set_collision_mask_value( 1, false )
 	set_physics_process( false )
 	set_process( false )
-	rocket_sound.stop()
+	
+	# Wait until explosion sound is done
 	if explosion_scale.x > 2:
-		await big_explode_sound.finished
+		await clones[ 0 ].explode_sound2.finished
 	else:
-		await explode_sound.finished
+		await clones[ 0 ].explode_sound.finished
+	
+	# Queue free
+	for clone in clones:
+		clone.queue_free()
+	clones = []
 	queue_free()
 
 

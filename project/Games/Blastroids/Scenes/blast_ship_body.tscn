@@ -1,23 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://10i1qjfhmetd"]
+[gd_scene load_steps=8 format=3 uid="uid://10i1qjfhmetd"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship_body.gd" id="1_u0bsr"]
 [ext_resource type="Texture2D" uid="uid://ggpbb6a2uedl" path="res://Games/Blastroids/Images/spaceship4_0.png" id="2_3xxbo"]
 [ext_resource type="Texture2D" uid="uid://ca22402n1bviv" path="res://Games/Blastroids/Images/spaceship3_markers3.png" id="3_e1t4l"]
 [ext_resource type="Texture2D" uid="uid://55fyxo6aygs8" path="res://Assets/Images/cursor.png" id="3_knoh3"]
-[ext_resource type="AudioStream" uid="uid://b6wymg66j681l" path="res://Assets/Sounds/thrust.wav" id="4_3wnfd"]
-[ext_resource type="AudioStream" uid="uid://cv8a7oxvfrwap" path="res://Assets/Sounds/laser_short.wav" id="5_es6bb"]
-[ext_resource type="AudioStream" uid="uid://crjk56u5benq5" path="res://Assets/Sounds/laser_short_2.wav" id="6_0fmls"]
-[ext_resource type="AudioStream" uid="uid://7k4je673lp0r" path="res://Assets/Sounds/laser_short_3.wav" id="7_8vcg3"]
-[ext_resource type="AudioStream" uid="uid://cboxcnfar5jr5" path="res://Assets/Sounds/ship_hit.wav" id="8_rfy71"]
-[ext_resource type="AudioStream" uid="uid://wa6w5fkpx1hc" path="res://Assets/Sounds/ship_hit2.wav" id="9_lvhjq"]
-[ext_resource type="AudioStream" uid="uid://bv66yxwarga0s" path="res://Assets/Sounds/ship_collide2.wav" id="10_xr00q"]
-[ext_resource type="AudioStream" uid="uid://b5nbq8moy5egm" path="res://Assets/Sounds/hit_body1.wav" id="11_6px5u"]
-[ext_resource type="AudioStream" uid="uid://u1xwqlocv1ab" path="res://Assets/Sounds/select.wav" id="12_beo2e"]
-[ext_resource type="AudioStream" uid="uid://17jw1g06582q" path="res://Assets/Sounds/hit_body2.wav" id="12_wh508"]
-[ext_resource type="AudioStream" uid="uid://dnoudo8w8g6tk" path="res://Assets/Sounds/burn.wav" id="13_3b6fo"]
-[ext_resource type="AudioStream" uid="uid://c6lkhefy7g0iw" path="res://Assets/Sounds/charge2.wav" id="13_t0cbb"]
-[ext_resource type="AudioStream" uid="uid://cyw3lufs1hukc" path="res://Assets/Sounds/explosion.wav" id="14_wr8xf"]
-[ext_resource type="AudioStream" uid="uid://cqalw1ktlp1mi" path="res://Assets/Sounds/next_turn_2.wav" id="15_qavu0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5y3kg"]
 radius = 30.0
@@ -88,76 +74,6 @@ monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_kvwq8")
-
-[node name="Sounds" type="Node" parent="."]
-
-[node name="ThrustSound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("4_3wnfd")
-volume_db = -6.734
-bus = &"Sound"
-
-[node name="LaserSound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("5_es6bb")
-volume_db = -8.0
-bus = &"Sound"
-
-[node name="LaserSound2" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_0fmls")
-volume_db = -8.0
-bus = &"Sound"
-
-[node name="LaserSound3" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("7_8vcg3")
-volume_db = -8.0
-bus = &"Sound"
-
-[node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("8_rfy71")
-max_polyphony = 2
-bus = &"Sound"
-
-[node name="Hit2" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("9_lvhjq")
-max_polyphony = 2
-bus = &"Sound"
-
-[node name="Hit3" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("11_6px5u")
-volume_db = 6.0
-max_polyphony = 2
-bus = &"Sound"
-
-[node name="Hit4" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("12_wh508")
-volume_db = 6.0
-max_polyphony = 2
-bus = &"Sound"
-
-[node name="Burn" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("13_3b6fo")
-volume_db = -20.0
-bus = &"Sound"
-
-[node name="Collide" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("10_xr00q")
-bus = &"Sound"
-
-[node name="Select" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("12_beo2e")
-bus = &"Sound"
-
-[node name="ChargeSound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("13_t0cbb")
-pitch_scale = 1.25
-bus = &"Sound"
-
-[node name="ExplosionSound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("14_wr8xf")
-bus = &"Sound"
-
-[node name="StartSound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("15_qavu0")
-bus = &"Sound"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

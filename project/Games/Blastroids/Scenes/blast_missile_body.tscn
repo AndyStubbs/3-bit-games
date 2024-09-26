@@ -1,11 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bdnux64bf5jbs"]
+[gd_scene load_steps=5 format=3 uid="uid://bdnux64bf5jbs"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_missile_body.gd" id="1_bx1gr"]
 [ext_resource type="Texture2D" uid="uid://y41qpgn83wvo" path="res://Games/ReadyAimFire/Images/self_guided_missile.png" id="3_1npcu"]
 [ext_resource type="Texture2D" uid="uid://pqicdh6fphgo" path="res://Games/Blastroids/Images/blast_missile_markers.png" id="3_hjotj"]
-[ext_resource type="AudioStream" uid="uid://o2ffv7jubl6g" path="res://Assets/Sounds/rocket.wav" id="3_yq1t1"]
-[ext_resource type="AudioStream" uid="uid://xcsh1pisq3yv" path="res://Assets/Sounds/explosion2.wav" id="4_nyhm5"]
-[ext_resource type="AudioStream" uid="uid://csdpp14v8c6nv" path="res://Assets/Sounds/big_explosion.mp3" id="6_sdwja"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ndtiy"]
 radius = 4.0
@@ -27,18 +24,5 @@ texture = ExtResource("3_hjotj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ndtiy")
-
-[node name="RocketSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_yq1t1")
-volume_db = -8.0
-bus = &"Sound"
-
-[node name="ExplodeSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_nyhm5")
-bus = &"Sound"
-
-[node name="ExplodeSound2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_sdwja")
-bus = &"Sound"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

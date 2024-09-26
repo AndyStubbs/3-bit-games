@@ -14,7 +14,9 @@ const ZOOM_SIZE = 0.3
 var camera_pos: Vector2
 var rockets: Array = []
 var enemies: Array = []
-
+var laser_sounds: Array
+var shield_hit_sounds: Array
+var body_hit_sounds: Array
 
 @onready var stars = $Stars
 @onready var stars2 = $Stars2
@@ -30,6 +32,19 @@ var enemies: Array = []
 @onready var gun_charges: Node2D = $Sprite2D/GunCharges
 @onready var low_energy_sprite: Sprite2D = $LowEnergySprite
 @onready var burn_particles: GPUParticles2D = $BurnParticles
+@onready var thrust_sound: AudioStreamPlayer2D = $Sounds/ThrustSound
+@onready var laser_sound: AudioStreamPlayer2D = $Sounds/LaserSound
+@onready var laser_sound2: AudioStreamPlayer2D = $Sounds/LaserSound
+@onready var laser_sound3: AudioStreamPlayer2D = $Sounds/LaserSound
+@onready var hit_sound: AudioStreamPlayer2D = $Sounds/Hit
+@onready var hit_sound2: AudioStreamPlayer2D = $Sounds/Hit2
+@onready var hit_sound3: AudioStreamPlayer2D = $Sounds/Hit3
+@onready var hit_sound4: AudioStreamPlayer2D = $Sounds/Hit4
+@onready var burn_sound: AudioStreamPlayer2D = $Sounds/Burn
+@onready var collide_sound: AudioStreamPlayer2D = $Sounds/Collide
+@onready var select_sound: AudioStreamPlayer2D = $Sounds/Select
+@onready var charge_sound: AudioStreamPlayer2D = $Sounds/ChargeSound
+@onready var explosion_sound: AudioStreamPlayer2D = $Sounds/ExplosionSound
 
 
 func init_stars( star_scene: PackedScene ) -> void:
@@ -102,6 +117,32 @@ func update( delta: float ) -> void:
 	burn_particles.emitting = ship_body.is_burning
 	if is_main_ship:
 		update_main_ship( delta )
+	update_sounds()
+
+
+func update_sounds() -> void:
+	if ship_body.start_thrusting and not thrust_sound.playing:
+		thrust_sound.play()
+	if ship_body.stop_thrusting:
+		thrust_sound.stop()
+	if ship_body.is_laser_firing:
+		laser_sounds.pick_random().play()
+	if ship_body.is_shields_hit:
+		shield_hit_sounds.pick_random().play()
+	if ship_body.is_body_hit:
+		body_hit_sounds.pick_random().play()
+	if ship_body.is_burning and not burn_sound.playing:
+		burn_sound.play()
+	if ship_body.collide_sound_volume > 0:
+		collide_sound.volume_db = ship_body.collide_sound_volume
+		if not collide_sound.playing:
+			collide_sound.play()
+	if ship_body.is_selecting and not select_sound.playing:
+		select_sound.play()
+	if ship_body.is_charging and not charge_sound.playing:
+		charge_sound.play()
+	elif not ship_body.is_charging:
+		charge_sound.stop()
 
 
 func update_main_ship( delta: float ) -> void:
@@ -190,6 +231,9 @@ func _ready() -> void:
 		$Sprite2D/Rockets/Rocket2/RocketParticles,
 		$Sprite2D/Rockets/Rocket2/RocketParticles2
 	]
+	laser_sounds = [ laser_sound, laser_sound2, laser_sound3 ]
+	shield_hit_sounds = [ hit_sound, hit_sound2 ]
+	body_hit_sounds = [ hit_sound3, hit_sound4 ]
 	sprite_markers.modulate = ship_body.ui_color
 	gun_charges.modulate = ship_body.ui_color
 	if is_main_ship:

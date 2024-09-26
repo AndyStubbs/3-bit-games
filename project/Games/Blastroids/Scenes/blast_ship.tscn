@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dvdig2uuyxaro"]
+[gd_scene load_steps=41 format=3 uid="uid://dvdig2uuyxaro"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship.gd" id="1_xfd4a"]
 [ext_resource type="Texture2D" uid="uid://dsuvukl4b1wkm" path="res://Games/Blastroids/Images/spaceship3_0.png" id="2_3ecx7"]
@@ -8,6 +8,20 @@
 [ext_resource type="Texture2D" uid="uid://ciwwc0tvdug7y" path="res://Games/Blastroids/Images/blast_charge.png" id="6_ebk61"]
 [ext_resource type="Texture2D" uid="uid://61bx8ffdfayx" path="res://Games/Blastroids/Images/charge_icon.png" id="7_rdedr"]
 [ext_resource type="Texture2D" uid="uid://uhey4p88xqt1" path="res://Games/ReadyAimFire/Images/small_smoke.png" id="8_rqnv8"]
+[ext_resource type="AudioStream" uid="uid://b6wymg66j681l" path="res://Assets/Sounds/thrust.wav" id="9_sjr0w"]
+[ext_resource type="AudioStream" uid="uid://cv8a7oxvfrwap" path="res://Assets/Sounds/laser_short.wav" id="10_lyva7"]
+[ext_resource type="AudioStream" uid="uid://crjk56u5benq5" path="res://Assets/Sounds/laser_short_2.wav" id="11_kavxa"]
+[ext_resource type="AudioStream" uid="uid://7k4je673lp0r" path="res://Assets/Sounds/laser_short_3.wav" id="12_vq3bs"]
+[ext_resource type="AudioStream" uid="uid://cboxcnfar5jr5" path="res://Assets/Sounds/ship_hit.wav" id="13_6sit8"]
+[ext_resource type="AudioStream" uid="uid://wa6w5fkpx1hc" path="res://Assets/Sounds/ship_hit2.wav" id="14_0addj"]
+[ext_resource type="AudioStream" uid="uid://b5nbq8moy5egm" path="res://Assets/Sounds/hit_body1.wav" id="15_50w5d"]
+[ext_resource type="AudioStream" uid="uid://17jw1g06582q" path="res://Assets/Sounds/hit_body2.wav" id="16_v7gh6"]
+[ext_resource type="AudioStream" uid="uid://dnoudo8w8g6tk" path="res://Assets/Sounds/burn.wav" id="17_h3oxw"]
+[ext_resource type="AudioStream" uid="uid://bv66yxwarga0s" path="res://Assets/Sounds/ship_collide2.wav" id="18_c4stj"]
+[ext_resource type="AudioStream" uid="uid://u1xwqlocv1ab" path="res://Assets/Sounds/select.wav" id="19_mkurl"]
+[ext_resource type="AudioStream" uid="uid://c6lkhefy7g0iw" path="res://Assets/Sounds/charge2.wav" id="20_kq3o4"]
+[ext_resource type="AudioStream" uid="uid://cyw3lufs1hukc" path="res://Assets/Sounds/explosion.wav" id="21_3r2ab"]
+[ext_resource type="AudioStream" uid="uid://cqalw1ktlp1mi" path="res://Assets/Sounds/next_turn_2.wav" id="22_xb33u"]
 
 [sub_resource type="Gradient" id="Gradient_e7rvf"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
@@ -222,3 +236,76 @@ offset_left = -18.0
 offset_top = -63.0
 offset_right = 22.0
 offset_bottom = -40.0
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="ThrustSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("9_sjr0w")
+volume_db = -6.734
+bus = &"Sound"
+
+[node name="LaserSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("10_lyva7")
+volume_db = -8.0
+max_polyphony = 3
+bus = &"Sound"
+
+[node name="LaserSound2" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("11_kavxa")
+volume_db = -8.0
+max_polyphony = 3
+bus = &"Sound"
+
+[node name="LaserSound3" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("12_vq3bs")
+volume_db = -8.0
+max_polyphony = 3
+bus = &"Sound"
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("13_6sit8")
+max_polyphony = 2
+bus = &"Sound"
+
+[node name="Hit2" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("14_0addj")
+max_polyphony = 2
+bus = &"Sound"
+
+[node name="Hit3" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("15_50w5d")
+volume_db = 6.0
+max_polyphony = 2
+bus = &"Sound"
+
+[node name="Hit4" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("16_v7gh6")
+volume_db = 6.0
+max_polyphony = 2
+bus = &"Sound"
+
+[node name="Burn" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("17_h3oxw")
+volume_db = -20.0
+bus = &"Sound"
+
+[node name="Collide" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("18_c4stj")
+bus = &"Sound"
+
+[node name="Select" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("19_mkurl")
+bus = &"Sound"
+
+[node name="ChargeSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("20_kq3o4")
+pitch_scale = 1.25
+bus = &"Sound"
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("21_3r2ab")
+bus = &"Sound"
+
+[node name="StartSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("22_xb33u")
+bus = &"Sound"

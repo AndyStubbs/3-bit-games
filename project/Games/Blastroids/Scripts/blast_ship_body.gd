@@ -109,25 +109,18 @@ var body_collision: CollisionPolygon2D
 var base_gun_points: Array
 var energy_tween: Tween
 var is_burning: bool = false
+var is_laser_firing: bool = false
+var is_shields_hit: bool = false
+var is_body_hit: bool = false
+var collide_sound_volume: float = 0
+var is_selecting: bool = false
+var is_charging: bool = false
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
 @onready var gun_points: Node2D = $GunPoints
 @onready var missile_point: Node2D = $MissilePoint
 @onready var shapecast: ShapeCast2D = $ShapeCast2D
-@onready var thrust_sound: AudioStreamPlayer = $Sounds/ThrustSound
-@onready var laser_sound: AudioStreamPlayer = $Sounds/LaserSound
-@onready var laser_sound2: AudioStreamPlayer = $Sounds/LaserSound
-@onready var laser_sound3: AudioStreamPlayer = $Sounds/LaserSound
-@onready var hit_sound: AudioStreamPlayer = $Sounds/Hit
-@onready var hit_sound2: AudioStreamPlayer = $Sounds/Hit2
-@onready var hit_sound3: AudioStreamPlayer = $Sounds/Hit3
-@onready var hit_sound4: AudioStreamPlayer = $Sounds/Hit4
-@onready var burn_sound: AudioStreamPlayer = $Sounds/Burn
-@onready var collide_sound: AudioStreamPlayer = $Sounds/Collide
-@onready var select_sound: AudioStreamPlayer = $Sounds/Select
-@onready var charge_sound: AudioStreamPlayer = $Sounds/ChargeSound
-@onready var explosion_sound: AudioStreamPlayer = $Sounds/ExplosionSound
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var sprite_markers: Sprite2D = $Sprite2D/Sprite2D
 @onready var shields_collision: CollisionShape2D = $ShieldsCollision
@@ -364,12 +357,7 @@ func fire_lasers( delta: float ) -> void:
 			return
 		ammo[ weapon ] -= 1
 		update_ammo()
-	if not laser_sound.playing:
-		laser_sound.play()
-	elif not laser_sound3.playing:
-		laser_sound3.play()
-	else:
-		laser_sound2.play()
+	is_laser_firing = true
 	var laser_velocity = linear_velocity + Vector2.from_angle( rotation ) * weapon_data.SPEED
 	if weapon_data.TYPE == "missile" or weapon_data.TYPE == "bomb":
 		var missile: BlastMissileBody = weapon_data.SCENE.instantiate()
@@ -435,9 +423,9 @@ func destroy( is_burned: bool = false ) -> void:
 		return
 	speed = 0
 	is_destroyed = true
-	if not is_burned:
-		explosion_sound.play()
 	for clone in clones:
+		if not is_burned and not clone.explosion_sound.playing:
+			clone.explosion_sound.play()
 		var clone_sprite: Sprite2D = clone.get_node( "Sprite2D" )
 		var tween = create_tween()
 		tween.tween_property( clone_sprite, "modulate:a", 0, 0.5 )
@@ -462,7 +450,7 @@ func disable() -> void:
 	set_collisions( false )
 	is_thrusting = false
 	stop_thrusting = true
-	thrust_sound.stop()
+	collide_sound_volume = 0
 
 
 func reset_ship() -> void:
@@ -539,7 +527,7 @@ func toggle_weapon_up() -> void:
 	if weapon_index >= weapon_store.size():
 		weapon_index = 0
 	select_weapon()
-	select_sound.play()
+	is_selecting = true
 
 
 func toggle_weapon_down() -> void:
@@ -547,7 +535,7 @@ func toggle_weapon_down() -> void:
 	if weapon_index < 0:
 		weapon_index = weapon_store.size() - 1
 	select_weapon()
-	select_sound.play()
+	is_selecting = true
 
 
 func process_rotation() -> void:
@@ -565,20 +553,19 @@ func process_firing( delta: float ) -> void:
 	if weapon_data.TYPE == "charge":
 		if get_input( "Fire_" + controls, true ):
 			blast_charge_size = 0.2
-			charge_sound.play()
+			is_charging = false
 		elif get_input( "Fire_" + controls ):
 			var charge_drain = weapon_data.CHARGE_DRAIN * delta
 			if blast_charge_size < 5 and charge_drain < laser_energy:
 				blast_charge_size += 1.5 * delta
 				laser_energy -= charge_drain
-				if not charge_sound.playing:
-					charge_sound.play()
+				is_charging = true
 			else:
-				charge_sound.stop()
+				is_charging = false
 		elif get_input( "Fire_" + controls, false, true ):
 			fire_lasers( delta )
 			blast_charge_size = 0
-			charge_sound.stop()
+			is_charging = false
 	elif Time.get_ticks_msec() > cooldown_time and get_input( "Fire_" + controls ):
 		if energy > 0:
 			cooldown_time = Time.get_ticks_msec() + weapon_data.COOLDOWN
@@ -617,10 +604,8 @@ func process_thrust( delta: float ) -> void:
 	stop_thrusting = false
 	if is_thrusting and not was_thrusting:
 		start_thrusting = true
-		thrust_sound.play()
 	if not is_thrusting and was_thrusting:
 		stop_thrusting = true
-		thrust_sound.stop()
 	was_thrusting = is_thrusting
 
 
@@ -697,17 +682,11 @@ func hit( damage: float, fired_from: BlastShipBody ) -> void:
 		return
 	shields -= damage
 	if shields > 0:
-		if not hit_sound.playing:
-			hit_sound.play()
-		else:
-			hit_sound2.play()
+		is_shields_hit = true
 		for clone in clones:
 			clone.raise_shields()
 	else:
-		if not hit_sound3.playing:
-			hit_sound3.play()
-		else:
-			hit_sound4.play()
+		is_body_hit = true
 	if shields < 0:
 		health += shields
 		shields = 0
@@ -721,8 +700,6 @@ func burn( damage: float ) -> void:
 	if is_destroyed or is_invulnerable:
 		return
 	is_burning = true
-	if not burn_sound.playing:
-		burn_sound.play()
 	shields -= damage
 	if shields < 0:
 		health += shields
@@ -792,15 +769,31 @@ func set_collisions( is_enabled: bool ) -> void:
 	set_collision_mask_value( 1, is_enabled )
 
 
+func reset_all_sounds() -> void:
+	is_laser_firing = false
+	is_burning = false
+	is_shields_hit = false
+	is_body_hit = false
+	collide_sound_volume = 0
+	is_selecting = false
+	blast_charge_size = 0
+	is_charging = false
+
+
 func _ready() -> void:
 	last_pos = position
 
 
 func _physics_process( delta: float ) -> void:
 	if is_destroyed:
+		reset_all_sounds()
 		process_observer_mode( delta )
 		return
+	
+	# Reset values
 	angular_velocity = 0
+	is_laser_firing = false
+	is_selecting = false
 	
 	if is_cpu:
 		cpu_ai.process( delta )
@@ -812,7 +805,13 @@ func _physics_process( delta: float ) -> void:
 	process_energy( delta )
 	update_clones( delta )
 	is_alternate_tick = !is_alternate_tick
+	
+	# Post process resets
 	is_burning = false
+	is_shields_hit = false
+	is_body_hit = false
+	collide_sound_volume = 0
+	
 	if world_id == -1:
 		return
 	coordinates_label.text = "(%d, %d)" % [
@@ -829,16 +828,12 @@ func _on_body_entered( node: Node2D ) -> void:
 	var impact = relative_velocity.length()
 	var damage = impact * log( body.mass )
 	if damage > 0:
-		if not collide_sound.playing:
-			if damage > 500:
-				collide_sound.volume_db = 1.5
-			elif damage > 1000:
-				collide_sound.volume_db = 3
-			elif damage > 1500:
-				collide_sound.volume_db = 6
-			else:
-				collide_sound.volume_db = 0
-		collide_sound.play()
+		if damage > 500:
+			collide_sound_volume = 1.5
+		elif damage > 1000:
+			collide_sound_volume = 3
+		elif damage > 1500:
+			collide_sound_volume = 6
 		hit( damage, null )
 
 

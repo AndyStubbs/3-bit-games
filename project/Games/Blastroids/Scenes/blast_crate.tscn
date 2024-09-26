@@ -34,7 +34,7 @@ bus = &"Sound"
 
 [node name="BurnSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_bh04i")
-volume_db = -20.0
+volume_db = -40.0
 bus = &"Sound"
 
 [node name="Explode" type="AudioStreamPlayer" parent="Sounds"]

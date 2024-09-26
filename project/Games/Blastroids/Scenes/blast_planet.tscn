@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://ceraxjp8kfuop"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_planet.gd" id="1_j6v0q"]
-[ext_resource type="Texture2D" uid="uid://byga0y14t6786" path="res://Games/Blastroids/Images/mars.webp" id="2_l88hp"]
+[ext_resource type="Texture2D" uid="uid://c1gjwsxdh4qsy" path="res://Games/Blastroids/Images/sun.webp" id="2_077kp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0klmj"]
 radius = 1800.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g23qq"]
-radius = 385.0
+radius = 785.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u2bcj"]
 radius = 40.0
@@ -17,7 +17,7 @@ script = ExtResource("1_j6v0q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
-texture = ExtResource("2_l88hp")
+texture = ExtResource("2_077kp")
 
 [node name="GravityArea" type="Area2D" parent="."]
 gravity_space_override = 1
@@ -28,6 +28,7 @@ gravity_direction = Vector2(0, 0)
 gravity = 9.8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea"]
+visible = false
 shape = SubResource("CircleShape2D_0klmj")
 
 [node name="Camera2D" type="Camera2D" parent="GravityArea"]
@@ -35,6 +36,7 @@ zoom = Vector2(0.75, 0.75)
 
 [node name="AtmosphereArea" type="Area2D" parent="."]
 collision_layer = 0
+linear_damp_space_override = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AtmosphereArea"]
 shape = SubResource("CircleShape2D_g23qq")

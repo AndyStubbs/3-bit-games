@@ -322,7 +322,7 @@ func init_map() -> void:
 	# Earth System
 	if Blast.settings.map_type == 1:
 		var planet = PLANET_SCENE.instantiate()
-		planet.load( "earth" )
+		planet.load( "sun" )
 		planet.position = Vector2(
 			rect.position.x + rect.size.x / 2,
 			rect.position.y + rect.size.y / 2
@@ -350,35 +350,35 @@ func init_map() -> void:
 		mercury.load( "mercury" )
 		bodies.add_child( mercury )
 		planets.append( mercury )
-		mercury.setup_orbit( sun, 3000 )
+		mercury.setup_orbit( sun, 2500 )
 		
 		# Venus
 		var venus = PLANET_SCENE.instantiate()
 		venus.load( "venus" )
 		bodies.add_child( venus )
 		planets.append( venus )
-		venus.setup_orbit( sun, 4000 )
+		venus.setup_orbit( sun, 3500 )
 		
 		# Earth
 		var earth = PLANET_SCENE.instantiate()
 		earth.load( "earth" )
 		bodies.add_child( earth )
 		planets.append( earth )
-		earth.setup_orbit( sun, 5000 )
+		earth.setup_orbit( sun, 5500 )
 		
 		# The Moon
 		var moon = PLANET_SCENE.instantiate()
 		moon.load( "moon" )
 		bodies.add_child( moon )
 		planets.append( moon )
-		moon.setup_orbit( earth, 750 )
+		moon.setup_orbit( earth, 1000 )
 		
 		# Mars
 		var mars = PLANET_SCENE.instantiate()
 		mars.load( "mars" )
 		bodies.add_child( mars )
 		planets.append( mars )
-		mars.setup_orbit( sun, 6000 )
+		mars.setup_orbit( sun, 7500 )
 
 
 func init_rocks() -> void:
@@ -450,7 +450,10 @@ func calc_orbit_velocity_from_planet( body: RigidBody2D, planet: BlastPlanet ) -
 	var gravity_point_unit_distance = area.gravity_point_unit_distance
 
 	# Calculate the effective gravity at the current distance using the inverse square law
-	var effective_gravity = gravity_strength * pow( gravity_point_unit_distance / distance_to_planet, 2 )
+	var effective_gravity = gravity_strength * pow(
+		gravity_point_unit_distance / distance_to_planet,
+		2
+	)
 
 	# Calculate the orbit speed using v = sqrt(effective_gravity * distance_to_planet)
 	var orbit_speed = sqrt( effective_gravity * distance_to_planet ) * speed_multiplier
@@ -477,9 +480,9 @@ func get_random_start_pos( buffer: float = 0, is_rock: bool = false ) -> Vector2
 	else:
 		var sun = planets[ 0 ]
 		var min_radius = sun.radius + 500
-		var max_radius = sun.gravity_collision_shape.shape.radius
-		if is_rock:
-			min_radius = 10000
+		var max_radius = sun.gravity_collision_shape.shape.radius * 0.95
+		if is_rock and Blast.settings.map_type == 2:
+			min_radius = 8500
 		var is_placed: bool = false
 		var safe_distance: float = 1000 * 1000
 		while not is_placed:

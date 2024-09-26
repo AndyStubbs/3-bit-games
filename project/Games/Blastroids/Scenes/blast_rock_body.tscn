@@ -45,7 +45,7 @@ bus = &"Sound"
 
 [node name="Burn" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("4_obmlk")
-volume_db = -20.0
+volume_db = -40.0
 max_polyphony = 2
 bus = &"Sound"
 

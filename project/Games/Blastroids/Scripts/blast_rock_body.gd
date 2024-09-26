@@ -193,8 +193,7 @@ func destroy( is_burned: bool = false ) -> void:
 	is_destroyed = true
 	var radius = sqrt( rect.size.x * rect.size.x + rect.size.y * rect.size.y ) * 0.5
 	await game.create_explosions( num_explosions, radius, self, exp_size )
-	set_collision_layer_value( 1, false )
-	set_collision_mask_value( 1, false )
+	set_collisions( false )
 	if not is_burned:
 		breakup_rock()
 	await get_tree().physics_frame
@@ -254,6 +253,11 @@ func get_clones() -> Array:
 	return clones
 
 
+func set_collisions( is_enabled: bool ) -> void:
+	set_collision_layer_value( 1, is_enabled )
+	set_collision_mask_value( 1, is_enabled )
+
+
 func _ready() -> void:
 	hit_points = DATA[ rock_size ].hit_points
 	last_hit_points = hit_points
@@ -262,8 +266,7 @@ func _ready() -> void:
 		load_rock()
 	calc_mass()
 	await get_tree().create_timer( 0.1 ).timeout
-	set_collision_layer_value( 1, true )
-	set_collision_mask_value( 1, true )
+	set_collisions( true )
 
 
 func _physics_process( _delta: float ) -> void:

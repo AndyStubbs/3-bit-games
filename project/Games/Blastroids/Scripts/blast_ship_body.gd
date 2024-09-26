@@ -435,8 +435,7 @@ func destroy( is_burned: bool = false ) -> void:
 
 
 func disable() -> void:
-	set_collision_layer_value( 1, false )
-	set_collision_mask_value( 1, false )
+	set_collisions( false )
 	is_thrusting = false
 	stop_thrusting = true
 	thrust_sound.stop()
@@ -468,8 +467,7 @@ func reset_ship() -> void:
 	for clone in minimap_clones:
 		clone.modulate.a = 1
 	is_destroyed = false
-	set_collision_layer_value( 1, true )
-	set_collision_mask_value( 1, true )
+	set_collisions( true )
 	await get_tree().create_timer( duration ).timeout
 	is_invulnerable = false
 
@@ -763,6 +761,11 @@ func get_clones() -> Array:
 func process_observer_mode( delta: float ) -> void:
 	linear_velocity = Vector2.ZERO
 	update_clones( delta )
+
+
+func set_collisions( is_enabled: bool ) -> void:
+	set_collision_layer_value( 1, is_enabled )
+	set_collision_mask_value( 1, is_enabled )
 
 
 func _ready() -> void:

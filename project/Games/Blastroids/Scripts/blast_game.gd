@@ -201,8 +201,12 @@ func init_containers() -> void:
 	elif Blast.settings.map_size == 3:
 		map_scale = 0.07
 	elif Blast.settings.map_size == 4:
-		#map_scale = 0.06
-		map_scale = 0.04
+		if Blast.settings.map_type == 2:
+			map_scale = 0.05
+		elif Blast.settings.map_type == 1:
+			map_scale = 0.055
+		else:
+			map_scale = 0.06
 	
 	var rect: Rect2 = Blast.get_rect()
 	var grid_size = minf( rect.size.x / 10, rect.size.y / 10 )

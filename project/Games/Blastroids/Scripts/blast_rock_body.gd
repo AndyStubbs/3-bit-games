@@ -71,10 +71,6 @@ var shape_cast: ShapeCast2D
 
 @onready var poly: CollisionPolygon2D = $CollisionPolygon2D
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var hit_sound: AudioStreamPlayer = $Sounds/Hit
-@onready var hit_sound2: AudioStreamPlayer = $Sounds/Hit2
-@onready var burn_sound: AudioStreamPlayer = $Sounds/Burn
-@onready var explode_sound: AudioStreamPlayer = $Sounds/Explode
 
 
 func init( new_game: BlastGame ) -> void:
@@ -84,16 +80,16 @@ func init( new_game: BlastGame ) -> void:
 	game = new_game
 	for i in range( game.worlds.size() ):
 		var world = game.worlds[ i ]
+		var clone_rock: BlastRock = BlastGame.ROCK_SCENE.instantiate()
+		world.add_child( clone_rock )
+		clone_rock.sprite.texture = sprite.texture
+		clones.append( clone_rock )
 		var minimap = game.minimaps[ i ]
-		var clone_rock: Sprite2D = Sprite2D.new()
 		var minimap_clone: Sprite2D = Sprite2D.new()
-		clone_rock.texture = sprite.texture
 		minimap_clone.scale = Vector2( 2, 2 )
 		minimap_clone.texture = sprite.texture
 		minimap_clone.material = game.create_minimap_material( Color.GRAY )
-		world.add_child( clone_rock )
 		minimap.add_child( minimap_clone )
-		clones.append( clone_rock )
 		minimap_clones.append( minimap_clone )
 
 
@@ -142,10 +138,8 @@ func calc_mass() -> void:
 func hit( damage: float, fired_from: BlastShipBody ) -> void:
 	if is_destroyed:
 		return
-	if not hit_sound.playing:
-		hit_sound.play()
-	elif not hit_sound2.playing:
-		hit_sound2.play()
+	for clone in clones:
+		clone.hit_sounds.pick_random().play()
 	hit_points -= damage
 	draw_damage()
 	if hit_points <= 0:
@@ -158,8 +152,9 @@ func burn( damage: float ) -> void:
 	if is_destroyed:
 		return
 	hit_points -= damage
-	if not burn_sound.playing:
-		burn_sound.play()
+	for clone in clones:
+		if not clone.burn_sound.playing:
+			clone.burn_sound.play()
 	if hit_points <= 0:
 		destroy( true )
 
@@ -175,7 +170,7 @@ func draw_damage() -> void:
 		texture = ImageTexture.create_from_image( img )
 		sprite.texture = texture
 		for clone in clones:
-			clone.texture = texture
+			clone.sprite.texture = texture
 	sprite.texture.update( img )
 
 
@@ -183,7 +178,9 @@ func destroy( is_burned: bool = false ) -> void:
 	if is_destroyed:
 		return
 	if not is_burned:
-		explode_sound.play()
+		for clone in clones:
+			if not clone.explode_sound.playing:
+				clone.explode_sound.play()
 	var num_explosions = DATA[ rock_size ].exp_num
 	var exp_size = DATA[ rock_size ].exp_size
 	var duration = num_explosions * 0.1 + 0.1
@@ -211,7 +208,7 @@ func breakup_rock() -> void:
 	var num = DATA[ rock_size ].break_num
 	var new_rocks = []
 	while num > 0:
-		var rock: BlastRockBody = BlastGame.ROCK_SCENE.instantiate()
+		var rock: BlastRockBody = BlastGame.ROCK_SCENE_BODY.instantiate()
 		if num > 8 and randf_range( 0, 1.0 ) > 0.5:
 			rock.rock_size = "large"
 			num -= 8
@@ -274,8 +271,8 @@ func _physics_process( _delta: float ) -> void:
 		if energy_tween == null or not energy_tween.is_running():
 			energy_tween = create_tween()
 			energy_tween.tween_property( sprite, "modulate:h", randf_range( 0.4, 0.9 ), 1.0 )
-	for clone: Sprite2D in clones:
-		clone.modulate = sprite.modulate
+	for clone: BlastRock in clones:
+		clone.sprite.modulate = sprite.modulate
 		clone.rotation = rotation
 		clone.position = position
 	for clone: Sprite2D in minimap_clones:

@@ -1,10 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmehk4f0pk85"]
+[gd_scene load_steps=3 format=3 uid="uid://dmehk4f0pk85"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_rock_body.gd" id="1_4e3g8"]
-[ext_resource type="AudioStream" uid="uid://dlqs1eg0ncbbw" path="res://Assets/Sounds/rock_hit3.wav" id="2_12ljy"]
-[ext_resource type="AudioStream" uid="uid://cboquju8pnja8" path="res://Assets/Sounds/rock_hit4.wav" id="3_2436n"]
-[ext_resource type="AudioStream" uid="uid://dk4bikldgek7d" path="res://Assets/Sounds/explosion-6055.mp3" id="4_ivx3g"]
-[ext_resource type="AudioStream" uid="uid://dnoudo8w8g6tk" path="res://Assets/Sounds/burn.wav" id="4_obmlk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kpogl"]
 radius = 100.0
@@ -30,26 +26,3 @@ enabled = false
 shape = SubResource("CircleShape2D_kpogl")
 target_position = Vector2(0, 0)
 max_results = 1
-
-[node name="Sounds" type="Node" parent="."]
-
-[node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("2_12ljy")
-volume_db = -4.0
-bus = &"Sound"
-
-[node name="Hit2" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("3_2436n")
-volume_db = -4.0
-bus = &"Sound"
-
-[node name="Burn" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("4_obmlk")
-volume_db = -40.0
-max_polyphony = 2
-bus = &"Sound"
-
-[node name="Explode" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("4_ivx3g")
-volume_db = -4.0
-bus = &"Sound"

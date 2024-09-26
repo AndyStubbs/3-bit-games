@@ -41,7 +41,8 @@ const BOMB_UI_MARKER = preload( "res://Games/Blastroids/Images/ui_blast_bomb_mar
 const BOMB_PICKUP_IMAGE = preload( "res://Games/Blastroids/Images/blast_bomb_pickup.png" )
 const BOMB_MARKER = preload( "res://Games/Blastroids/Images/blast_bomb_markers.png" )
 const PICKUP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_pickup.tscn" )
-const ROCK_SCENE = preload( "res://Games/Blastroids/Scenes/blast_rock_body.tscn" )
+const ROCK_SCENE_BODY = preload( "res://Games/Blastroids/Scenes/blast_rock_body.tscn" )
+const ROCK_SCENE = preload( "res://Games/Blastroids/Scenes/blast_rock.tscn" )
 const CRATE_SCENE = preload( "res://Games/Blastroids/Scenes/blast_crate.tscn" )
 const SHIP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_ship.tscn" )
 const TRI_IMAGE = preload( "res://Games/Blastroids/Images/triangle.png" )
@@ -398,7 +399,7 @@ func init_rocks() -> void:
 	if Blast.settings.map_type == 1:
 		num_rocks = roundi( num_rocks * 0.5 )
 	for i in range( num_rocks ):
-		var rock: BlastRockBody = ROCK_SCENE.instantiate()
+		var rock: BlastRockBody = ROCK_SCENE_BODY.instantiate()
 		rock.rock_size = rock_sizes.pick_random()
 		rock.set_collision_mask_value( 1, false )
 		bodies.add_child( rock )

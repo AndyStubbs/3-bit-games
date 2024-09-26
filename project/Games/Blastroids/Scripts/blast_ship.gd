@@ -17,6 +17,8 @@ var enemies: Array = []
 var laser_sounds: Array
 var shield_hit_sounds: Array
 var body_hit_sounds: Array
+var pickup_sounds: Array
+
 
 @onready var stars = $Stars
 @onready var stars2 = $Stars2
@@ -46,6 +48,8 @@ var body_hit_sounds: Array
 @onready var select_sound: AudioStreamPlayer2D = $Sounds/Select
 @onready var charge_sound: AudioStreamPlayer2D = $Sounds/ChargeSound
 @onready var explosion_sound: AudioStreamPlayer2D = $Sounds/ExplosionSound
+@onready var pickup_sound: AudioStreamPlayer2D = $Sounds/PickupSound
+@onready var pickup_sound2: AudioStreamPlayer2D = $Sounds/PickupSound2
 
 
 func init_stars( star_scene: PackedScene ) -> void:
@@ -235,6 +239,7 @@ func _ready() -> void:
 	laser_sounds = [ laser_sound, laser_sound2, laser_sound3 ]
 	shield_hit_sounds = [ hit_sound, hit_sound2 ]
 	body_hit_sounds = [ hit_sound3, hit_sound4 ]
+	pickup_sounds = [ pickup_sound, pickup_sound2 ]
 	sprite_markers.modulate = ship_body.ui_color
 	gun_charges.modulate = ship_body.ui_color
 	if is_main_ship:

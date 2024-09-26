@@ -170,7 +170,6 @@ var init_time: float
 
 
 @onready var bodies = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
-@onready var pickup_sound = $Sounds/PickupSound
 
 
 func init() -> void:

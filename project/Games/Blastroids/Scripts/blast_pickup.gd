@@ -85,7 +85,6 @@ func _on_body_entered( body: Node2D ) -> void:
 		return
 	if is_energy and body.has_method( "pickup" ):
 		is_picked_up = true
-		game.pickup_sound.play()
 		body.pickup( energy )
 		velocity = Vector2.ZERO
 		var tween = create_tween()
@@ -96,7 +95,6 @@ func _on_body_entered( body: Node2D ) -> void:
 		tween.tween_method( slide, 0.0, 1.0, 0.5 )
 		await tween.finished
 	if not is_energy and body.has_method( "pickup_weapon" ):
-		game.pickup_sound.play()
 		is_picked_up = true
 		body.pickup_weapon( weapon )
 	if is_picked_up:

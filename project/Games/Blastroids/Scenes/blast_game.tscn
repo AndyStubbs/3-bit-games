@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl3rxtqyxc6lo"]
+[gd_scene load_steps=8 format=3 uid="uid://dl3rxtqyxc6lo"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game.gd" id="1_ish2g"]
 [ext_resource type="FontFile" uid="uid://du4fcyuvxpb56" path="res://Assets/Fonts/ProtestGuerrilla-Regular.ttf" id="3_la5p5"]
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game_over.gd" id="3_ypayv"]
-[ext_resource type="AudioStream" uid="uid://0s2eoi25wo8" path="res://Assets/Sounds/pickup_01.wav" id="4_moumk"]
 [ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="5_28w2k"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amygs"]
@@ -142,11 +141,5 @@ render_target_update_mode = 0
 [node name="World" type="Node2D" parent="CanvasLayer/SubViewportContainer/WorldViewport"]
 
 [node name="Bodies" type="Node2D" parent="CanvasLayer/SubViewportContainer/WorldViewport/World"]
-
-[node name="Sounds" type="Node" parent="."]
-
-[node name="PickupSound" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("4_moumk")
-bus = &"Sound"
 
 [connection signal="pressed" from="CanvasLayer/GameOver/VB/MC/ReturnButton" to="CanvasLayer/GameOver" method="_on_return_button_pressed"]

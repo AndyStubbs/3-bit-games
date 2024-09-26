@@ -248,7 +248,7 @@ func add_weapon( new_weapon: BlastGame.WEAPONS ) -> void:
 		if new_weapon == weapon:
 			update_ammo()
 	elif new_weapon_data.AMMO_TYPE == "energy":
-		pickup( 500.0 )
+		pickup( 500.0, true )
 	
 	if weapon_store.find( new_weapon ) == -1:
 		weapon_store.append( new_weapon )
@@ -710,7 +710,10 @@ func burn( damage: float ) -> void:
 			destroy( true )
 
 
-func pickup( boost: float ) -> void:
+func pickup( boost: float, is_silent: bool = false ) -> void:
+	if not is_silent:
+		for clone: BlastShip in clones:
+			clone.pickup_sounds.pick_random().play()
 	var energy_charge = boost
 	if energy + boost > max_energy:
 		energy_charge = max_energy - energy
@@ -753,6 +756,8 @@ func pickup( boost: float ) -> void:
 
 
 func pickup_weapon( new_weapon: BlastGame.WEAPONS ) -> void:
+	for clone: BlastShip in clones:
+		clone.pickup_sound.play()
 	add_weapon( new_weapon )
 
 

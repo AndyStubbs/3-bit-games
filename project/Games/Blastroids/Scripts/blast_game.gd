@@ -43,6 +43,7 @@ const BOMB_MARKER = preload( "res://Games/Blastroids/Images/blast_bomb_markers.p
 const PICKUP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_pickup.tscn" )
 const ROCK_SCENE_BODY = preload( "res://Games/Blastroids/Scenes/blast_rock_body.tscn" )
 const ROCK_SCENE = preload( "res://Games/Blastroids/Scenes/blast_rock.tscn" )
+const CRATE_BODY_SCENE = preload( "res://Games/Blastroids/Scenes/blast_crate_body.tscn" )
 const CRATE_SCENE = preload( "res://Games/Blastroids/Scenes/blast_crate.tscn" )
 const SHIP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_ship.tscn" )
 const TRI_IMAGE = preload( "res://Games/Blastroids/Images/triangle.png" )
@@ -431,7 +432,7 @@ func init_crates() -> void:
 		var x = 0
 		var y = 0
 		for j in range( bonus_crates ):
-			var crate: BlastCrate = CRATE_SCENE.instantiate()
+			var crate: BlastCrateBody = CRATE_BODY_SCENE.instantiate()
 			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
 			bodies.add_child( crate )
 			rigid_bodies.append( crate )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://crhtwwp1ps7u1"]
+[gd_scene load_steps=7 format=3 uid="uid://jycg8r6soyan"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_crate.gd" id="1_0vsfn"]
 [ext_resource type="Texture2D" uid="uid://d1dajn02ugoai" path="res://Games/Blastroids/Images/crate_small.png" id="2_5j7gc"]
@@ -7,36 +7,29 @@
 [ext_resource type="AudioStream" uid="uid://dnoudo8w8g6tk" path="res://Assets/Sounds/burn.wav" id="5_bh04i"]
 [ext_resource type="AudioStream" uid="uid://kmpwpvsipqbv" path="res://Assets/Sounds/crate_open2.wav" id="5_iky45"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_medqf"]
-size = Vector2(32, 32)
-
-[node name="BlastCrate" type="RigidBody2D"]
-mass = 5.0
-center_of_mass_mode = 1
-angular_damp_mode = 1
+[node name="BlastCrate" type="Node2D"]
 script = ExtResource("1_0vsfn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_5j7gc")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_medqf")
+[node name="Sounds" type="Node2D" parent="."]
 
-[node name="Sounds" type="Node" parent="."]
-
-[node name="Hit" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Hit" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("3_li3bq")
+max_polyphony = 3
 bus = &"Sound"
 
-[node name="Hit2" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Hit2" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("4_u8ti1")
+max_polyphony = 3
 bus = &"Sound"
 
-[node name="BurnSound" type="AudioStreamPlayer" parent="Sounds"]
+[node name="BurnSound" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("5_bh04i")
-volume_db = -40.0
+volume_db = -10.0
 bus = &"Sound"
 
-[node name="Explode" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Explode" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("5_iky45")
 bus = &"Sound"

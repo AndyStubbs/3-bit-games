@@ -350,10 +350,16 @@ func apply_thrust( delta: float, mult: float = 1.0 ) -> void:
 func fire_lasers( delta: float ) -> void:
 	if weapon_data.AMMO_TYPE == "energy":
 		if laser_energy < weapon_data.DRAIN * delta:
+			for clone: BlastShip in clones:
+				if clone.is_main_ship and not clone.invalid_sound.playing:
+					clone.invalid_sound.play()
 			return
 		laser_energy -= weapon_data.DRAIN * delta
 	elif weapon_data.AMMO_TYPE == "physical":
 		if ammo[ weapon ] < 1:
+			for clone: BlastShip in clones:
+				if not clone.invalid_sound.playing:
+					clone.invalid_sound.play()
 			return
 		ammo[ weapon ] -= 1
 		update_ammo()
@@ -713,7 +719,9 @@ func burn( damage: float ) -> void:
 func pickup( boost: float, is_silent: bool = false ) -> void:
 	if not is_silent:
 		for clone: BlastShip in clones:
-			clone.pickup_sounds.pick_random().play()
+			var sound = clone.pickup_sounds.pick_random()
+			if not sound.playing:
+				sound.play()
 	var energy_charge = boost
 	if energy + boost > max_energy:
 		energy_charge = max_energy - energy

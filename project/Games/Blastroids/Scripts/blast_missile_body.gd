@@ -170,10 +170,8 @@ func destroy( body_hit = null ) -> void:
 		for body in game.bodies.get_children():
 			if body != self and body != body_hit and body.has_method( "hit" ):
 				var dist = ( body.position - position ).length_squared()
-				#print( "Dist: %s, size: %s" % [ dist, exp_size ] )
 				if dist < exp_size:
 					var d = damage * ( dist / exp_size )
-					print( "Hit for: %s" % d )
 					body.hit( d, fired_from_ship )
 	
 	# Create Explosion
@@ -183,9 +181,12 @@ func destroy( body_hit = null ) -> void:
 		world.add_child( explosion )
 		explosion.position = position
 	
-	# Stop Rocket Sounds
+	# Stop Rocket Sounds and hide rocket
 	for clone: BlastMissile in clones:
 		clone.rocket_sound.stop()
+		clone.sprite.modulate.a = 0
+		for rocket: GPUParticles2D in clone.rocket.get_children():
+			rocket.emitting = false
 	
 	# Stop everthing
 	is_destroyed = true

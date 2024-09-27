@@ -82,7 +82,8 @@ func _on_body_entered( body: Node2D ) -> void:
 	if body.has_method( "get_clones" ):
 		for clone in body.get_clones():
 			var explosion = BlastGame.EXPLOSION_SCENE.instantiate()
-			explosion.modulate.a = sprite.modulate.a
+			#explosion.modulate.a = sprite.modulate.a
+			explosion.modulate = sprite.modulate
 			clone.add_child( explosion )
 			explosion.global_position = global_position
 	destroy()

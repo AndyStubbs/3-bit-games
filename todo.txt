@@ -13,8 +13,9 @@
 	getting hit by player
 13. Need to show low power warning much sooner.														**** COMPLETE ****
 14. Fix stars going off screen when ship hits borders.												**** COMPLETE ****
-15. Change color of explosion when shields are up.
-16. Highlight ship vector when your ship is facing the enemy so that you can know if you fire you will hit your enemy
+15. Change color of explosion when shields are up.													**** COMPLETE ****
+16. Highlight ship vector when your ship is facing the enemy so that you can know if you fire you
+	will hit your enemy
 17. Improve AI behavior
 	a. More aggresive towards other ships
 	b. When low energy go after crates or energy rocks

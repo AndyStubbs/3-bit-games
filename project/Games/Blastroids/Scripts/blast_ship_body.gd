@@ -364,7 +364,7 @@ func fire_lasers( delta: float ) -> void:
 			drain = drain * 0.333
 			is_low_power_mode = true
 		if laser_energy < drain * delta:
-			if not main_clone.invalid_sound.playing:
+			if main_clone != null and not main_clone.invalid_sound.playing:
 				main_clone.invalid_sound.play()
 			return
 		laser_energy -= weapon_data.DRAIN * delta

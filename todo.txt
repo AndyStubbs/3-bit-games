@@ -9,7 +9,7 @@
 	b. Play a different sound if only one weapon available and attempted to change weapons.			**** COMPLETE ****
 11. Add a lower power mode to lasers, this will allow lasers to fire easier when					**** COMPLETE ****
 	energy is lower.  Try changing the color of the lasers and laser bar in low power mode.
-12. Fix bug with player not getting credit for kill when enemy runs out of energy after
+12. Fix bug with player not getting credit for kill when enemy runs out of energy after				**** COMPLETE ****
 	getting hit by player
 13. Need to show low power warning much sooner
 14. Highlight ship vector when your ship is facing the enemy so that you can know if you fire you will hit your enemy

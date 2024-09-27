@@ -2,6 +2,7 @@ extends RigidBody2D
 class_name BlastShipBody
 
 
+const HIT_CREDIT_DURATION = 3.0
 const LOW_POWER_PCT = 0.333
 const GUN_POINTS: Array = [
 	[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
@@ -119,6 +120,8 @@ var is_body_hit: bool = false
 var collide_sound_volume: float = 0
 var is_selecting: bool = false
 var is_charging: bool = false
+var last_hit_by: BlastShipBody
+var last_hit_time: float = 0
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -446,6 +449,9 @@ func fire_lasers( delta: float ) -> void:
 func destroy( is_burned: bool = false ) -> void:
 	if is_destroyed:
 		return
+	if last_hit_by != null and last_hit_time > Time.get_ticks_msec() - HIT_CREDIT_DURATION:
+		last_hit_by.stats.ship_kills += 1
+		print( "%s destroyed by %s" % [ display_name, last_hit_by.display_name ] )
 	speed = 0
 	is_destroyed = true
 	for clone in clones:
@@ -454,6 +460,7 @@ func destroy( is_burned: bool = false ) -> void:
 		var clone_sprite: Sprite2D = clone.get_node( "Sprite2D" )
 		var tween = create_tween()
 		tween.tween_property( clone_sprite, "modulate:a", 0, 0.5 )
+		clone.hide_health_bar()
 	for clone in minimap_clones:
 		clone.modulate.a = 0
 	modulate.a = 0.5
@@ -716,6 +723,9 @@ func recharge_lasers( delta: float ) -> void:
 func hit( damage: float, fired_from: BlastShipBody ) -> void:
 	if is_destroyed or is_invulnerable:
 		return
+	if damage > 0 and fired_from != null:
+		last_hit_by = fired_from
+		last_hit_time = Time.get_ticks_msec()
 	shields -= damage
 	if shields > 0:
 		is_shields_hit = true
@@ -727,9 +737,10 @@ func hit( damage: float, fired_from: BlastShipBody ) -> void:
 		health += shields
 		shields = 0
 		if health <= 0:
-			if fired_from != null:
-				fired_from.stats.ship_kills += 1
 			destroy()
+		else:
+			for clone: BlastShip in clones:
+				clone.show_health_bar()
 
 
 func burn( damage: float ) -> void:
@@ -871,13 +882,17 @@ func _on_body_entered( node: Node2D ) -> void:
 	var impact = relative_velocity.length()
 	var damage = impact * log( body.mass )
 	if damage > 0:
+		var hit_by: BlastShipBody = null
+		if node is BlastShipBody:
+			hit_by = node as BlastShipBody
+			print( "%s hit by %s" % [ display_name, hit_by.display_name ] )
 		if damage > 500:
 			collide_sound_volume = 1.5
 		elif damage > 1000:
 			collide_sound_volume = 3
 		elif damage > 1500:
 			collide_sound_volume = 6
-		hit( damage, null )
+		hit( damage, hit_by )
 
 
 func _on_area_2d_body_entered( body: Node2D ) -> void:

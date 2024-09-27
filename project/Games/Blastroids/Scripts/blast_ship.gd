@@ -18,6 +18,7 @@ var laser_sounds: Array
 var shield_hit_sounds: Array
 var body_hit_sounds: Array
 var pickup_sounds: Array
+var health_bar_tween: Tween
 
 
 @onready var stars = $Stars
@@ -32,8 +33,11 @@ var pickup_sounds: Array
 @onready var sprite_markers: Sprite2D = $Sprite2D/Sprite2D
 @onready var ship_vectors: Node2D = $Vector/Ships
 @onready var gun_charges: Node2D = $Sprite2D/GunCharges
+@onready var shield_particles: GPUParticles2D = $ShieldsParticles
 @onready var low_energy_sprite: Sprite2D = $LowEnergySprite
 @onready var burn_particles: GPUParticles2D = $BurnParticles
+@onready var health_bar_panel: Panel = $HealthBarPanel
+@onready var health_bar: ProgressBar = $HealthBarPanel/HealthBar
 @onready var start_sound: AudioStreamPlayer2D = $Sounds/StartSound
 @onready var thrust_sound: AudioStreamPlayer2D = $Sounds/ThrustSound
 @onready var laser_sound: AudioStreamPlayer2D = $Sounds/LaserSound
@@ -229,7 +233,24 @@ func update_main_ship( delta: float ) -> void:
 
 
 func raise_shields() -> void:
-	$ShieldsParticles.emitting = true
+	shield_particles.emitting = true
+
+
+func show_health_bar() -> void:
+	if health_bar_tween != null and health_bar_tween.is_running():
+		health_bar_tween.stop()
+	health_bar.value = ship_body.health / ship_body.max_health * 100.0
+	health_bar_tween = create_tween()
+	health_bar_tween.tween_property( health_bar_panel, "modulate:a", 1.0, 0.5 )
+	health_bar_tween.tween_property( health_bar_panel, "modulate:a", 1.0, 1.5 )
+	health_bar_tween.tween_property( health_bar_panel, "modulate:a", 0.0, 1.0 )
+
+
+func hide_health_bar() -> void:
+	if health_bar_tween != null and health_bar_tween.is_running():
+		health_bar_tween.stop()
+	health_bar_tween = create_tween()
+	health_bar_tween.tween_property( health_bar_panel, "modulate:a", 0.0, 0.5 )
 
 
 func _ready() -> void:
@@ -239,6 +260,7 @@ func _ready() -> void:
 		$Sprite2D/Rockets/Rocket2/RocketParticles,
 		$Sprite2D/Rockets/Rocket2/RocketParticles2
 	]
+	health_bar_panel.modulate.a = 0
 	laser_sounds = [ laser_sound, laser_sound2, laser_sound3 ]
 	shield_hit_sounds = [ hit_sound, hit_sound2 ]
 	body_hit_sounds = [ hit_sound3, hit_sound4 ]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dvdig2uuyxaro"]
+[gd_scene load_steps=47 format=3 uid="uid://dvdig2uuyxaro"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship.gd" id="1_xfd4a"]
 [ext_resource type="Texture2D" uid="uid://dsuvukl4b1wkm" path="res://Games/Blastroids/Images/spaceship3_0.png" id="2_3ecx7"]
@@ -111,6 +111,23 @@ initial_velocity_max = 20.0
 gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_w2cs5")
 color_ramp = SubResource("GradientTexture1D_182cd")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j8nmt"]
+bg_color = Color(0, 0, 0, 0.584)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.8, 0.8, 0.578)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ict3"]
+bg_color = Color(0.209, 0.209, 0.209, 0.486)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gfxsd"]
+bg_color = Color(0.819608, 0, 0, 0.784314)
+corner_detail = 1
 
 [node name="Ship" type="Node2D"]
 z_index = 5
@@ -239,6 +256,24 @@ offset_left = -18.0
 offset_top = -63.0
 offset_right = 22.0
 offset_bottom = -40.0
+
+[node name="HealthBarPanel" type="Panel" parent="."]
+offset_left = -35.0
+offset_top = 35.0
+offset_right = 35.0
+offset_bottom = 58.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_j8nmt")
+
+[node name="HealthBar" type="ProgressBar" parent="HealthBarPanel"]
+custom_minimum_size = Vector2(60, 15)
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 65.0
+offset_bottom = 19.0
+theme_override_styles/background = SubResource("StyleBoxFlat_6ict3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gfxsd")
+value = 50.0
+show_percentage = false
 
 [node name="Sounds" type="Node2D" parent="."]
 

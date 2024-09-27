@@ -6,6 +6,7 @@ extends Node
 @onready var asteroid_count = $MC/VB/MC/PL/MC/VB/HbOptions/Panel3/MC/VB/AsteroidCount
 @onready var crate_count = $MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC/VB/CrateCount
 @onready var lives_count = $MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC/VB/LivesCount
+@onready var crosshairs = $MC/VB/MC/PL/MC/VB/HbOptions/Panel6/MC/VB/Crosshairs
 
 
 func update_settings() -> void:
@@ -14,6 +15,7 @@ func update_settings() -> void:
 	Blast.settings.rock_density = asteroid_count.selected
 	Blast.settings.crate_density = crate_count.selected
 	Blast.settings.lives_count = lives_count.selected
+	Blast.settings.show_crosshairs = crosshairs.selected
 	if Blast.settings.map_type == 2 and Blast.settings.map_size < 4:
 		Blast.settings.map_type = 0
 		map_types.select( Blast.settings.map_type )
@@ -42,6 +44,7 @@ func _ready() -> void:
 	asteroid_count.select( Blast.settings.rock_density )
 	crate_count.select( Blast.settings.crate_density )
 	lives_count.select( Blast.settings.lives_count )
+	crosshairs.select( Blast.settings.show_crosshairs )
 	update_ui_state()
 
 
@@ -70,4 +73,8 @@ func _on_crate_count_item_selected( _index: int ) -> void:
 
 
 func _on_lives_count_item_selected( _index: int ) -> void:
+	update_settings()
+
+
+func _on_crosshairs_item_selected( _index: int ) -> void:
 	update_settings()

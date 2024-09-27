@@ -14,7 +14,7 @@
 13. Need to show low power warning much sooner.														**** COMPLETE ****
 14. Fix stars going off screen when ship hits borders.												**** COMPLETE ****
 15. Change color of explosion when shields are up.													**** COMPLETE ****
-16. Highlight ship vector when your ship is facing the enemy so that you can know if you fire you
+16. Highlight ship vector when your ship is facing the enemy so that you can know if you fire you	**** COMPLETE ****
 	will hit your enemy
 17. Improve AI behavior
 	a. More aggresive towards other ships
@@ -23,4 +23,6 @@
 	d. Randomly change weapons from time to time.
 18. Fix bug with when hitting brakes it nullifies all movement when near zero speed.  This means during collisions have no push impact on
 	ships that are stopping.
+19. Need to hide all ship vectors when destroyed
+20. Implement observer mode.
 

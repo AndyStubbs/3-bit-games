@@ -89,6 +89,7 @@ func init_stars( star_scene: PackedScene ) -> void:
 func init_main_ship() -> void:
 	var buffer: int = 500
 	var rect: Rect2 = Blast.get_rect()
+	crosshair.modulate = CROSSHAIR_WHITE
 	camera.limit_left = roundi( rect.position.x ) - buffer
 	camera.limit_right = roundi( rect.position.x + rect.size.x ) + buffer
 	camera.limit_top = roundi( rect.position.y ) - buffer

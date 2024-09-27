@@ -821,6 +821,8 @@ func process_observer_mode( delta: float ) -> void:
 
 
 func process_crosshairs() -> void:
+	if Blast.settings.show_crosshairs == 0:
+		return
 	shapecast.target_position = Vector2.RIGHT * 1000
 	shapecast.force_shapecast_update()
 	if shapecast.is_colliding():

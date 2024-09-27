@@ -25,6 +25,7 @@ const CRATES: Array = [
 	[ 0,  15,  20,  30,  50 ],
 ]
 const LIVES: Array = [ 1, 2, 3, 4, 5, 6, 7 ]
+const CROSSHAIRS: Array = [ false, true ]
 
 
 var is_loading_settings: bool = false
@@ -39,7 +40,8 @@ var settings: Dictionary = {
 	"rock_density": 2,
 	"crate_density": 2,
 	"lives_count": 2,
-	"added_cpus": 4
+	"added_cpus": 4,
+	"show_crosshairs": 1
 }
 var data: Dictionary = {
 	"player_count": 0
@@ -98,6 +100,9 @@ func load_settings() -> void:
 	if loaded_settings.has( "lives_count" ):
 		var lives_count = Globals.parse_field( loaded_settings.lives_count, "int" )
 		settings.lives_count = clampi( lives_count, 0, LIVES.size() - 1 )
+	if loaded_settings.has( "show_crosshairs" ):
+		var index = Globals.parse_field( loaded_settings.show_crosshairs, "int" )
+		settings.show_crosshairs = clampi( index, 0, CROSSHAIRS.size() - 1 )
 
 
 func _ready() -> void:

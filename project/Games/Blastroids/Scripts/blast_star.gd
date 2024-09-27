@@ -37,7 +37,7 @@ func set_warp_mode( new_warp: int ) -> void:
 
 
 func init_position() -> void:
-	var expanse: float = 300
+	var expanse: float = 1000
 	area = get_viewport_rect()
 	area.size.x += expanse
 	area.size.y += expanse

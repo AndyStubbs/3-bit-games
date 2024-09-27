@@ -28,6 +28,7 @@ var dampening_factor: float = 0.0005
 var last_pos: Vector2
 var camera_pos: Vector2
 var clones: Array = []
+var main_clone: BlastShip
 var minimap_clones: Array = []
 var nav_clones: Array = []
 var was_thrusting: bool = false
@@ -291,6 +292,7 @@ func init_clones() -> void:
 		clone_ship.ship_body = self
 		if i == world_id:
 			clone_ship.is_main_ship = true
+			main_clone = clone_ship
 		world.add_child( clone_ship )
 		clone_ship.sprite.texture = sprite.texture
 		clone_ship.sprite_markers.texture = sprite_markers.texture
@@ -362,9 +364,8 @@ func fire_lasers( delta: float ) -> void:
 			drain = drain * 0.333
 			is_low_power_mode = true
 		if laser_energy < drain * delta:
-			for clone: BlastShip in clones:
-				if clone.is_main_ship and not clone.invalid_sound.playing:
-					clone.invalid_sound.play()
+			if not main_clone.invalid_sound.playing:
+				main_clone.invalid_sound.play()
 			return
 		laser_energy -= weapon_data.DRAIN * delta
 	elif weapon_data.AMMO_TYPE == "physical":

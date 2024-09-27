@@ -34,14 +34,15 @@ func setup_ui() -> void:
 		var minimap = container.get_node( "SubViewport/CanvasLayer/PlayerUI/Panel" )
 		var coords = container.get_node( "SubViewport/CanvasLayer/PlayerUI/Control" )
 		var lives = container.get_node( "SubViewport/CanvasLayer/PlayerUI/Lives" )
-		minimap.scale = Vector2( 0.9, 0.9 )
-		minimap.position.x = 605
-		minimap.position.y = 323
-		coords.position.x = 605
-		coords.position.y = 323
+		minimap.scale = Vector2( 0.8, 0.8 )
+		minimap.position.x = 645
+		minimap.position.y = 355
+		coords.position.x = 645
+		coords.position.y = 320
 		lives.position.y = 500
 		if index > 1:
-			minimap.position.y = 317
+			minimap.position.y = 346
+			coords.position.y = 311
 			lives.position.y = 492
 		index += 1
 

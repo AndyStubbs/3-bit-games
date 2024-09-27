@@ -11,6 +11,7 @@ const SHIP_BODY = preload( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" 
 const PL_ONE = preload( "res://Games/Blastroids/Scenes/pl_one.tscn" )
 const PL_TWO = preload( "res://Games/Blastroids/Scenes/pl_two.tscn" )
 const PL_THREE = preload( "res://Games/Blastroids/Scenes/pl_three.tscn" )
+const PL_FOUR = preload( "res://Games/Blastroids/Scenes/pl_four.tscn" )
 const PLAYER_UI_SMALL = preload( "res://Games/Blastroids/Images/blast_player_ui_small.png" )
 const BUFFER = 1000
 const BORDER_SHADER = preload( "res://Games/Blastroids/Scripts/v_drops.gdshader" )
@@ -635,10 +636,11 @@ func setup_players() -> void:
 		pl = PL_ONE.instantiate()
 	elif players.size() == 2:
 		pl = PL_TWO.instantiate()
-	else:
+	elif players.size() == 3:
 		pl = PL_THREE.instantiate()
+	else:
+		pl = PL_FOUR.instantiate()
 	$Players.add_child( pl )
-	
 	var bodies2 = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
 	var world_id = 0
 	for player in players:

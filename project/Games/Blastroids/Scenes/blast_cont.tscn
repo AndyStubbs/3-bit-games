@@ -41,9 +41,8 @@ border_width_right = 2
 border_width_bottom = 2
 
 [node name="Cont" type="SubViewportContainer"]
-offset_top = 18.0
 offset_right = 960.0
-offset_bottom = 1042.0
+offset_bottom = 1080.0
 
 [node name="SubViewport" type="SubViewport" parent="."]
 disable_3d = true

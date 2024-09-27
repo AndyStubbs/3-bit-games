@@ -11,7 +11,8 @@
 	energy is lower.  Try changing the color of the lasers and laser bar in low power mode.
 12. Fix bug with player not getting credit for kill when enemy runs out of energy after				**** COMPLETE ****
 	getting hit by player
-13. Need to show low power warning much sooner
+13. Need to show low power warning much sooner.														**** COMPLETE ****
+14. Change color of explosion when shields are up.
 14. Highlight ship vector when your ship is facing the enemy so that you can know if you fire you will hit your enemy
 15. Improve AI behavior
 	a. More aggresive towards other ships
@@ -20,3 +21,4 @@
 	d. Randomly change weapons from time to time.
 16. Fix bug with when hitting brakes it nullifies all movement when near zero speed.  This means during collisions have no push impact on
 	ships that are stopping.
+

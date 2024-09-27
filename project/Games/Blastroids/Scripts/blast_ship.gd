@@ -2,6 +2,8 @@ extends Node2D
 class_name BlastShip
 
 
+const LOW_ENERGY_WARN_PCT = 0.33
+const LOW_ENERGY_WARN_PCT2 = 0.15
 const STAR_DENSITY = 6553
 const ZOOM_DX = 0.075
 const ZOOM_SIZE = 0.3
@@ -19,6 +21,7 @@ var shield_hit_sounds: Array
 var body_hit_sounds: Array
 var pickup_sounds: Array
 var health_bar_tween: Tween
+var blink_d: float = 1.0
 
 
 @onready var stars = $Stars
@@ -197,10 +200,7 @@ func update_main_ship( delta: float ) -> void:
 	camera_pos = pos
 	camera.position = camera.position.lerp( camera_pos, 0.5 * delta )
 	
-	if ship_body.energy < ship_body.min_energy * 2.0:
-		low_energy_sprite.modulate.a = minf( low_energy_sprite.modulate.a + delta, 1.0 )
-	else:
-		low_energy_sprite.modulate.a = maxf( low_energy_sprite.modulate.a - delta, 0.0 )
+	process_low_energy_warning( delta )
 	
 	# Adjust camera zoom to zoom out when moving fast
 	var speed_factor = ( ( 15 - clampf( log( ship_body.speed ), 10, 15 ) ) / 5 ) * ZOOM_SIZE
@@ -232,6 +232,26 @@ func update_main_ship( delta: float ) -> void:
 	#]
 
 
+func process_low_energy_warning( delta: float ) -> void:
+	if ship_body.energy < ship_body.max_energy * LOW_ENERGY_WARN_PCT:
+		if ship_body.is_destroyed:
+			low_energy_sprite.modulate.a = 0
+			return
+		var da: float = delta * 1.5
+		if ship_body.energy < ship_body.max_energy * LOW_ENERGY_WARN_PCT2:
+			da *= blink_d
+			low_energy_sprite.modulate.a = clampf( low_energy_sprite.modulate.a + da, 0.35, 1.0 )
+			var a = low_energy_sprite.modulate.a
+			if low_energy_sprite.modulate.a == 1.0:
+				blink_d = -1.0
+			elif low_energy_sprite.modulate.a <= 0.35:
+				blink_d = 1.0
+		elif ship_body.energy < ship_body.max_energy * LOW_ENERGY_WARN_PCT:
+			low_energy_sprite.modulate.a = minf( low_energy_sprite.modulate.a + da, 0.75 )
+	else:
+		low_energy_sprite.modulate.a = maxf( low_energy_sprite.modulate.a - delta, 0.0 )
+
+
 func raise_shields() -> void:
 	shield_particles.emitting = true
 
@@ -260,6 +280,7 @@ func _ready() -> void:
 		$Sprite2D/Rockets/Rocket2/RocketParticles,
 		$Sprite2D/Rockets/Rocket2/RocketParticles2
 	]
+	low_energy_sprite.modulate.a = 0
 	health_bar_panel.modulate.a = 0
 	laser_sounds = [ laser_sound, laser_sound2, laser_sound3 ]
 	shield_hit_sounds = [ hit_sound, hit_sound2 ]

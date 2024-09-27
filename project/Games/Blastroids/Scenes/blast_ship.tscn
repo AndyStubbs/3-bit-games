@@ -231,8 +231,7 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("6_ebk61")
 
 [node name="LowEnergySprite" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(0, 50)
+position = Vector2(0, -50)
 texture = ExtResource("7_rdedr")
 
 [node name="ShieldsParticles" type="GPUParticles2D" parent="."]
@@ -253,9 +252,9 @@ local_coords = true
 
 [node name="Label" type="Label" parent="."]
 offset_left = -18.0
-offset_top = -63.0
+offset_top = 70.0
 offset_right = 22.0
-offset_bottom = -40.0
+offset_bottom = 93.0
 
 [node name="HealthBarPanel" type="Panel" parent="."]
 offset_left = -35.0

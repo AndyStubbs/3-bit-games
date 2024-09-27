@@ -7,7 +7,7 @@
 6. Add 1-player, 3-player, and 4-player containers													**** COMPLETE ****
 7. Add sound effect when unable to fire weapon.														**** COMPLETE ****
 	b. Play a different sound if only one weapon available and attempted to change weapons.			**** COMPLETE ****
-11. Add a lower power mode to lasers, this will allow lasers to fire easier when
+11. Add a lower power mode to lasers, this will allow lasers to fire easier when					**** COMPLETE ****
 	energy is lower.  Try changing the color of the lasers and laser bar in low power mode.
 12. Fix bug with player not getting credit for kill when enemy runs out of energy after
 	getting hit by player

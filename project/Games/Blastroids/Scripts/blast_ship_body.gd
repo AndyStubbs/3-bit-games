@@ -2,6 +2,7 @@ extends RigidBody2D
 class_name BlastShipBody
 
 
+const LOW_POWER_PCT = 0.333
 const GUN_POINTS: Array = [
 	[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
 	[ Vector2( 28, -6 ), Vector2( 28, 6 ) ],
@@ -51,6 +52,9 @@ var laser_energy: float = 500:
 		laser_energy = value
 		if weapons_bar:
 			weapons_bar.value = ( laser_energy / max_laser_energy ) * 100
+			var low_power = max_laser_energy * LOW_POWER_PCT
+			if laser_energy < low_power:
+				weapons_bar.modulate.a = ( laser_energy / low_power ) * 0.25 + 0.75
 var shields_radius: float = 30.0
 var max_shields: float = 1000
 var min_shields: float = 100
@@ -348,8 +352,13 @@ func apply_thrust( delta: float, mult: float = 1.0 ) -> void:
 
 
 func fire_lasers( delta: float ) -> void:
+	var is_low_power_mode = false
 	if weapon_data.AMMO_TYPE == "energy":
-		if laser_energy < weapon_data.DRAIN * delta:
+		var drain = weapon_data.DRAIN
+		if laser_energy < max_laser_energy * 0.25:
+			drain = drain * 0.333
+			is_low_power_mode = true
+		if laser_energy < drain * delta:
 			for clone: BlastShip in clones:
 				if clone.is_main_ship and not clone.invalid_sound.playing:
 					clone.invalid_sound.play()
@@ -389,7 +398,12 @@ func fire_lasers( delta: float ) -> void:
 			bullet.sprite.scale = weapon_data.SCALE
 			bullet.sprite.texture = weapon_data.IMAGE
 			bullet.init( self )
-			bullet.fire( laser_velocity, ui_color, weapon_data.DAMAGE, rotation )
+			if is_low_power_mode:
+				var laser_color = ui_color
+				laser_color.a = 0.75
+				bullet.fire( laser_velocity, laser_color, weapon_data.DAMAGE, rotation )
+			else:
+				bullet.fire( laser_velocity, ui_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "spread":
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = base_gun_points[ 0 ].x + 7
@@ -403,7 +417,12 @@ func fire_lasers( delta: float ) -> void:
 				bullet.sprite.texture = weapon_data.IMAGE
 				bullet.init( self )
 				var vel =  linear_velocity + Vector2.from_angle( rotation + a ) * weapon_data.SPEED
-				bullet.fire( vel, ui_color, weapon_data.DAMAGE, rotation )
+				if is_low_power_mode:
+					var laser_color = ui_color
+					laser_color.a = 0.75
+					bullet.fire( vel, laser_color, weapon_data.DAMAGE, rotation )
+				else:
+					bullet.fire( vel, ui_color, weapon_data.DAMAGE, rotation )
 	elif weapon_data.TYPE == "charge":
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = base_gun_points[ 0 ].x + blast_charge_size * 10

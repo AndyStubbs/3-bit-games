@@ -42,13 +42,13 @@ func fire( new_velocity: Vector2, color: Color, new_damage: float, new_rotation:
 	velocity = new_velocity
 	rotation = new_rotation
 	sprite.modulate = color
-	sprite.modulate.a = 0.95
+	#sprite.modulate.a = 0.95
 	var tween = create_tween()
-	tween.tween_property( sprite, "modulate:a", 1.0, 0.01 )
+	tween.tween_property( sprite, "modulate:a", color.a, 0.01 )
 	await tween.finished
 	set_collision_mask_value( 1, true )
 	var tween2 = create_tween()
-	tween2.tween_property( sprite, "modulate:a", 1.0, 0.5 )
+	tween2.tween_property( sprite, "modulate:a", color.a, 0.5 )
 	tween2.tween_property( sprite, "modulate:a", 0.0, 0.5 )
 	await tween2.finished
 	destroy()

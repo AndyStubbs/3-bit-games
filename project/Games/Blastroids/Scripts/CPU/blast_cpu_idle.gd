@@ -36,7 +36,7 @@ func process( delta: float ) -> void:
 		ship.position.y + randf_range( -500, 500 )
 	)
 	# Check for collisions
-	var collider = cpu.shapecast_2d( pos )
+	var collider = ship.shapecast_2d( pos )
 	if collider:
 		return
 	

@@ -41,7 +41,9 @@ var settings: Dictionary = {
 	"lives_count": 2,
 	"added_cpus": 4
 }
-
+var data: Dictionary = {
+	"player_count": 0
+}
 
 func get_num_rocks() -> int:
 	return ROCKS[ settings.map_size ][ settings.rock_density ]

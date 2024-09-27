@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://dvdig2uuyxaro"]
+[gd_scene load_steps=48 format=3 uid="uid://dvdig2uuyxaro"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_ship.gd" id="1_xfd4a"]
 [ext_resource type="Texture2D" uid="uid://dsuvukl4b1wkm" path="res://Games/Blastroids/Images/spaceship3_0.png" id="2_3ecx7"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cvsp2k7nknxbq" path="res://Games/Blastroids/Images/triangle2.png" id="4_c4vh4"]
 [ext_resource type="Texture2D" uid="uid://dqjt825j2gcjh" path="res://Games/Blastroids/Images/spaceship3_markers2.png" id="5_8qmco"]
 [ext_resource type="Texture2D" uid="uid://ciwwc0tvdug7y" path="res://Games/Blastroids/Images/blast_charge.png" id="6_ebk61"]
+[ext_resource type="Texture2D" uid="uid://pb38spt2odb6" path="res://Games/Blastroids/Images/blast_cross_hair2.png" id="7_2xlww"]
 [ext_resource type="Texture2D" uid="uid://61bx8ffdfayx" path="res://Games/Blastroids/Images/charge_icon.png" id="7_rdedr"]
 [ext_resource type="Texture2D" uid="uid://uhey4p88xqt1" path="res://Games/ReadyAimFire/Images/small_smoke.png" id="8_rqnv8"]
 [ext_resource type="AudioStream" uid="uid://b6wymg66j681l" path="res://Assets/Sounds/thrust.wav" id="9_sjr0w"]
@@ -213,6 +214,12 @@ local_coords = true
 [node name="Sprite2D" type="Sprite2D" parent="Sprite2D"]
 modulate = Color(0.0627451, 0.352941, 1, 1)
 texture = ExtResource("5_8qmco")
+
+[node name="CrosshairSprite" type="Sprite2D" parent="Sprite2D"]
+texture_filter = 1
+position = Vector2(200, 0)
+scale = Vector2(2, 2)
+texture = ExtResource("7_2xlww")
 
 [node name="GunCharges" type="Node2D" parent="Sprite2D"]
 visible = false

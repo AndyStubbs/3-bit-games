@@ -78,7 +78,7 @@ func update_scores( game: BlastGame ) -> void:
 				return a.lives > b.lives
 			for stat in stats:
 				if a.stats[ stat ] != b.stats[ stat ]:
-					return a.stats[ stat ] > b.stats.stat
+					return a.stats[ stat ] > b.stats[ stat ]
 			return true
 			#if a.stats.ship_kills != b.stats.ship_kills:
 				#return a.stats.ship_kills > b.stats.ship_kills

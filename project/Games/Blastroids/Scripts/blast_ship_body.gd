@@ -15,6 +15,7 @@ const GUN_POINTS: Array = [
 @export var display_name: String = "Player 1"
 
 
+var crosshair_x: float = 200.0
 var ship_color: Color = Color.BLUE
 var ui_color: Color
 var cpu_ai: BlastCpuAi
@@ -819,6 +820,32 @@ func process_observer_mode( delta: float ) -> void:
 	update_clones( delta )
 
 
+func process_crosshairs() -> void:
+	shapecast.target_position = Vector2.RIGHT * 1000
+	shapecast.force_shapecast_update()
+	if shapecast.is_colliding():
+		var cx = ( shapecast.get_collision_point( 0 ) - position ).length()
+		if cx > crosshair_x:
+			cx = crosshair_x
+		main_clone.show_crosshair()
+		main_clone.crosshair.position.x = cx
+	else:
+		main_clone.hide_crosshair()
+		main_clone.crosshair.position.x = crosshair_x
+	#main_clone.crosshair.position.x = dist
+
+
+func shapecast_2d( end: Vector2 ) -> Variant:
+	var shape_cast: ShapeCast2D = shapecast
+	shape_cast.rotation = -rotation
+	shape_cast.target_position = end - position
+	shape_cast.force_shapecast_update()
+	Globals.debug_line( position, end, Color.YELLOW, 2, get_parent(), 1 )
+	if shape_cast.is_colliding():
+		return shape_cast.get_collider( 0 )
+	return null
+
+
 func set_collisions( is_enabled: bool ) -> void:
 	set_collision_layer_value( 1, is_enabled )
 	set_collision_mask_value( 1, is_enabled )
@@ -837,6 +864,8 @@ func reset_all_sounds() -> void:
 
 func _ready() -> void:
 	last_pos = position
+	if Blast.data.player_count == 4:
+		crosshair_x = 165
 
 
 func _physics_process( delta: float ) -> void:
@@ -852,6 +881,8 @@ func _physics_process( delta: float ) -> void:
 	
 	if is_cpu:
 		cpu_ai.process( delta )
+	else:
+		process_crosshairs()
 	
 	process_weapon()
 	process_rotation()
@@ -897,7 +928,7 @@ func _on_body_entered( node: Node2D ) -> void:
 
 
 func _on_area_2d_body_entered( body: Node2D ) -> void:
-	if body.has_method( "fire_lasers" ):
+	if body != self and body.has_method( "fire_lasers" ):
 		nearby_objs.append( body )
 
 

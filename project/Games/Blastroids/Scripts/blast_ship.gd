@@ -2,6 +2,8 @@ extends Node2D
 class_name BlastShip
 
 
+const CROSSHAIR_GREEN = Color( 0, 1, 0, 1 )
+const CROSSHAIR_WHITE = Color( 1, 1, 1, 0.75 )
 const LOW_ENERGY_WARN_PCT = 0.33
 const LOW_ENERGY_WARN_PCT2 = 0.15
 const STAR_DENSITY = 6553
@@ -21,6 +23,8 @@ var shield_hit_sounds: Array
 var body_hit_sounds: Array
 var pickup_sounds: Array
 var health_bar_tween: Tween
+var crosshair_tween: Tween
+var is_crosshair_green: bool = false
 var blink_d: float = 1.0
 
 
@@ -60,6 +64,7 @@ var blink_d: float = 1.0
 @onready var pickup_sound3: AudioStreamPlayer2D = $Sounds/PickupSound3
 @onready var pickup_sound4: AudioStreamPlayer2D = $Sounds/PickupSound4
 @onready var invalid_sound: AudioStreamPlayer2D = $Sounds/InvalidSound
+@onready var crosshair: Sprite2D = $Sprite2D/CrosshairSprite
 
 
 func init_stars( star_scene: PackedScene ) -> void:
@@ -273,6 +278,27 @@ func hide_health_bar() -> void:
 	health_bar_tween.tween_property( health_bar_panel, "modulate:a", 0.0, 0.5 )
 
 
+func show_crosshair() -> void:
+	if is_crosshair_green:
+		return
+	if crosshair_tween != null and crosshair_tween.is_running():
+		crosshair_tween.stop()
+	crosshair_tween = create_tween()
+	crosshair_tween.tween_property( crosshair, "modulate", CROSSHAIR_GREEN, 0.35 )
+	is_crosshair_green = true
+
+
+
+func hide_crosshair() -> void:
+	if not is_crosshair_green:
+		return
+	if crosshair_tween != null and crosshair_tween.is_running():
+		crosshair_tween.stop()
+	crosshair_tween = create_tween()
+	crosshair_tween.tween_property( crosshair, "modulate", CROSSHAIR_WHITE, 0.35 )
+	is_crosshair_green = false
+
+
 func _ready() -> void:
 	rockets = [
 		$Sprite2D/Rockets/Rocket/RocketParticles,
@@ -280,12 +306,24 @@ func _ready() -> void:
 		$Sprite2D/Rockets/Rocket2/RocketParticles,
 		$Sprite2D/Rockets/Rocket2/RocketParticles2
 	]
+	crosshair.modulate.a = 0
 	low_energy_sprite.modulate.a = 0
 	health_bar_panel.modulate.a = 0
 	laser_sounds = [ laser_sound, laser_sound2, laser_sound3 ]
 	shield_hit_sounds = [ hit_sound, hit_sound2 ]
 	body_hit_sounds = [ hit_sound3, hit_sound4 ]
 	pickup_sounds = [ pickup_sound, pickup_sound2, pickup_sound3, pickup_sound4 ]
+	
+	# Modify sounds based on number of players
+	var displacement: float = 0
+	if Blast.data.player_count == 2:
+		displacement = -1
+	elif Blast.data.player_count == 3:
+		displacement = -3
+	elif Blast.data.player_count == 4:
+		displacement = -6
+	for sound: AudioStreamPlayer2D in $Sounds.get_children():
+		sound.volume_db = sound.volume_db + displacement
 	sprite_markers.modulate = ship_body.ui_color
 	gun_charges.modulate = ship_body.ui_color
 	if is_main_ship:

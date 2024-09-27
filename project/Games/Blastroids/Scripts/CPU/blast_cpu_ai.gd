@@ -80,7 +80,7 @@ func process( delta: float ) -> void:
 	preprocess_inputs()
 	
 	# Check for collisions
-	var collider = shapecast_2d( ship.position + ship.linear_velocity )
+	var collider = ship.shapecast_2d( ship.position + ship.linear_velocity )
 	if collider:
 		Globals.debug_circle( collider.position, Color.RED, 15, 15, ship.get_parent(), 5 )
 		input.is_action_pressed[ "Down_CPU" ] = true
@@ -89,7 +89,7 @@ func process( delta: float ) -> void:
 		
 	# Check for targets
 	if randf_range( 0, 1 ) > 0.75:
-		collider = shapecast_2d( ship.position + Vector2.from_angle( ship.rotation ) * 600 )
+		collider = ship.shapecast_2d( ship.position + Vector2.from_angle( ship.rotation ) * 600 )
 		if collider:
 			input.is_action_pressed[ "Fire_CPU" ] = true
 	postprocess_inputs()
@@ -173,14 +173,3 @@ func calculate_intercept_angle(
 	
 	# Angle A needs to rotate towards to intercept B
 	return intercept_direction.angle()
-
-
-func shapecast_2d( end: Vector2 ) -> Variant:
-	var shape_cast: ShapeCast2D = ship.shapecast
-	shape_cast.rotation = -ship.rotation
-	shape_cast.target_position = end - ship.position
-	shape_cast.force_shapecast_update()
-	Globals.debug_line( ship.position, end, Color.YELLOW, 2, ship.get_parent(), 1 )
-	if shape_cast.is_colliding():
-		return shape_cast.get_collider( 0 )
-	return null

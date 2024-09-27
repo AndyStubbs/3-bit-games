@@ -634,12 +634,16 @@ func setup_players() -> void:
 	var pl: Panel
 	if players.size() == 1:
 		pl = PL_ONE.instantiate()
+		Blast.data.player_count = 1
 	elif players.size() == 2:
 		pl = PL_TWO.instantiate()
+		Blast.data.player_count = 2
 	elif players.size() == 3:
 		pl = PL_THREE.instantiate()
+		Blast.data.player_count = 3
 	else:
 		pl = PL_FOUR.instantiate()
+		Blast.data.player_count = 4
 	$Players.add_child( pl )
 	var bodies2 = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
 	var world_id = 0

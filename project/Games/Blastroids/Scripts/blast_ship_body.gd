@@ -534,7 +534,12 @@ func toggle_weapon_up() -> void:
 	if weapon_index >= weapon_store.size():
 		weapon_index = 0
 	select_weapon()
-	is_selecting = true
+	if weapon_store.size() > 1:
+		is_selecting = true
+	else:
+		for clone: BlastShip in clones:
+			if not clone.invalid_sound.playing:
+				clone.invalid_sound.play()
 
 
 func toggle_weapon_down() -> void:
@@ -542,7 +547,12 @@ func toggle_weapon_down() -> void:
 	if weapon_index < 0:
 		weapon_index = weapon_store.size() - 1
 	select_weapon()
-	is_selecting = true
+	if weapon_store.size() > 1:
+		is_selecting = true
+	else:
+		for clone: BlastShip in clones:
+			if not clone.invalid_sound.playing:
+				clone.invalid_sound.play()
 
 
 func process_rotation() -> void:

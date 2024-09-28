@@ -90,7 +90,7 @@ func init_stars( star_scene: PackedScene ) -> void:
 func init_main_ship() -> void:
 	var buffer: int = 500
 	var rect: Rect2 = Blast.get_rect()
-	if not ship_body.is_cpu:
+	if not ship_body.is_cpu and Blast.data.settings.show_crosshairs == 1:
 		crosshair.modulate = CROSSHAIR_WHITE
 	camera.limit_left = roundi( rect.position.x ) - buffer
 	camera.limit_right = roundi( rect.position.x + rect.size.x ) + buffer
@@ -270,10 +270,10 @@ func update_vector( vector: Sprite2D, pos: Vector2 ) -> void:
 	vector.rotation = vector_pos.angle()
 	vector.modulate.a = clampf( a, 0.6, 1.0 )
 	vector.scale = Vector2( vector.modulate.a, vector.modulate.a )
-	if a > 0.94:
-		vector.self_modulate.a = 1
-	else:
-		vector.self_modulate.a = 0
+	#if a > 0.94:
+		#vector.self_modulate.a = 1
+	#else:
+		#vector.self_modulate.a = 0
 
 
 func process_low_energy_warning( delta: float ) -> void:

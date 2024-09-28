@@ -6,7 +6,7 @@ var game: BlastGame
 var clones: Array = []
 var minimap_clones: Array = []
 var is_clone: bool = false
-var is_active: bool = false
+var is_active: bool = true
 
 
 func init( new_game: BlastGame ) -> void:

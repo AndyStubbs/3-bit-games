@@ -393,17 +393,19 @@ func init_map() -> void:
 
 
 func init_rocks() -> void:
+	var num_rocks = Blast.get_num_rocks()
+	if Blast.data.settings.map_type == 1:
+		num_rocks = roundi( num_rocks * 0.5 )
+	create_rocks( num_rocks )
+
+
+func create_rocks( num_rocks: int, is_init: bool = false ) -> void:
 	var rock_sizes: Array = []
 	rock_sizes.append_array( fill_array( "huge", 5 ) )
 	rock_sizes.append_array( fill_array( "large", 4 ) )
 	rock_sizes.append_array( fill_array( "medium", 3 ) )
 	rock_sizes.append_array( fill_array( "small", 3 ) )
 	rock_sizes.append_array( fill_array( "tiny", 3 ) )
-	
-	# Create Rocks
-	var num_rocks = Blast.get_num_rocks()
-	if Blast.data.settings.map_type == 1:
-		num_rocks = roundi( num_rocks * 0.5 )
 	for i in range( num_rocks ):
 		var rock: BlastRockBody = ROCK_SCENE_BODY.instantiate()
 		rock.rock_size = rock_sizes.pick_random()
@@ -418,6 +420,8 @@ func init_rocks() -> void:
 		if Blast.data.settings.map_type == 0:
 			rock.linear_velocity = Vector2.from_angle( randf_range( 0, TAU ) ) * 100
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
+		if is_init:
+			rock.init( self )
 
 
 func init_crates() -> void:

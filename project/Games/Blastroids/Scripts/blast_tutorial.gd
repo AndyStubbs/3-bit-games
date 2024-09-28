@@ -13,7 +13,7 @@ var steps: Array = [ {
 		"lives_count": 0,
 		"added_cpus": 0,
 		"game_mode": 0,
-		"show_crosshairs": 1
+		"show_crosshairs": 0
 	},
 	"substeps": [ {
 		"enabled_actions": [ "Up_" ],
@@ -31,16 +31,23 @@ var steps: Array = [ {
 		"enabled_actions": [ "Up_", "Left_", "Right_", "Down_" ],
 		"messages": 3,
 		"goal": "beacon",
-		"color": Color.WEB_GREEN,
+		"color": Color.RED,
 		"beacon": Vector2( 1500, -500 ),
 		"delay": 1
 	}, {
 		"enabled_actions": [ "Up_", "Left_", "Right_", "Down_" ],
 		"messages": 1,
 		"goal": "beacon",
-		"color": Color.RED,
+		"color": Color.CORNFLOWER_BLUE,
 		"beacon_radius": 1000,
 		"beacon_mid_pos": Vector2( 1500, -500 ),
+	},{
+		"enabled_actions": [ "Up_", "Left_", "Right_", "Down_" ],
+		"messages": 3,
+		"goal": "beacon",
+		"color": Color.WEB_GREEN,
+		"beacon": Vector2( -3000, 2500 ),
+		"rocks": 150
 	}, {
 		"enabled_actions": [ "Up_", "Left_", "Right_", "Down_" ],
 		"goal": "none",
@@ -82,7 +89,6 @@ func start_substep() -> void:
 	ship.enable_controls( substep.enabled_actions )
 	
 	if substep.has( "delay" ):
-		print( "Delay" )
 		await get_tree().create_timer( substep.delay ).timeout
 	contents.text = ""
 	for i in range( substep.messages ):
@@ -99,6 +105,9 @@ func start_substep() -> void:
 		beacon.modulate = substep.color
 		game.add_body( beacon )
 		beacon.init( game )
+	if substep.has( "rocks" ):
+		# TODO add loading screen
+		game.create_rocks( substep.rocks, true )
 
 
 func next_substate() -> void:

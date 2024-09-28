@@ -31,7 +31,7 @@
 24. Show controls for blastroids
 25. Create energy generators that create energy pickups randomly
 26. Create option for AI difficulty
-
+27. Add loading screen when level loading, can also use it when loading tutorials substeps
 
 Ready Aim Fire Bug
 Don't allow other controllers to toggle weapons.

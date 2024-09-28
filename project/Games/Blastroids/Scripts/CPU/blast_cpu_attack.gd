@@ -8,6 +8,7 @@ var ship: BlastShipBody
 var target: Node2D
 var target_offset: Vector2
 var start_time: float
+var substate_name: String = ""
 
 
 func init( new_cpu: BlastCpuAi ) -> void:

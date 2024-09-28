@@ -9,12 +9,20 @@ enum STATE {
 }
 
 
+const STATE_NAMES: Dictionary = {
+	STATE.IDLE: "idle",
+	STATE.MOVE: "move",
+	STATE.ATTACK: "attack"
+}
+
+
 var state
 var states: Dictionary = {
 	STATE.IDLE: BlastCpuIdle.new(),
 	STATE.MOVE: BlastCpuMove.new(),
 	STATE.ATTACK: BlastCpuAttack.new()
 }
+var state_name: String
 var ship: BlastShipBody
 var input: Dictionary
 var last_input: Dictionary =  {
@@ -72,6 +80,7 @@ func reset_input() -> void:
 
 
 func set_state( new_state: STATE, data: Variant = null ) -> void:
+	state_name = STATE_NAMES[ new_state ]
 	state = states[ new_state ]
 	state.start( data )
 
@@ -80,17 +89,21 @@ func process( delta: float ) -> void:
 	preprocess_inputs()
 	
 	# Check for collisions
-	var collider = ship.shapecast_2d( ship.position + ship.linear_velocity )
-	if collider:
-		Globals.debug_circle( collider.position, Color.RED, 15, 15, ship.get_parent(), 5 )
-		input.is_action_pressed[ "Down_CPU" ] = true
-	else:
+	var collider = null
+	if ship.speed > 100:
+		collider = ship.shapecast_2d( ship.position + ship.linear_velocity )
+		if collider:
+			Globals.debug_circle( collider.position, Color.RED, 15, 15, ship.get_parent(), 5 )
+			input.is_action_pressed[ "Down_CPU" ] = true
+	
+	# Process cpu state if not collided
+	if not collider:
 		state.process( delta )
 		
 	# Check for targets
 	if randf_range( 0, 1 ) > 0.75:
 		collider = ship.shapecast_2d( ship.position + Vector2.from_angle( ship.rotation ) * 600 )
-		if collider:
+		if collider and collider.has_method( "hit" ) and ship.can_cpu_fire():
 			input.is_action_pressed[ "Fire_CPU" ] = true
 	postprocess_inputs()
 

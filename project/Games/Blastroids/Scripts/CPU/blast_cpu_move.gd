@@ -9,7 +9,17 @@ enum SUBSTATE {
 }
 
 
+const SUBSTATE_NAMES: Dictionary = {
+	SUBSTATE.TARGETING: "targeting",
+	SUBSTATE.ROTATE: "rotate",
+	SUBSTATE.THRUST: "thrust"
+}
+const MIN_SPEED: float = 100.0
+const MAX_OFFTRACK: int = 10
+
+
 var substate: SUBSTATE
+var substate_name: String = ""
 var nav_point: Vector2
 var cpu: BlastCpuAi
 var ship: BlastShipBody
@@ -19,7 +29,7 @@ var target: Dictionary = {
 	"distance": 0,
 	"halfway_distance": 0,
 	"thrust_distance": 0,
-	"action_time": 0
+	"offtrack_count": 0
 }
 
 
@@ -31,7 +41,8 @@ func init( new_cpu: BlastCpuAi ) -> void:
 func start( data: Variant ) -> void:
 	var pos = data as Vector2
 	set_nav_point( pos )
-	substate = SUBSTATE.TARGETING
+	#substate = SUBSTATE.TARGETING
+	set_substate( SUBSTATE.TARGETING )
 
 
 func process( delta: float ) -> void:
@@ -42,6 +53,11 @@ func process( delta: float ) -> void:
 		process_rotate( delta )
 	elif substate == SUBSTATE.THRUST:
 		process_thrust( delta )
+
+
+func set_substate( sub: SUBSTATE ) -> void:
+	substate = sub
+	substate_name = SUBSTATE_NAMES[ sub ]
 
 
 func set_nav_point( pos: Vector2 ) -> void:
@@ -55,12 +71,14 @@ func process_targeting( _delta: float ) -> void:
 		return
 	
 	# Stop before moving towards target
-	if ship.linear_velocity.is_zero_approx():
+	if ship.speed < MIN_SPEED:
 		target.obj = null
 		target.pos = nav_point
 		update_target()
-		substate = SUBSTATE.ROTATE
+		#substate = SUBSTATE.ROTATE
+		set_substate( SUBSTATE.ROTATE )
 	else:
+		#print( ship.speed )
 		cpu.input.is_action_pressed[ "Down_CPU" ] = true
 
 
@@ -73,7 +91,8 @@ func process_rotate( delta ) -> void:
 		cpu.input.is_action_pressed[ "Right_CPU" ] = true
 	else:
 		ship.rotation = target.angle
-		substate = SUBSTATE.THRUST
+		#substate = SUBSTATE.THRUST
+		set_substate( SUBSTATE.THRUST )
 
 
 func process_thrust( _delta ) -> void:
@@ -86,15 +105,22 @@ func process_thrust( _delta ) -> void:
 	
 	# We are off course, retarget
 	if distance_to_target > target.distance:
-		substate = SUBSTATE.TARGETING
-		return
+		target.offtrack_count += 1
+		#substate = SUBSTATE.TARGETING
+		if target.offtrack_count >= MAX_OFFTRACK:
+			set_substate( SUBSTATE.TARGETING )
+			target.offtrack_count = 0
+			return
+	else:
+		target.offtrack_count = 0
 	
 	# Thrusting
 	if distance_to_target >= target.thrust_distance:
 		cpu.input.is_action_pressed[ "Up_CPU" ] = true
 	elif distance_to_target <= target.halfway_distance:
-		if ship.linear_velocity.is_zero_approx():
-			substate = SUBSTATE.TARGETING
+		if ship.speed < MIN_SPEED:
+			#substate = SUBSTATE.TARGETING
+			set_substate( SUBSTATE.TARGETING )
 		else:
 			cpu.input.is_action_pressed[ "Down_CPU" ] = true
 	

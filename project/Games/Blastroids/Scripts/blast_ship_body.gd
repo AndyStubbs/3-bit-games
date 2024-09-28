@@ -85,6 +85,7 @@ var thrust_drain: float = 150
 var life_support_energy: float = 10
 var is_destroyed: bool = false
 var nearby_objs: Array = []
+var nearby_enemies: Array = []
 var health_bar: ProgressBar
 var shields_bar: ProgressBar
 var energy_bar: ProgressBar
@@ -357,6 +358,10 @@ func apply_thrust( delta: float, mult: float = 1.0 ) -> void:
 	is_thrusting = true
 
 
+func can_cpu_fire() -> bool:
+	return laser_energy >= max_laser_energy * 0.25
+
+
 func fire_lasers( delta: float ) -> void:
 	var is_low_power_mode = false
 	if weapon_data.AMMO_TYPE == "energy":
@@ -488,6 +493,8 @@ func disable() -> void:
 
 
 func reset_ship() -> void:
+	if is_cpu:
+		cpu_ai.set_state( cpu_ai.STATE.IDLE )
 	is_invulnerable = true
 	var is_clear: bool = false
 	health = max_health
@@ -930,10 +937,16 @@ func _on_body_entered( node: Node2D ) -> void:
 
 
 func _on_area_2d_body_entered( body: Node2D ) -> void:
-	if body != self and body.has_method( "fire_lasers" ):
-		nearby_objs.append( body )
+	if body != self and body.has_method( "hit" ):
+		if body.has_method( "fire_lasers" ):
+			nearby_enemies.append( body )
+		else:
+			nearby_objs.append( body )
 
 
 func _on_area_2d_body_exited( body: Node2D ) -> void:
-	if body.has_method( "fire_lasers" ):
-		nearby_objs.erase( body )
+	if body != self and body.has_method( "hit" ):
+		if body.has_method( "fire_lasers" ):
+			nearby_enemies.erase( body )
+		else:
+			nearby_objs.erase( body )

@@ -89,7 +89,8 @@ func init_stars( star_scene: PackedScene ) -> void:
 func init_main_ship() -> void:
 	var buffer: int = 500
 	var rect: Rect2 = Blast.get_rect()
-	crosshair.modulate = CROSSHAIR_WHITE
+	if not ship_body.is_cpu:
+		crosshair.modulate = CROSSHAIR_WHITE
 	camera.limit_left = roundi( rect.position.x ) - buffer
 	camera.limit_right = roundi( rect.position.x + rect.size.x ) + buffer
 	camera.limit_top = roundi( rect.position.y ) - buffer
@@ -236,6 +237,11 @@ func update_main_ship( delta: float ) -> void:
 		#roundi( ship_body.position.x / 100 ),
 		#roundi( ship_body.position.y / 100 )
 	#]
+	
+	if ship_body.is_cpu:
+		var state_name = ship_body.cpu_ai.state_name
+		var substate_name = ship_body.cpu_ai.state.substate_name
+		$Label.text = "%s - %s" % [ state_name, substate_name ]
 
 
 func process_low_energy_warning( delta: float ) -> void:
@@ -287,7 +293,6 @@ func show_crosshair() -> void:
 	crosshair_tween = create_tween()
 	crosshair_tween.tween_property( crosshair, "modulate", CROSSHAIR_GREEN, 0.35 )
 	is_crosshair_green = true
-
 
 
 func hide_crosshair() -> void:

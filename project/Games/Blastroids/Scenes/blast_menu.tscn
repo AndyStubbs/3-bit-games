@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://6alqj2rempg2"]
+[gd_scene load_steps=9 format=3 uid="uid://6alqj2rempg2"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_menu.gd" id="1_bgg41"]
 [ext_resource type="PackedScene" uid="uid://dyhh1j60dt6t0" path="res://Shared/player_select.tscn" id="1_yedil"]
 [ext_resource type="Texture2D" uid="uid://b6bv4frxy18or" path="res://Games/Blastroids/Images/background_0.webp" id="2_33dug"]
 [ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="4_4rcpt"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="5_5dyco"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr8yo"]
 bg_color = Color(0, 0, 0, 1)
@@ -405,6 +406,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_niit2")
 text = "TR_BACK"
+
+[node name="Cursor" parent="." instance=ExtResource("5_5dyco")]
 
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel/MC/VB/MapSizes" to="." method="_on_map_sizes_item_selected"]
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel2/MC/VB/MapTypes" to="." method="_on_map_types_item_selected"]

@@ -39,6 +39,7 @@ func update_ui_state() -> void:
 
 
 func _ready() -> void:
+	Globals.is_menu_page = true
 	map_sizes.select( Blast.settings.map_size )
 	map_types.select( Blast.settings.map_type )
 	asteroid_count.select( Blast.settings.rock_density )

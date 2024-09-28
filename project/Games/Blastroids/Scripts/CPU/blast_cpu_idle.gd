@@ -91,11 +91,16 @@ func get_target_ship_position() -> Vector2:
 	
 	# Find the nearest ship
 	for check_ship: BlastShipBody in ship.game.ships:
-		if ship != check_ship:
+		if ship != check_ship and not check_ship.is_destroyed:
 			var distance: float = ship.position.distance_squared_to( check_ship.position )
 			if distance < min_distance:
 				min_distance = distance
 				target_ship = check_ship
+	
+	# If no ship found then return random position
+	if target_ship == null:
+		return get_random_position()
+	
 	var pos = target_ship.position
 	
 	print( "%s Targeting %s" % [ ship.display_name, target_ship.display_name ] )

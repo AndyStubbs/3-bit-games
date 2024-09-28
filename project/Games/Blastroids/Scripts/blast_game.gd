@@ -667,6 +667,7 @@ func setup_players() -> void:
 
 
 func _ready() -> void:
+	Globals.is_menu_page = false
 	setup_players()
 	PhysicsServer2D.area_set_param(
 		get_viewport().find_world_2d().space,

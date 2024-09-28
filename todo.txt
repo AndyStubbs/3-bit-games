@@ -21,11 +21,16 @@
 	b. When low energy go after crates or energy rocks
 	c. Go after pickups
 	d. Randomly change weapons from time to time.
-18. Fix bug with when hitting brakes it nullifies all movement when near zero speed.  This means during collisions have no push impact on
-	ships that are stopping.
+18. Fix bug with when hitting brakes it nullifies all movement when near zero speed.  This means
+	during collisions have no push impact on ships that are stopping.
 19. Need to hide all ship vectors when destroyed
 20. Implement observer mode.
-
+21. Add more crates
+22. Add race mode
+23. Add tutorial for blastroids
+24. Show controls for blastroids
+25. Create energy generators that create energy pickups randomly
+26. Create option for AI difficulty
 
 
 Ready Aim Fire Bug

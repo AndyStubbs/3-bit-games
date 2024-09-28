@@ -34,7 +34,7 @@ var blink_d: float = 1.0
 @onready var stars4 = $Stars4
 @onready var stars5 = $Stars5
 @onready var camera: Camera2D = $Camera2D
-@onready var vector: Node2D = $Vector
+#@onready var vector: Node2D = $Vector
 @onready var vector_sprite: Sprite2D = $Vector/VectorSprite
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var sprite_markers: Sprite2D = $Sprite2D/Sprite2D
@@ -65,6 +65,7 @@ var blink_d: float = 1.0
 @onready var pickup_sound4: AudioStreamPlayer2D = $Sounds/PickupSound4
 @onready var invalid_sound: AudioStreamPlayer2D = $Sounds/InvalidSound
 @onready var crosshair: Sprite2D = $Sprite2D/CrosshairSprite
+@onready var beacon_vector: Sprite2D = $Vector/Beacons/Sprite2D
 
 
 func init_stars( star_scene: PackedScene ) -> void:
@@ -112,7 +113,6 @@ func init_main_ship() -> void:
 			ship_vector_front.modulate = ship.ui_color
 			ship_vector.add_child( ship_vector_front )
 			ship_vector.texture = ship_body.game.TRI_IMAGE
-			#ship_vector.modulate.h += 0.15
 			ship_vector.self_modulate.a = 0
 			ship_vectors.add_child( ship_vector )
 			enemies.append( ship )
@@ -168,6 +168,8 @@ func update_sounds() -> void:
 
 
 func update_main_ship( delta: float ) -> void:
+	
+	# Update Stars
 	stars.position = position * -0.35
 	stars2.position = position * -0.45
 	stars3.position = position * -0.55
@@ -182,22 +184,38 @@ func update_main_ship( delta: float ) -> void:
 		vector_sprite.modulate.a = 0.85
 		pos = ship_body.linear_velocity.normalized() * 75
 	
+	# Update ship vectors
 	for i in range( enemies.size() ):
 		var ship: BlastShipBody = enemies[ i ]
 		var ship_vector = ship_vectors.get_child( i )
-		var ship_diff = ( ship.position - position )
-		var ship_vector_pos = ship_diff.normalized() * 75
-		var a = 1.0 - ship_diff.length_squared() * 0.0000001
-		ship_vector.position = ship_vector_pos
-		ship_vector.rotation = ship_vector_pos.angle()
-		ship_vector.modulate.a = clampf( a, 0.6, 1.0 )
-		ship_vector.scale = Vector2( ship_vector.modulate.a, ship_vector.modulate.a )
-		if a > 0.94:
-			ship_vector.self_modulate.a = 1
-		else:
-			ship_vector.self_modulate.a = 0
+		update_vector( ship_vector, ship.position )
+		#var ship_diff = ( ship.position - position )
+		#var ship_vector_pos = ship_diff.normalized() * 75
+		#var a = 1.0 - ship_diff.length_squared() * 0.0000001
+		#ship_vector.position = ship_vector_pos
+		#ship_vector.rotation = ship_vector_pos.angle()
+		#ship_vector.modulate.a = clampf( a, 0.6, 1.0 )
+		#ship_vector.scale = Vector2( ship_vector.modulate.a, ship_vector.modulate.a )
+		#if a > 0.94:
+			#ship_vector.self_modulate.a = 1
+		#else:
+			#ship_vector.self_modulate.a = 0
 		if ship.is_game_over:
 			ship_vector.hide()
+	
+	# Update beacon vector
+	beacon_vector.modulate.a = 0
+	var min_distance = INF
+	var closest_beacon: BlastBeacon
+	for beacon: BlastBeacon in ship_body.game.beacons:
+		var distance = beacon.position.distance_squared_to( position )
+		if distance < min_distance:
+			closest_beacon = beacon
+			min_distance = distance
+	if closest_beacon:
+		beacon_vector.modulate = closest_beacon.modulate
+		update_vector( beacon_vector, closest_beacon.position )
+	
 	#if ship_body.speed < 15625:
 		#pos = ship_body.linear_velocity
 	#else:
@@ -242,6 +260,20 @@ func update_main_ship( delta: float ) -> void:
 		var state_name = ship_body.cpu_ai.state_name
 		var substate_name = ship_body.cpu_ai.state.substate_name
 		$Label.text = "%s - %s" % [ state_name, substate_name ]
+
+
+func update_vector( vector: Sprite2D, pos: Vector2 ) -> void:
+	var diff = ( pos - position )
+	var vector_pos = diff.normalized() * 75
+	var a = 1.0 - diff.length_squared() * 0.0000001
+	vector.position = vector_pos
+	vector.rotation = vector_pos.angle()
+	vector.modulate.a = clampf( a, 0.6, 1.0 )
+	vector.scale = Vector2( vector.modulate.a, vector.modulate.a )
+	if a > 0.94:
+		vector.self_modulate.a = 1
+	else:
+		vector.self_modulate.a = 0
 
 
 func process_low_energy_warning( delta: float ) -> void:
@@ -312,6 +344,7 @@ func _ready() -> void:
 		$Sprite2D/Rockets/Rocket2/RocketParticles,
 		$Sprite2D/Rockets/Rocket2/RocketParticles2
 	]
+	beacon_vector.modulate.a = 0
 	crosshair.modulate.a = 0
 	low_energy_sprite.modulate.a = 0
 	health_bar_panel.modulate.a = 0

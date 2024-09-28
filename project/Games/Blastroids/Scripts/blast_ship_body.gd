@@ -8,6 +8,15 @@ const GUN_POINTS: Array = [
 	[ Vector2( 28, -20 ), Vector2( 28, 22 ) ],
 	[ Vector2( 28, -6 ), Vector2( 28, 6 ) ],
 ]
+const ACTION_NAMES: Array = [
+	"ToggleDown_",
+	"ToggleUp_",
+	"Left_",
+	"Right_",
+	"Up_",
+	"Down_",
+	"Fire_"
+]
 
 
 @export var world_id: int = 0
@@ -125,6 +134,7 @@ var is_selecting: bool = false
 var is_charging: bool = false
 var last_hit_by: BlastShipBody
 var last_hit_time: float = 0
+var enabled_actions: Dictionary = {}
 
 
 @onready var nav_marker: Sprite2D = $NavMarker
@@ -201,6 +211,7 @@ func setup_ship( settings: Dictionary ) -> void:
 	if is_cpu:
 		cpu_ai = BlastCpuAi.new()
 		cpu_ai.init( self )
+	enable_controls( ACTION_NAMES )
 
 
 func setup_weapon() -> void:
@@ -527,6 +538,8 @@ func reset_ship() -> void:
 
 
 func get_input( action: String, just: bool = false, released: bool = false ) -> bool:
+	if not enabled_actions[ action ]:
+		return false
 	if is_cpu:
 		return cpu_ai.get_input( action, just, released )
 	if just:
@@ -832,7 +845,7 @@ func process_crosshairs() -> void:
 		return
 	shapecast.target_position = Vector2.RIGHT * 1000
 	shapecast.force_shapecast_update()
-	if shapecast.is_colliding():
+	if shapecast.is_colliding() and shapecast.get_collider( 0 ).has_method( "hit" ):
 		var cx = ( shapecast.get_collision_point( 0 ) - position ).length()
 		if cx > crosshair_x:
 			cx = crosshair_x
@@ -841,7 +854,6 @@ func process_crosshairs() -> void:
 	else:
 		main_clone.hide_crosshair()
 		main_clone.crosshair.position.x = crosshair_x
-	#main_clone.crosshair.position.x = dist
 
 
 func shapecast_2d( end: Vector2 ) -> Variant:
@@ -869,6 +881,16 @@ func reset_all_sounds() -> void:
 	is_selecting = false
 	blast_charge_size = 0
 	is_charging = false
+
+
+func disable_controls() -> void:
+	for action in ACTION_NAMES:
+		enabled_actions[ action + controls ] = false
+
+
+func enable_controls( actions: Array ) -> void:
+	for action in actions:
+		enabled_actions[ action + controls ] = true
 
 
 func _ready() -> void:

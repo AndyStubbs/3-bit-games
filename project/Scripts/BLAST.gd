@@ -48,24 +48,25 @@ var settings: Dictionary = {
 var data: Dictionary = {
 	"player_count": 0,
 	"is_tutorial": false,
+	"tutorial_step": 0,
 	"settings": {}
 }
 
 
 func get_num_rocks() -> int:
-	return ROCKS[ settings.map_size ][ settings.rock_density ]
+	return ROCKS[ data.settings.map_size ][ data.settings.rock_density ]
 
 
 func get_num_crates() -> int:
-	return CRATES[ settings.map_size ][ settings.crate_density ]
+	return CRATES[ data.settings.map_size ][ data.settings.crate_density ]
 
 
 func get_rect() -> Rect2:
 	var rect: Rect2 = Rect2( -1920, -1080, 3840, 2160 )
-	if settings.map_type > 0:
+	if data.settings.map_type > 0:
 		rect = Rect2( -1920, -1920, 3840, 3840 )
-	var mult = ( settings.map_size + 1 )
-	if settings.map_type == 2:
+	var mult = ( data.settings.map_size + 1 )
+	if data.settings.map_type == 2:
 		mult += 2
 	return Rect2( rect.position * mult, rect.size * mult )
 

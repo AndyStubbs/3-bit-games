@@ -1,0 +1,121 @@
+[gd_scene load_steps=5 format=3 uid="uid://cuoljppcvsc51"]
+
+[ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_tutorial.gd" id="1_c2cvd"]
+[ext_resource type="FontFile" uid="uid://c3gncvcmikaq0" path="res://Assets/Fonts/AbrilFatface-Regular.ttf" id="2_6eccx"]
+[ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="2_nq3a8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a6kab"]
+bg_color = Color(0.158, 0.158, 0.158, 0.15)
+expand_margin_left = 64.0
+expand_margin_top = 32.0
+expand_margin_right = 64.0
+expand_margin_bottom = 32.0
+
+[node name="BlastTutorial" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c2cvd")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_top = 32.0
+offset_right = 500.0
+offset_bottom = 332.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_a6kab")
+
+[node name="VB" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="Panel/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_6eccx")
+theme_override_font_sizes/font_size = 32
+text = "Tutorial"
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="Panel/VB"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Contents" type="Label" parent="Panel/VB"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nq3a8")
+theme_override_font_sizes/font_size = 24
+autowrap_mode = 3
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -80.0
+offset_right = 500.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_a6kab")
+
+[node name="VB" type="VBoxContainer" parent="Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HB" type="HBoxContainer" parent="Panel2/VB"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ShowControls" type="Button" parent="Panel2/VB/HB"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nq3a8")
+theme_override_font_sizes/font_size = 28
+text = "Show Controls"
+
+[node name="ResetButton" type="Button" parent="Panel2/VB/HB"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nq3a8")
+theme_override_font_sizes/font_size = 28
+text = "Reset"
+
+[node name="PreviousButton" type="Button" parent="Panel2/VB/HB"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nq3a8")
+theme_override_font_sizes/font_size = 28
+text = "Previous"
+
+[node name="NextButton" type="Button" parent="Panel2/VB/HB"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nq3a8")
+theme_override_font_sizes/font_size = 28
+text = "Next"
+
+[node name="Quit" type="Button" parent="Panel2/VB/HB"]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nq3a8")
+theme_override_font_sizes/font_size = 28
+text = "Quit"

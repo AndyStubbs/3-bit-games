@@ -7,6 +7,8 @@ enum WEAPONS {
 }
 
 
+const BEACON_SCENE = preload( "res://Games/Blastroids/Scenes/blast_beacon.tscn" )
+const TUTORIAL_SCENE = preload( "res://Games/Blastroids/Scenes/blast_tutorial.tscn" )
 const SHIP_BODY = preload( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" )
 const PL_ONE = preload( "res://Games/Blastroids/Scenes/pl_one.tscn" )
 const PL_TWO = preload( "res://Games/Blastroids/Scenes/pl_two.tscn" )
@@ -165,6 +167,7 @@ const WEAPONS_DATA: Dictionary = {
 var worlds: Array
 var uis: Array
 var ships: Array = []
+var beacons: Array = []
 var minimaps: Array = []
 var ui_items: Array = []
 var planets: Array = []
@@ -516,6 +519,10 @@ func add_body( body ) -> void:
 	bodies.add_child( body )
 
 
+func add_beacon( beacon: BlastBeacon ) -> void:
+	beacons.append( beacon )
+
+
 func create_minimap_material( color: Color ) -> ShaderMaterial:
 	var shader_material: ShaderMaterial = ShaderMaterial.new()
 	shader_material.shader = MINIMAP_SHADER
@@ -681,6 +688,12 @@ func setup_players() -> void:
 func _ready() -> void:
 	if not Blast.data.settings:
 		Blast.data.settings = Blast.settings
+	var tutorial
+	if Blast.data.is_tutorial:
+		tutorial = TUTORIAL_SCENE.instantiate()
+		$CanvasLayer.add_child( tutorial )
+		tutorial.init( self )
+		Blast.data.settings = tutorial.get_settings()
 	Globals.is_menu_page = false
 	setup_players()
 	PhysicsServer2D.area_set_param(
@@ -701,6 +714,8 @@ func _ready() -> void:
 			)
 	init()
 	init_time = Time.get_ticks_msec() + 1000
+	if tutorial:
+		tutorial.start()
 
 
 func _physics_process( _delta: float ) -> void:

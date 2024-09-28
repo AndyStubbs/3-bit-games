@@ -196,18 +196,18 @@ func init() -> void:
 func init_containers() -> void:
 	var base_size: Vector2 = Vector2( 355.6, 200.0 )
 	var map_scale: float = 0.1
-	if Blast.settings.map_size == 0:
+	if Blast.data.settings.map_size == 0:
 		map_scale = 0.1
-	elif Blast.settings.map_size == 1:
+	elif Blast.data.settings.map_size == 1:
 		map_scale = 0.09
-	elif Blast.settings.map_size == 2:
+	elif Blast.data.settings.map_size == 2:
 		map_scale = 0.08
-	elif Blast.settings.map_size == 3:
+	elif Blast.data.settings.map_size == 3:
 		map_scale = 0.07
-	elif Blast.settings.map_size == 4:
-		if Blast.settings.map_type == 2:
+	elif Blast.data.settings.map_size == 4:
+		if Blast.data.settings.map_type == 2:
 			map_scale = 0.05
-		elif Blast.settings.map_type == 1:
+		elif Blast.data.settings.map_type == 1:
 			map_scale = 0.055
 		else:
 			map_scale = 0.06
@@ -328,7 +328,7 @@ func init_map() -> void:
 		radius = rect.size.y / 2
 	
 	# Earth System
-	if Blast.settings.map_type == 1:
+	if Blast.data.settings.map_type == 1:
 		var planet = PLANET_SCENE.instantiate()
 		planet.load( "sun" )
 		planet.position = Vector2(
@@ -340,7 +340,7 @@ func init_map() -> void:
 		planets.append( planet )
 	
 	# Inner solar system
-	elif Blast.settings.map_type == 2:
+	elif Blast.data.settings.map_type == 2:
 		
 		# The Sun
 		var sun = PLANET_SCENE.instantiate()
@@ -399,7 +399,7 @@ func init_rocks() -> void:
 	
 	# Create Rocks
 	var num_rocks = Blast.get_num_rocks()
-	if Blast.settings.map_type == 1:
+	if Blast.data.settings.map_type == 1:
 		num_rocks = roundi( num_rocks * 0.5 )
 	for i in range( num_rocks ):
 		var rock: BlastRockBody = ROCK_SCENE_BODY.instantiate()
@@ -412,7 +412,7 @@ func init_rocks() -> void:
 			rock.position = get_random_start_pos( 0, true )
 			rock.shape_cast.force_shapecast_update()
 			is_placed = not rock.shape_cast.is_colliding()
-		if Blast.settings.map_type == 0:
+		if Blast.data.settings.map_type == 0:
 			rock.linear_velocity = Vector2.from_angle( randf_range( 0, TAU ) ) * 100
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 
@@ -480,7 +480,7 @@ func get_random_start_pos( buffer: float = 0, is_rock: bool = false ) -> Vector2
 	var max_x: float = rect.position.x + rect.size.x - buffer * 2
 	var max_y: float = rect.position.y + rect.size.y - buffer * 2
 	var pos: Vector2
-	if Blast.settings.map_type == 0:
+	if Blast.data.settings.map_type == 0:
 		pos = Vector2(
 			randf_range( min_x, max_x ),
 			randf_range( min_y, max_y )
@@ -489,7 +489,7 @@ func get_random_start_pos( buffer: float = 0, is_rock: bool = false ) -> Vector2
 		var sun = planets[ 0 ]
 		var min_radius = sun.radius + 500
 		var max_radius = sun.gravity_collision_shape.shape.radius * 0.95
-		if is_rock and Blast.settings.map_type == 2:
+		if is_rock and Blast.data.settings.map_type == 2:
 			min_radius = 8500
 		var is_placed: bool = false
 		var safe_distance: float = 1000 * 1000
@@ -628,9 +628,21 @@ func set_game_over() -> void:
 
 func setup_players() -> void:
 	var players: Array = []
-	for player in Globals.players:
-		if player.enabled:
-			players.append( player )
+	if Blast.data.is_tutorial:
+		var player = {
+			"id": 0,
+			"enabled": true,
+			"name": "TR_PLAYER_1",
+			"controls": "ANY",
+			"colors": 0,
+			"image_id": 0,
+			"name_changed": false
+		}
+		players.append( player )
+	else:
+		for player in Globals.players:
+			if player.enabled:
+				players.append( player )
 	var pl: Panel
 	if players.size() == 1:
 		pl = PL_ONE.instantiate()
@@ -653,7 +665,7 @@ func setup_players() -> void:
 		bodies2.add_child( ship_body )
 		ship_body.setup_ship( player )
 		world_id += 1
-	for i in Blast.settings.added_cpus:
+	for i in Blast.data.settings.added_cpus:
 		var ship_body = SHIP_BODY.instantiate()
 		ship_body.world_id = -1
 		bodies2.add_child( ship_body )
@@ -667,6 +679,8 @@ func setup_players() -> void:
 
 
 func _ready() -> void:
+	if not Blast.data.settings:
+		Blast.data.settings = Blast.settings
 	Globals.is_menu_page = false
 	setup_players()
 	PhysicsServer2D.area_set_param(
@@ -692,6 +706,6 @@ func _ready() -> void:
 func _physics_process( _delta: float ) -> void:
 	if Input.is_action_just_pressed( "Exit" ):
 		get_tree().change_scene_to_packed( Blast.scenes.menu )
-	if Blast.settings.map_type > 0 and Time.get_ticks_msec() < init_time:
+	if Blast.data.settings.map_type > 0 and Time.get_ticks_msec() < init_time:
 		for body: RigidBody2D in rigid_bodies:
 			body.linear_velocity = get_orbit_velocity( body )

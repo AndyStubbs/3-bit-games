@@ -50,6 +50,22 @@ func _ready() -> void:
 
 
 func _on_start_button_pressed() -> void:
+	Blast.data.settings = Blast.settings
+	get_tree().change_scene_to_packed( Blast.scenes.game )
+
+
+func _on_tutorial_button_pressed() -> void:
+	Blast.data.is_tutorial = true
+	Blast.data.settings = {
+		"map_size": 2,
+		"map_type": 0,
+		"rock_density": 0,
+		"crate_density": 0,
+		"lives_count": 0,
+		"added_cpus": 0,
+		"game_mode": 0,
+		"show_crosshairs": 1
+	}
 	get_tree().change_scene_to_packed( Blast.scenes.game )
 
 

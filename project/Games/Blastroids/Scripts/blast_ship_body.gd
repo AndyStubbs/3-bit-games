@@ -141,7 +141,7 @@ func init( new_game: BlastGame ) -> void:
 	game = new_game
 	if world_id > -1:
 		init_ui()
-	lives = Blast.settings.lives_count + 1
+	lives = Blast.data.settings.lives_count + 1
 	add_weapon( BlastGame.WEAPONS.LASER )
 	weapon_index = 0
 	select_weapon()
@@ -506,7 +506,7 @@ func reset_ship() -> void:
 		shapecast.target_position = Vector2.ZERO
 		shapecast.force_shapecast_update()
 		is_clear = not shapecast.is_colliding()
-	if Blast.settings.map_type > 0:
+	if Blast.data.settings.map_type > 0:
 		linear_velocity = game.get_orbit_velocity( self )
 	modulate.a = 1.0
 	var duration: float = 1.5
@@ -828,7 +828,7 @@ func process_observer_mode( delta: float ) -> void:
 
 
 func process_crosshairs() -> void:
-	if Blast.settings.show_crosshairs == 0:
+	if Blast.data.settings.show_crosshairs == 0:
 		return
 	shapecast.target_position = Vector2.RIGHT * 1000
 	shapecast.force_shapecast_update()

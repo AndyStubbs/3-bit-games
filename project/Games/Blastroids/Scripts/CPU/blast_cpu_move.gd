@@ -106,7 +106,6 @@ func process_thrust( _delta ) -> void:
 	# We are off course, retarget
 	if distance_to_target > target.distance:
 		target.offtrack_count += 1
-		#substate = SUBSTATE.TARGETING
 		if target.offtrack_count >= MAX_OFFTRACK:
 			set_substate( SUBSTATE.TARGETING )
 			target.offtrack_count = 0
@@ -119,10 +118,12 @@ func process_thrust( _delta ) -> void:
 		cpu.input.is_action_pressed[ "Up_CPU" ] = true
 	elif distance_to_target <= target.halfway_distance:
 		if ship.speed < MIN_SPEED:
-			#substate = SUBSTATE.TARGETING
 			set_substate( SUBSTATE.TARGETING )
 		else:
 			cpu.input.is_action_pressed[ "Down_CPU" ] = true
+	elif ship.speed < MIN_SPEED:
+		print( "Stopped Cruising" )
+		set_substate( SUBSTATE.TARGETING )
 	
 	# Update target distance
 	target.distance = distance_to_target

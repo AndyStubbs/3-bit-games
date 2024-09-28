@@ -26,6 +26,7 @@ const CRATES: Array = [
 ]
 const LIVES: Array = [ 1, 2, 3, 4, 5, 6, 7 ]
 const CROSSHAIRS: Array = [ false, true ]
+const GAME_MODES: Array = [ "default", "race" ]
 
 
 var is_loading_settings: bool = false
@@ -41,11 +42,15 @@ var settings: Dictionary = {
 	"crate_density": 2,
 	"lives_count": 2,
 	"added_cpus": 0,
+	"game_mode": 0,
 	"show_crosshairs": 1
 }
 var data: Dictionary = {
-	"player_count": 0
+	"player_count": 0,
+	"is_tutorial": false,
+	"settings": {}
 }
+
 
 func get_num_rocks() -> int:
 	return ROCKS[ settings.map_size ][ settings.rock_density ]

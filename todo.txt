@@ -26,3 +26,9 @@
 19. Need to hide all ship vectors when destroyed
 20. Implement observer mode.
 
+
+
+Ready Aim Fire Bug
+Don't allow other controllers to toggle weapons.
+
+

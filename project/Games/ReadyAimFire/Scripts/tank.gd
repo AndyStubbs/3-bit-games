@@ -465,7 +465,7 @@ func process_bullet_select() -> void:
 	if is_firing: return
 	var is_toggled: bool = false
 	#if Input.is_action_just_pressed( "ToggleUp_ANY" ):
-	if get_input( "ToggleUp_ANY", true ):
+	if get_input( "ToggleUp_" + controls, true ):
 		is_toggled = true
 		var selected_items: Array = bullet_select.get_selected_items()
 		if selected_items.size() == 0:
@@ -482,7 +482,7 @@ func process_bullet_select() -> void:
 		bullet_select.select( selected_index )
 		update_bullet_image()
 	#if Input.is_action_just_pressed( "ToggleDown_ANY" ):
-	if get_input( "ToggleDown_ANY", true ):
+	if get_input( "ToggleDown_" + controls, true ):
 		is_toggled = true
 		var selected_items: Array = bullet_select.get_selected_items()
 		if selected_items.size() == 0:

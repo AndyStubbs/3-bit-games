@@ -691,6 +691,8 @@ func setup_players() -> void:
 
 
 func show_loading_screen() -> void:
+	loading_panel.modulate.a = 0
+	loading_panel.show()
 	var tween = create_tween()
 	tween.tween_property( loading_panel, "modulate:a", 1.0, 0.5 )
 	await tween.finished
@@ -699,9 +701,12 @@ func show_loading_screen() -> void:
 func hide_loading_screen() -> void:
 	var tween = create_tween()
 	tween.tween_property( loading_panel, "modulate:a", 0.0, 1.0 )
+	await tween.finished
+	loading_panel.hide()
 
 
 func _ready() -> void:
+	await get_tree().physics_frame
 	if not Blast.data.settings:
 		Blast.data.settings = Blast.settings
 	var tutorial

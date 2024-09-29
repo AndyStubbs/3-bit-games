@@ -56,10 +56,12 @@ func start( game: BlastGame ) -> void:
 	for item in game.ui_items:
 		hide_tween.tween_property( item, "modulate:a", 0.0, 1.0 )
 	for ship in game.ships:
-		for clone in ship.get_clones():
+		for clone: BlastShip in ship.get_clones():
 			if clone.has_method( "init_stars" ) and clone.is_main_ship:
 				hide_tween.tween_property( clone.sprite, "modulate:a", 0.0, 1.0 )
-				hide_tween.tween_property( clone.vector, "modulate:a", 0.0, 1.0 )
+				hide_tween.tween_property( clone.get_node( "Vector" ), "modulate:a", 0.0, 1.0 )
+				hide_tween.tween_property( clone.low_energy_sprite, "modulate:a", 0.0, 1.0 )
+				hide_tween.tween_property( clone.health_bar_panel, "modulate:a", 0.0, 1.0 )
 			else:
 				hide_tween.tween_property( clone, "modulate:a", 0.0, 1.0 )
 	set_physics_process( true )

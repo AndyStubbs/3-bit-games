@@ -100,6 +100,7 @@ func start_substep() -> void:
 		beacon.position = substep.beacon
 		game.add_body( beacon )
 		beacon.init( game )
+		ship.clones[ 0 ].target_beacon = beacon
 	if substep.has( "beacon_radius" ):
 		beacon = BlastGame.BEACON_SCENE.instantiate()
 		beacon.modulate = substep.color
@@ -114,6 +115,7 @@ func start_substep() -> void:
 
 func next_substate() -> void:
 	if beacon:
+		ship.clones[ 0 ].target_beacon = null
 		beacon.destroy()
 		beacon = null
 	if Blast.data.tutorial_substep <  data.substeps.size() - 1:
@@ -157,4 +159,5 @@ func _on_reset_button_pressed() -> void:
 
 
 func _on_quit_pressed() -> void:
+	Blast.data.tutorial_substep = 0
 	get_tree().change_scene_to_packed( Blast.scenes.menu )

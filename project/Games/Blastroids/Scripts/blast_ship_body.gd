@@ -34,7 +34,9 @@ var max_rotation_speed = TAU
 var min_roation_speed = PI / 2
 var game: BlastGame
 var thrust_force: float = 4000
+#var thrust_force: float = 40000
 var dampening_factor: float = 0.0005
+#var dampening_factor: float = 0
 var last_pos: Vector2
 var camera_pos: Vector2
 var clones: Array = []

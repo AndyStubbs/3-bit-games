@@ -26,6 +26,7 @@ var health_bar_tween: Tween
 var crosshair_tween: Tween
 var is_crosshair_green: bool = false
 var blink_d: float = 1.0
+var target_beacon: BlastBeacon
 
 
 @onready var stars = $Stars
@@ -205,16 +206,9 @@ func update_main_ship( delta: float ) -> void:
 	
 	# Update beacon vector
 	beacon_vector.modulate.a = 0
-	var min_distance = INF
-	var closest_beacon: BlastBeacon
-	for beacon: BlastBeacon in ship_body.game.beacons:
-		var distance = beacon.position.distance_squared_to( position )
-		if distance < min_distance:
-			closest_beacon = beacon
-			min_distance = distance
-	if closest_beacon:
-		beacon_vector.modulate = closest_beacon.modulate
-		update_vector( beacon_vector, closest_beacon.position )
+	if target_beacon:
+		beacon_vector.modulate = target_beacon.modulate
+		update_vector( beacon_vector, target_beacon.position, true )
 	
 	#if ship_body.speed < 15625:
 		#pos = ship_body.linear_velocity
@@ -262,13 +256,14 @@ func update_main_ship( delta: float ) -> void:
 		$Label.text = "%s - %s" % [ state_name, substate_name ]
 
 
-func update_vector( vector: Sprite2D, pos: Vector2 ) -> void:
+func update_vector( vector: Sprite2D, pos: Vector2, is_beacon: bool = false ) -> void:
 	var diff = ( pos - position )
 	var vector_pos = diff.normalized() * 75
 	var a = 1.0 - diff.length_squared() * 0.0000001
 	vector.position = vector_pos
 	vector.rotation = vector_pos.angle()
 	vector.modulate.a = clampf( a, 0.6, 1.0 )
+	if is_beacon: vector.modulate.a = clampf( a, 0.8, 1.0 )
 	vector.scale = Vector2( vector.modulate.a, vector.modulate.a )
 	#if a > 0.94:
 		#vector.self_modulate.a = 1

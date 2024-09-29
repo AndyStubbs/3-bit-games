@@ -176,6 +176,7 @@ var init_time: float
 
 
 @onready var bodies = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
+@onready var loading_panel = $CanvasLayer/LoadingPanel
 
 
 func init() -> void:
@@ -689,6 +690,17 @@ func setup_players() -> void:
 		} )
 
 
+func show_loading_screen() -> void:
+	var tween = create_tween()
+	tween.tween_property( loading_panel, "modulate:a", 1.0, 0.5 )
+	await tween.finished
+
+
+func hide_loading_screen() -> void:
+	var tween = create_tween()
+	tween.tween_property( loading_panel, "modulate:a", 0.0, 1.0 )
+
+
 func _ready() -> void:
 	if not Blast.data.settings:
 		Blast.data.settings = Blast.settings
@@ -720,6 +732,8 @@ func _ready() -> void:
 	init_time = Time.get_ticks_msec() + 1000
 	if tutorial:
 		tutorial.start()
+	await get_tree().physics_frame
+	hide_loading_screen()
 
 
 func _physics_process( _delta: float ) -> void:

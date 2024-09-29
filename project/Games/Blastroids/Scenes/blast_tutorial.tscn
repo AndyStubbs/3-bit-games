@@ -119,3 +119,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_nq3a8")
 theme_override_font_sizes/font_size = 28
 text = "Quit"
+
+[connection signal="pressed" from="Panel2/VB/HB/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Panel2/VB/HB/Quit" to="." method="_on_quit_pressed"]

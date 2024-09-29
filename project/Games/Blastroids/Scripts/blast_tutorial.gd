@@ -10,7 +10,7 @@ var steps: Array = [ {
 		"map_type": 0,
 		"rock_density": 0,
 		"crate_density": 0,
-		"lives_count": 0,
+		"lives_count": -1,
 		"added_cpus": 0,
 		"game_mode": 0,
 		"show_crosshairs": 0
@@ -55,7 +55,6 @@ var steps: Array = [ {
 	} ]
 } ]
 var data: Dictionary
-var substep_index: int = 0
 var substep: Dictionary
 var ship: BlastShipBody
 var items: Array = []
@@ -84,15 +83,16 @@ func start() -> void:
 
 
 func start_substep() -> void:
-	substep = data.substeps[ substep_index ]
+	substep = data.substeps[ Blast.data.tutorial_substep ]
 	ship.disable_controls()
 	ship.enable_controls( substep.enabled_actions )
-	
 	if substep.has( "delay" ):
 		await get_tree().create_timer( substep.delay ).timeout
 	contents.text = ""
 	for i in range( substep.messages ):
-		var msg = "TR_BLAST_TUT_%d_%d_%d" % [ Blast.data.tutorial_step, substep_index, i ]
+		var msg = "TR_BLAST_TUT_%d_%d_%d" % [
+			Blast.data.tutorial_step, Blast.data.tutorial_substep, i
+		]
 		contents.text += tr( msg )
 	if substep.has( "beacon" ):
 		beacon = BlastGame.BEACON_SCENE.instantiate()
@@ -106,17 +106,23 @@ func start_substep() -> void:
 		game.add_body( beacon )
 		beacon.init( game )
 	if substep.has( "rocks" ):
-		# TODO add loading screen
+		await game.show_loading_screen()
 		game.create_rocks( substep.rocks, true )
+		await get_tree().physics_frame
+		game.hide_loading_screen()
 
 
 func next_substate() -> void:
 	if beacon:
 		beacon.destroy()
 		beacon = null
-	if substep_index <  data.substeps.size() - 1:
-		substep_index += 1
+	if Blast.data.tutorial_substep <  data.substeps.size() - 1:
+		Blast.data.tutorial_substep += 1
 		start_substep()
+
+
+func reset_tutorial() -> void:
+	get_tree().change_scene_to_packed( Blast.scenes.game )
 
 
 func _physics_process( delta: float ) -> void:
@@ -139,3 +145,16 @@ func _physics_process( delta: float ) -> void:
 	elif substep.goal == "beacon":
 		if beacon and ship.position.distance_squared_to( beacon.position ) < 10000:
 			next_substate()
+	
+	if ship.is_destroyed:
+		await get_tree().create_timer( 1.5 ).timeout
+		reset_tutorial()
+
+
+func _on_reset_button_pressed() -> void:
+	Blast.data.tutorial_substep = 0
+	reset_tutorial()
+
+
+func _on_quit_pressed() -> void:
+	get_tree().change_scene_to_packed( Blast.scenes.menu )

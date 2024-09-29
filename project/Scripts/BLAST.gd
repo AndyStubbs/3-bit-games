@@ -49,6 +49,7 @@ var data: Dictionary = {
 	"player_count": 0,
 	"is_tutorial": false,
 	"tutorial_step": 0,
+	"tutorial_substep": 0,
 	"settings": {}
 }
 

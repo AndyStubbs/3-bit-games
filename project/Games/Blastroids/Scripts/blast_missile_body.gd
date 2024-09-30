@@ -62,7 +62,7 @@ func fire( new_velocity: Vector2, color: Color, new_rotation ) -> void:
 func find_target() -> void:
 	var min_distance = 1000 * 1000
 	for target_ship: BlastShipBody in game.ships:
-		if target_ship == fired_from_ship:
+		if target_ship == fired_from_ship or target_ship.is_destroyed:
 			continue
 		var distance = position.distance_squared_to( target_ship.position )
 		if distance < min_distance:

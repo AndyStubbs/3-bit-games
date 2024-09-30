@@ -54,10 +54,6 @@ func slide( weight: float ) -> void:
 	#Globals.debug_line( position, slide_body.position, Color.RED, 1, clones[ 0 ].get_parent(), 2.0 )
 
 
-func _ready() -> void:
-	lifetime = randf_range( 5.0, 8.0 )
-
-
 func _physics_process( delta: float ) -> void:
 	rotation += a_velocity * delta
 	modulate.h += randf_range( -1.5, 1.5 ) * delta

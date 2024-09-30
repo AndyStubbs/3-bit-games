@@ -104,18 +104,29 @@ func init_main_ship() -> void:
 	
 	# Wait one frame for all ships to be added
 	await get_tree().physics_frame
-	for ship in ship_body.game.ships:
-		if ship != ship_body:
-			var ship_vector = Sprite2D.new()
-			var ship_vector_front = Sprite2D.new()
+	create_enemy_ship_vectors()
+
+
+func create_enemy_ship_vectors() -> void:
+	for i in range( ship_body.game.ships.size() ):
+		var ship = ship_body.game.ships[ i ]
+		if ship != ship_body and not enemies.has( ship ):
+			var ship_vector: Sprite2D
+			var ship_vector_front: Sprite2D
+			if i >= ship_vectors.get_child_count():
+				ship_vector = Sprite2D.new()
+				ship_vector_front = Sprite2D.new()
+				ship_vector.add_child( ship_vector_front )
+				ship_vectors.add_child( ship_vector )
+			else:
+				ship_vector = ship_vectors.get_child( i )
+				ship_vector_front = ship_vector.get_child( 0 )
 			ship_vector_front.position.x = -0.5
 			ship_vector_front.scale = Vector2( 0.75, 0.75 )
 			ship_vector_front.texture = ship_body.game.TRI_IMAGE
 			ship_vector_front.modulate = ship.ui_color
-			ship_vector.add_child( ship_vector_front )
 			ship_vector.texture = ship_body.game.TRI_IMAGE
 			ship_vector.self_modulate.a = 0
-			ship_vectors.add_child( ship_vector )
 			enemies.append( ship )
 
 

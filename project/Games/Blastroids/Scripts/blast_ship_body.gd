@@ -491,7 +491,8 @@ func destroy( is_burned: bool = false ) -> void:
 		reset_ship()
 	else:
 		is_game_over = true
-		game.set_game_over()
+		if not Blast.data.is_tutorial:
+			game.set_game_over()
 
 
 func disable() -> void:

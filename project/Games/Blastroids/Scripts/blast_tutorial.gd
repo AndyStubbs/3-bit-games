@@ -232,7 +232,10 @@ var steps: Array = [
 			{
 				# Destroy ship
 				"messages": 3,
-				"ship": Vector2( 2000, -1000 ),
+				"ship": Vector2( 2000, -2000 ),
+				"ship_weak": true,
+				"ship_disabled": true,
+				"ship_enabled_delay": 10.0,
 				"goal": "destroy_ship",
 				"crate": Vector2( 1000, -1000 ),
 				"crate_radius": 300,
@@ -241,7 +244,7 @@ var steps: Array = [
 			{
 				# Tutorial Completed
 				"goal": "none",
-				"messages": 2
+				"messages": 1
 			}
 		]
 	}
@@ -376,8 +379,6 @@ func start_substep() -> void:
 		game.add_body( enemy_ship )
 		game.ships.append( enemy_ship )
 		game.rigid_bodies.append( enemy_ship )
-		enemy_ship.init( game )
-		enemy_ship.position = substep.ship
 		enemy_ship.setup_ship( {
 			"colors": null,
 			"name": "CPU 1",
@@ -385,13 +386,17 @@ func start_substep() -> void:
 			"image_id": null,
 			"name_changed": false
 		} )
+		enemy_ship.init( game )
+		enemy_ship.position = substep.ship
 		if substep.has( "ship_disabled" ):
 			enemy_ship.disable_controls()
 		if substep.has( "ship_weak" ):
-			enemy_ship.max_shields = enemy_ship.max_shields * 0.5
+			enemy_ship.max_shields = enemy_ship.max_shields * 0.25
 			enemy_ship.shields = enemy_ship.max_shields
-			enemy_ship.max_health = enemy_ship.max_health * 0.5
-			enemy_ship.health = enemy_ship.health
+			enemy_ship.max_health = enemy_ship.max_health * 0.35
+			enemy_ship.health = enemy_ship.max_health
+		ship.clones[ 0 ].create_enemy_ship_vectors()
+		enable_delayed()
 	
 	# Setup goals
 	if substep.goal == "none":
@@ -407,6 +412,13 @@ func start_substep() -> void:
 	if substep.has( "hit_with_missile" ):
 		await get_tree().create_timer( 0.5 ).timeout
 		ship.enable_controls( [ "Up_" ] )
+
+
+func enable_delayed() -> void:
+	if substep.has( "ship_enabled_delay" ):
+		await get_tree().create_timer( substep.ship_enabled_delay ).timeout
+		if enemy_ship and not enemy_ship.is_destroyed:
+			enemy_ship.enable_controls( [ "Left_", "Up_", "Right_", "Down_", "Fire_" ] )
 
 
 func next_substate() -> void:
@@ -441,7 +453,8 @@ func on_body_hit( weapon: String, body: RigidBody2D ) -> void:
 
 
 func on_pickup_destroyed( weapon: String ) -> void:
-	if substep.goal == "pickup" and weapon == substep.pickup:
+	if substep.goal == "pickup" and weapon == substep.pickup and not is_waiting_for_reset_step:
+		is_waiting_for_reset_step = true
 		call_deferred( "start_substep" )
 
 

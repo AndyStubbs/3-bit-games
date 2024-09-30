@@ -205,6 +205,10 @@ var is_waiting_for_reset_step: bool = false
 func init( new_game: BlastGame ) -> void:
 	game = new_game
 	data = steps[ Blast.data.tutorial_step ]
+	if Blast.data.tutorial_step == steps.size() - 1:
+		$Panel2/VB/HB/NextButton.disabled = true
+	if Blast.data.tutorial_step == 0:
+		$Panel2/VB/HB/PreviousButton.disabled = true
 
 
 func get_settings() -> Dictionary:
@@ -398,6 +402,14 @@ func _on_quit_pressed() -> void:
 
 
 func _on_next_button_pressed() -> void:
-	Blast.data.tutorial_step += 1
-	Blast.data.tutorial_substep = 0
-	get_tree().change_scene_to_packed( Blast.scenes.game )
+	if Blast.data.tutorial_step < steps.size() - 1:
+		Blast.data.tutorial_step += 1
+		Blast.data.tutorial_substep = 0
+		get_tree().change_scene_to_packed( Blast.scenes.game )
+
+
+func _on_previous_button_pressed() -> void:
+	if Blast.data.tutorial_step > 0:
+		Blast.data.tutorial_step -= 1
+		Blast.data.tutorial_substep = 0
+		get_tree().change_scene_to_packed( Blast.scenes.game )

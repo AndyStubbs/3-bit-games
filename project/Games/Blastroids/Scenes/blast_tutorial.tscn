@@ -125,5 +125,6 @@ text = "Quit"
 stream = ExtResource("4_s77ns")
 
 [connection signal="pressed" from="Panel2/VB/HB/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Panel2/VB/HB/PreviousButton" to="." method="_on_previous_button_pressed"]
 [connection signal="pressed" from="Panel2/VB/HB/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="pressed" from="Panel2/VB/HB/Quit" to="." method="_on_quit_pressed"]

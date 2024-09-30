@@ -11,8 +11,8 @@ var last_input: Dictionary =  {
 		"Right_CPU": false,
 		"Up_CPU": false,
 		"Down_CPU": false,
-		"ToggleUp_ANY": false,
-		"ToggleDown_ANY": false,
+		"ToggleUp_CPU": false,
+		"ToggleDown_CPU": false,
 		"Fire_CPU": false
 	}
 }
@@ -50,8 +50,8 @@ func reset_input() -> void:
 			"Right_CPU": false,
 			"Up_CPU": false,
 			"Down_CPU": false,
-			"ToggleUp_ANY": false,
-			"ToggleDown_ANY": false,
+			"ToggleUp_CPU": false,
+			"ToggleDown_CPU": false,
 			"Fire_CPU": false
 		},
 		"is_action_just_released": {
@@ -60,8 +60,8 @@ func reset_input() -> void:
 			"Right_CPU": false,
 			"Up_CPU": false,
 			"Down_CPU": false,
-			"ToggleUp_ANY": false,
-			"ToggleDown_ANY": false,
+			"ToggleUp_CPU": false,
+			"ToggleDown_CPU": false,
 			"Fire_CPU": false
 		},
 		"is_action_pressed": {
@@ -70,8 +70,8 @@ func reset_input() -> void:
 			"Right_CPU": false,
 			"Up_CPU": false,
 			"Down_CPU": false,
-			"ToggleUp_ANY": false,
-			"ToggleDown_ANY": false,
+			"ToggleUp_CPU": false,
+			"ToggleDown_CPU": false,
 			"Fire_CPU": false
 		}
 	}
@@ -215,11 +215,11 @@ func process_bullet_change() -> void:
 		if move_dir > 0:
 			if randf_range( 0, 1 ) < 0.05:
 				bullet_changes -= 1
-				input.is_action_pressed.ToggleUp_ANY = true
+				input.is_action_pressed.ToggleUp_CPU = true
 		else:
 			if randf_range( 0, 1 ) < 0.05:
 				bullet_changes -= 1
-				input.is_action_pressed.ToggleDown_ANY = true
+				input.is_action_pressed.ToggleDown_CPU = true
 
 
 func process_boosting() -> void:

@@ -43,7 +43,11 @@ func _physics_process( delta: float ) -> void:
 		Input.get_axis( "Up_J_ANY", "Down_J_ANY" )
 	)
 	var last_pos: Vector2 = Vector2( position )
-	position += speed * vector * delta
+	#position += speed * vector * delta
+	position = Vector2(
+		clampf( position.x + speed * vector.x * delta, 0, 1920 ),
+		clampf( position.y + speed * vector.y * delta, 0, 1080 )
+	)
 	if last_pos.is_equal_approx( position ):
 		speed = SLOW_SPEED
 	else:

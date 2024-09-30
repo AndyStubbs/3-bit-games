@@ -525,3 +525,13 @@ func _on_previous_button_pressed() -> void:
 		Blast.data.tutorial_step -= 1
 		Blast.data.tutorial_substep = 0
 		get_tree().change_scene_to_packed( Blast.scenes.game )
+
+
+func _on_show_controls_pressed() -> void:
+	var controls: Panel = $Controls
+	var tween: Tween = create_tween()
+	var controls_button: Button = $Panel2/VB/HB/ControlsButton
+	controls.modulate.a = 0
+	controls.show()
+	tween.tween_property( controls, "modulate:a", 1.0, 0.5 )
+	controls_button.release_focus()

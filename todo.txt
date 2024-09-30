@@ -37,7 +37,7 @@
 30. Fix tutorial bug when destroying ship game over screen appears.
 31. Fix tutorial bug, one time when started I was at the ship where I needed to kill it wit
 	h missiles but I had no missiles and I had to reset.
-
+32. Fix bug when gameover and last ship is also destroyed, the last ship reappears, should not happen.
 
 Ready Aim Fire Bug
 Don't allow other controllers to toggle weapons.

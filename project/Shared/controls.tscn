@@ -13,6 +13,7 @@ font = ExtResource("2_qx60u")
 font_size = 24
 
 [node name="Controls" type="Panel"]
+custom_minimum_size = Vector2(1920, 1080)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -48,9 +49,9 @@ texture = ExtResource("2_is3j5")
 [node name="LabelMove" type="Label" parent="TextureRect"]
 custom_minimum_size = Vector2(135, 0)
 layout_mode = 0
-offset_top = 252.0
+offset_top = 350.0
 offset_right = 135.0
-offset_bottom = 275.0
+offset_bottom = 373.0
 theme_override_fonts/font = ExtResource("2_qx60u")
 text = "TR_MOVE_AIM"
 horizontal_alignment = 2
@@ -135,6 +136,26 @@ offset_right = 1062.0
 offset_bottom = 356.0
 theme_override_fonts/font = ExtResource("2_qx60u")
 text = "TR_FIRE"
+
+[node name="LabelThrust" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 250.0
+offset_right = 130.0
+offset_bottom = 274.0
+theme_override_fonts/font = ExtResource("2_qx60u")
+text = "TR_THRUST"
+horizontal_alignment = 2
+
+[node name="LabelReverse" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = -20.0
+offset_top = 474.0
+offset_right = 130.0
+offset_bottom = 498.0
+theme_override_fonts/font = ExtResource("2_qx60u")
+text = "TR_REVERSE"
+horizontal_alignment = 2
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
@@ -384,28 +405,77 @@ offset_bottom = 40.0
 [node name="LineDirL" type="ColorRect" parent="Lines"]
 layout_mode = 0
 offset_left = 600.0
-offset_top = 377.0
+offset_top = 475.0
 offset_right = 710.0
-offset_bottom = 379.0
+offset_bottom = 477.0
 
 [node name="LineDirL2" type="ColorRect" parent="Lines/LineDirL"]
 layout_mode = 0
 offset_left = 109.0
+offset_top = -53.0
 offset_right = 111.0
-offset_bottom = 160.0
+offset_bottom = 60.0
 
 [node name="LineDirL3" type="ColorRect" parent="Lines/LineDirL"]
 layout_mode = 0
 offset_left = 109.0
-offset_top = 44.0
+offset_top = -53.0
 offset_right = 139.0
-offset_bottom = 46.0
+offset_bottom = -51.0
 
 [node name="LineDirL4" type="ColorRect" parent="Lines/LineDirL"]
 layout_mode = 0
 offset_left = 109.0
-offset_top = 159.0
+offset_top = 60.0
 offset_right = 224.0
-offset_bottom = 161.0
+offset_bottom = 62.0
+
+[node name="LineThurst" type="ColorRect" parent="Lines"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 376.0
+offset_right = 780.0
+offset_bottom = 378.0
+
+[node name="LineThurst2" type="ColorRect" parent="Lines/LineThurst"]
+layout_mode = 0
+offset_left = 277.0
+offset_top = -25.0
+offset_right = 279.0
+offset_bottom = 105.0
+
+[node name="LineThurst3" type="ColorRect" parent="Lines/LineThurst"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = -25.0
+offset_right = 278.0
+offset_bottom = -23.0
+
+[node name="LineThurst4" type="ColorRect" parent="Lines/LineThurst"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = -25.0
+offset_right = 152.0
+offset_bottom = 2.0
+
+[node name="LineReverse" type="ColorRect" parent="Lines"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 600.0
+offset_right = 877.0
+offset_bottom = 602.0
+
+[node name="LineReverse2" type="ColorRect" parent="Lines/LineReverse"]
+layout_mode = 0
+offset_left = 277.0
+offset_top = -25.0
+offset_right = 279.0
+offset_bottom = 2.0
+
+[node name="LineReverse4" type="ColorRect" parent="Lines/LineReverse"]
+layout_mode = 0
+offset_left = 193.0
+offset_top = -120.0
+offset_right = 195.0
 
 [connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]

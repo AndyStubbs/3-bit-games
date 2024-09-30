@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://6alqj2rempg2"]
+[gd_scene load_steps=10 format=3 uid="uid://6alqj2rempg2"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_menu.gd" id="1_bgg41"]
 [ext_resource type="PackedScene" uid="uid://dyhh1j60dt6t0" path="res://Shared/player_select.tscn" id="1_yedil"]
 [ext_resource type="Texture2D" uid="uid://b6bv4frxy18or" path="res://Games/Blastroids/Images/background_0.webp" id="2_33dug"]
 [ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="4_4rcpt"]
 [ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="5_5dyco"]
+[ext_resource type="PackedScene" uid="uid://dm5kiqh62u0tm" path="res://Shared/controls.tscn" id="6_0j4lp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qr8yo"]
 bg_color = Color(0, 0, 0, 1)
@@ -407,6 +408,13 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_y3lf5")
 text = "TR_TUTORIAL"
 
+[node name="ControlsButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HbMainButtons"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_y3lf5")
+text = "TR_SHOW_CONTROLS"
+
 [node name="ReturnButton" type="Button" parent="MC/VB/MC/PL/MC/VB/HbMainButtons"]
 custom_minimum_size = Vector2(250, 60)
 layout_mode = 2
@@ -416,6 +424,10 @@ text = "TR_BACK"
 
 [node name="Cursor" parent="." instance=ExtResource("5_5dyco")]
 
+[node name="Controls" parent="." instance=ExtResource("6_0j4lp")]
+visible = false
+game_postfix = "_BLAST"
+
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel/MC/VB/MapSizes" to="." method="_on_map_sizes_item_selected"]
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel2/MC/VB/MapTypes" to="." method="_on_map_types_item_selected"]
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel3/MC/VB/AsteroidCount" to="." method="_on_asteroid_count_item_selected"]
@@ -424,4 +436,5 @@ text = "TR_BACK"
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel6/MC/VB/Crosshairs" to="." method="_on_crosshairs_item_selected"]
 [connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/ControlsButton" to="." method="_on_controls_button_pressed"]
 [connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/ReturnButton" to="." method="_on_return_button_pressed"]

@@ -46,6 +46,7 @@ func get_random_color() -> Color:
 
 
 func start( game: BlastGame ) -> void:
+	Globals.is_menu_page = true
 	modulate.a = 0
 	show()
 	update_scores( game )

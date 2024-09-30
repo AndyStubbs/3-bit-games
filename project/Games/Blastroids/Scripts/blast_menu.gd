@@ -86,3 +86,13 @@ func _on_lives_count_item_selected( _index: int ) -> void:
 
 func _on_crosshairs_item_selected( _index: int ) -> void:
 	update_settings()
+
+
+func _on_controls_button_pressed() -> void:
+	var controls: Panel = $Controls
+	var tween: Tween = create_tween()
+	var controls_button: Button = $MC/VB/MC/PL/MC/VB/HbMainButtons/ControlsButton
+	controls.modulate.a = 0
+	controls.show()
+	tween.tween_property( controls, "modulate:a", 1.0, 0.5 )
+	controls_button.release_focus()

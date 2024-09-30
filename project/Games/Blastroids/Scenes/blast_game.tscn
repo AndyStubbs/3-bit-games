@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl3rxtqyxc6lo"]
+[gd_scene load_steps=10 format=3 uid="uid://dl3rxtqyxc6lo"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game.gd" id="1_ish2g"]
 [ext_resource type="FontFile" uid="uid://du4fcyuvxpb56" path="res://Assets/Fonts/ProtestGuerrilla-Regular.ttf" id="3_la5p5"]
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_game_over.gd" id="3_ypayv"]
 [ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="5_28w2k"]
+[ext_resource type="PackedScene" uid="uid://bis7s7jb6jkys" path="res://Shared/cursor.tscn" id="5_ifokc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_amygs"]
 bg_color = Color(0.277528, 0.277528, 0.277528, 1)
@@ -169,5 +170,7 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_28w2k")
 theme_override_font_sizes/font_size = 84
 text = "Loading..."
+
+[node name="Cursor" parent="." instance=ExtResource("5_ifokc")]
 
 [connection signal="pressed" from="CanvasLayer/GameOver/VB/MC/ReturnButton" to="CanvasLayer/GameOver" method="_on_return_button_pressed"]

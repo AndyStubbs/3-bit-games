@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cuoljppcvsc51"]
+[gd_scene load_steps=7 format=3 uid="uid://cuoljppcvsc51"]
 
 [ext_resource type="Script" path="res://Games/Blastroids/Scripts/blast_tutorial.gd" id="1_c2cvd"]
 [ext_resource type="FontFile" uid="uid://c3gncvcmikaq0" path="res://Assets/Fonts/AbrilFatface-Regular.ttf" id="2_6eccx"]
 [ext_resource type="FontFile" uid="uid://dvb8i8opar3p4" path="res://Assets/Fonts/OpenSans-Regular.ttf" id="2_nq3a8"]
 [ext_resource type="AudioStream" uid="uid://es4teidkwrpf" path="res://Assets/Sounds/tutorial_complete.wav" id="4_s77ns"]
+[ext_resource type="PackedScene" uid="uid://dm5kiqh62u0tm" path="res://Shared/controls.tscn" id="5_n4b15"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a6kab"]
 bg_color = Color(0.158, 0.158, 0.158, 0.15)
@@ -86,7 +87,7 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="ShowControls" type="Button" parent="Panel2/VB/HB"]
+[node name="ControlsButton" type="Button" parent="Panel2/VB/HB"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 focus_mode = 0
@@ -129,6 +130,17 @@ text = "Quit"
 [node name="TutorialCompleteSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_s77ns")
 
+[node name="Controls" parent="." instance=ExtResource("5_n4b15")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+game_postfix = "_BLAST"
+
+[connection signal="pressed" from="Panel2/VB/HB/ControlsButton" to="." method="_on_show_controls_pressed"]
 [connection signal="pressed" from="Panel2/VB/HB/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="Panel2/VB/HB/PreviousButton" to="." method="_on_previous_button_pressed"]
 [connection signal="pressed" from="Panel2/VB/HB/NextButton" to="." method="_on_next_button_pressed"]

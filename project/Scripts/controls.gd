@@ -6,11 +6,19 @@ extends Panel
 
 
 func _ready() -> void:
-	if game_postfix == "_TUN":
+	if game_postfix == "":
+		$Lines/LineThurst.hide()
+		$Lines/LineReverse.hide()
+	elif game_postfix == "_TUN":
 		$Lines/LineLT.hide()
 		$Lines/LineLB.hide()
 		$Lines/LineRT.hide()
 		$Lines/LineRB.hide()
+		$Lines/LineThurst.hide()
+		$Lines/LineReverse.hide()
+	elif game_postfix == "_BLAST":
+		$Lines/LineLT.hide()
+		$Lines/LineRT.hide()
 	if game_postfix != "":
 		append_text_to_labels( self )
 

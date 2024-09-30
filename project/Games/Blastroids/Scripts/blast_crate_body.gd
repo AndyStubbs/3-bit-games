@@ -23,6 +23,7 @@ var rect: Rect2
 var img: Image
 var texture: ImageTexture
 var weapon: String
+var is_max_count: bool = false
 
 
 @onready var sprite: Sprite2D = $Sprite2D
@@ -137,6 +138,8 @@ func breakup_crate() -> void:
 	if weapon_data.has( "COUNT" ):
 		var min_count = roundi( float( weapon_data.COUNT ) / 2 )
 		count = maxi( randi_range( -min_count, weapon_data.COUNT ), min_count )
+	if is_max_count:
+		count = weapon_data.COUNT
 	var base_move: float = 20.0
 	var base_push: float = 50.0
 	if count == 1:

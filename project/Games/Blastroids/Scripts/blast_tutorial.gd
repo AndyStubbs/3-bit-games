@@ -184,16 +184,75 @@ var steps: Array = [
 				"messages": 2
 			}
 		]
+	}, {
+		"start_pos": Vector2( 1000, -1000 ),
+		"settings": {
+			"map_size": 2,
+			"map_type": 0,
+			"rock_density": 0,
+			"crate_density": 0,
+			"lives_count": -1,
+			"added_cpus": 0,
+			"game_mode": 0,
+			"show_crosshairs": 1
+		},
+		"substeps": [
+			{
+				# Pickup bomb
+				"messages": 1,
+				"crate": Vector2( 900, -900 ),
+				"pickup": "bomb",
+				"goal": "pickup"
+			},
+			{
+				# Destroy asteroid with bomb
+				"messages": 3,
+				"hit_with": "bomb",
+				"rock": Vector2( 1000, -1000 ),
+				"rock_radius": 300,
+				"rock_energy": 0,
+				"goal": "destroy_rock"
+			},
+			{
+				# Pickup missile
+				"messages": 1,
+				"pickup": "missile",
+				"goal": "pickup",
+				"crate": Vector2( 900, -900 ),
+				"crate_maxed": true
+			},
+			{
+				# Destroy ship with missiles
+				"messages": 3,
+				"ship": Vector2( 1200, -800 ),
+				"ship_disabled": true,
+				"ship_weak": true,
+				"goal": "destroy_ship"
+			},
+			{
+				# Destroy ship
+				"messages": 3,
+				"ship": Vector2( 2000, -1000 ),
+				"goal": "destroy_ship",
+				"crate": Vector2( 1000, -1000 ),
+				"crate_radius": 300,
+				"crate_count": 9,
+			},
+			{
+				# Tutorial Completed
+				"goal": "none",
+				"messages": 2
+			}
+		]
 	}
 ]
 var data: Dictionary
 var substep: Dictionary
 var ship: BlastShipBody
+var enemy_ship: BlastShipBody
 var items: Array = []
 var beacon: BlastBeacon
 var beacon_angle: float = 0
-#var rock: BlastRockBody
-#var crate: BlastCrateBody
 var is_waiting_for_reset_step: bool = false
 
 
@@ -299,6 +358,8 @@ func start_substep() -> void:
 			else:
 				crate = game.create_crate()
 			crate.position = substep.crate
+			if substep.has( "crate_maxed" ):
+				crate.is_max_count = true
 		if substep.goal == "pickup":
 			game.on_pickup_destroyed.connect( on_pickup_destroyed )
 	if substep.has( "hit_with_missile" ):
@@ -309,17 +370,44 @@ func start_substep() -> void:
 		missile.init( ship, "bomb" )
 		missile.fire( Vector2.LEFT * 160, Color.RED, PI )
 		ship.linear_velocity = Vector2.ZERO
+	if substep.has( "ship" ):
+		enemy_ship = game.scenes.SHIP_BODY.instantiate()
+		enemy_ship.world_id = -1
+		game.add_body( enemy_ship )
+		game.ships.append( enemy_ship )
+		game.rigid_bodies.append( enemy_ship )
+		enemy_ship.init( game )
+		enemy_ship.position = substep.ship
+		enemy_ship.setup_ship( {
+			"colors": null,
+			"name": "CPU 1",
+			"controls": "CPU",
+			"image_id": null,
+			"name_changed": false
+		} )
+		if substep.has( "ship_disabled" ):
+			enemy_ship.disable_controls()
+		if substep.has( "ship_weak" ):
+			enemy_ship.max_shields = enemy_ship.max_shields * 0.5
+			enemy_ship.shields = enemy_ship.max_shields
+			enemy_ship.max_health = enemy_ship.max_health * 0.5
+			enemy_ship.health = enemy_ship.health
+	
+	# Setup goals
 	if substep.goal == "none":
 		tutorial_complete.play()
-	# Setup goals
 	if substep.goal == "hit_rock":
 		game.on_body_hit.connect( on_body_hit )
 	elif substep.goal == "destroy_rock":
 		game.on_body_hit.connect( on_body_hit )
-		
+	if substep.has( "hit_with" ) and substep.hit_with == "bomb":
+		game.on_missile_destroyed.connect( on_missile_destroyed )
+	
+	# Disable thrust so that ship can get hit by missile
 	if substep.has( "hit_with_missile" ):
 		await get_tree().create_timer( 0.5 ).timeout
 		ship.enable_controls( [ "Up_" ] )
+
 
 func next_substate() -> void:
 	if beacon:
@@ -357,6 +445,12 @@ func on_pickup_destroyed( weapon: String ) -> void:
 		call_deferred( "start_substep" )
 
 
+func on_missile_destroyed() -> void:
+	var crate: BlastCrateBody
+	crate = game.create_crate( "bomb" )
+	crate.position = Vector2( 900, -900 )
+
+
 func _physics_process( delta: float ) -> void:
 	
 	# Move Beacon
@@ -386,6 +480,11 @@ func _physics_process( delta: float ) -> void:
 			next_substate()
 	elif substep.goal == "energy_recharged" and ship.energy > ship.max_energy * 0.75:
 		next_substate()
+	elif substep.goal == "destroy_ship" and enemy_ship.is_destroyed:
+		enemy_ship = null
+		next_substate()
+	
+	# Reset tutorial if killed
 	if ship.is_destroyed:
 		await get_tree().create_timer( 1.5 ).timeout
 		reset_tutorial()

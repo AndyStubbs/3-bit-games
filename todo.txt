@@ -32,6 +32,12 @@
 25. Create energy generators that create energy pickups randomly
 26. Create option for AI difficulty
 27. Add loading screen when level loading, can also use it when loading tutorials substeps
+28. Fix tutorial bug with crate_maxed not being maxed.
+29. Fix tutorial bug with ship having the wrong markings
+30. Fix tutorial bug when destroying ship game over screen appears.
+31. Fix tutorial bug, one time when started I was at the ship where I needed to kill it wit
+	h missiles but I had no missiles and I had to reset.
+
 
 Ready Aim Fire Bug
 Don't allow other controllers to toggle weapons.

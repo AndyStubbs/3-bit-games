@@ -98,6 +98,7 @@ func apply_thrust( delta: float ) -> void:
 	apply_force( thrust_vector )
 	energy -= drain * delta
 	if energy < 0:
+		game.on_missile_destroyed.emit()
 		destroy()
 
 
@@ -245,6 +246,10 @@ func _on_body_entered( body: Node ) -> void:
 		return
 	if body.has_method( "hit" ):
 		body.hit( damage * sprite.modulate.a, fired_from_ship )
+		if is_bomb:
+			game.on_body_hit.emit( "bomb", body )
+		else:
+			game.on_body_hit.emit( "missile", body )
 		if mass > 0:
 			var r_body = body as RigidBody2D
 			var diff = ( body.position - position )

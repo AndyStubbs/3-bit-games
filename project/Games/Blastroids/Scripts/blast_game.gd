@@ -134,11 +134,16 @@ const WEAPONS_DATA: Dictionary = {
 }
 
 
+# These signals are only used by the tutorial
+
 @warning_ignore( "unused_signal" )
 signal on_body_hit( weapon: String, body: RigidBody2D )
 
 @warning_ignore( "unused_signal" )
 signal on_pickup_destroyed( weapon: String )
+
+@warning_ignore( "unused_signal" )
+signal on_missile_destroyed
 
 
 var scenes: Dictionary = {
@@ -146,6 +151,7 @@ var scenes: Dictionary = {
 	"MISSILE": load( "res://Games/Blastroids/Scenes/blast_missile.tscn" ),
 	"BEACON": load( "res://Games/Blastroids/Scenes/blast_beacon.tscn" ),
 	"TUTORIAL":load( "res://Games/Blastroids/Scenes/blast_tutorial.tscn" ),
+	"SHIP": load( "res://Games/Blastroids/Scenes/blast_ship.tscn" ),
 	"SHIP_BODY": load( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" ),
 	"PL_ONE": load( "res://Games/Blastroids/Scenes/pl_one.tscn" ),
 	"PL_TWO": load( "res://Games/Blastroids/Scenes/pl_two.tscn" ),
@@ -158,7 +164,6 @@ var scenes: Dictionary = {
 	"ROCK": load( "res://Games/Blastroids/Scenes/blast_rock.tscn" ),
 	"CRATE_BODY": load( "res://Games/Blastroids/Scenes/blast_crate_body.tscn" ),
 	"CRATE": load( "res://Games/Blastroids/Scenes/blast_crate.tscn" ),
-	"SHIP": load( "res://Games/Blastroids/Scenes/blast_ship.tscn" ),
 	"BORDER": load( "res://Games/Blastroids/Scenes/blast_border.tscn" ),
 	"PLANET": load( "res://Games/Blastroids/Scenes/blast_planet.tscn" )
 }

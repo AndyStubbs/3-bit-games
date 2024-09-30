@@ -126,7 +126,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("5_28w2k")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_xth2m")
-text = "Return To Menu"
+text = "TR_RETURN_MENU"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 visible = false
@@ -169,7 +169,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("5_28w2k")
 theme_override_font_sizes/font_size = 84
-text = "Loading..."
+text = "TR_LOADING"
 
 [node name="Cursor" parent="." instance=ExtResource("5_ifokc")]
 

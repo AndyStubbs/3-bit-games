@@ -133,7 +133,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
-text = "Map Size"
+text = "TR_MAP_SIZE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -180,7 +180,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
-text = "Map Type"
+text = "TR_MAP_TYPE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -191,11 +191,11 @@ theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
 selected = 0
 item_count = 3
-popup/item_0/text = "Normal"
-popup/item_1/text = "Star"
+popup/item_0/text = "TR_NORMAL"
+popup/item_1/text = "TR_STAR"
 popup/item_1/id = 1
 popup/item_1/disabled = true
-popup/item_2/text = "Solar System"
+popup/item_2/text = "TR_SOLAR_SYSTEM"
 popup/item_2/id = 2
 popup/item_2/disabled = true
 
@@ -225,7 +225,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
-text = "Asteroids"
+text = "TR_ASTEROIDS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -272,7 +272,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
-text = "Crates"
+text = "TR_CRATES"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -319,7 +319,7 @@ alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
-text = "Lives"
+text = "TR_LIVES"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -345,6 +345,7 @@ popup/item_6/text = "7"
 popup/item_6/id = 6
 
 [node name="Panel6" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+visible = false
 custom_minimum_size = Vector2(175, 90)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
@@ -381,9 +382,62 @@ theme_override_fonts/font = ExtResource("4_4rcpt")
 theme_override_font_sizes/font_size = 16
 selected = 1
 item_count = 2
-popup/item_0/text = "Hidden"
-popup/item_1/text = "Shown"
+popup/item_0/text = "TR_HIDDEN"
+popup/item_1/text = "TR_SHOWN"
 popup/item_1/id = 1
+
+[node name="Panel7" type="Panel" parent="MC/VB/MC/PL/MC/VB/HbOptions"]
+custom_minimum_size = Vector2(175, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qr8yo")
+
+[node name="MC" type="MarginContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel7"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="VB" type="VBoxContainer" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel7/MC"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel7/MC/VB"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+text = "TR_ADD_CPUS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AddiontalCpus" type="OptionButton" parent="MC/VB/MC/PL/MC/VB/HbOptions/Panel7/MC/VB"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_4rcpt")
+theme_override_font_sizes/font_size = 16
+selected = 0
+item_count = 8
+popup/item_0/text = "0"
+popup/item_1/text = "1"
+popup/item_1/id = 1
+popup/item_2/text = "2"
+popup/item_2/id = 2
+popup/item_3/text = "3"
+popup/item_3/id = 3
+popup/item_4/text = "4"
+popup/item_4/id = 4
+popup/item_5/text = "5"
+popup/item_5/id = 6
+popup/item_6/text = "6"
+popup/item_6/id = 6
+popup/item_7/text = "7"
+popup/item_7/id = 7
 
 [node name="Control2" type="Control" parent="MC/VB/MC/PL/MC/VB"]
 custom_minimum_size = Vector2(0, 100)
@@ -434,6 +488,7 @@ game_postfix = "_BLAST"
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC/VB/CrateCount" to="." method="_on_crate_count_item_selected"]
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC/VB/LivesCount" to="." method="_on_lives_count_item_selected"]
 [connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel6/MC/VB/Crosshairs" to="." method="_on_crosshairs_item_selected"]
+[connection signal="item_selected" from="MC/VB/MC/PL/MC/VB/HbOptions/Panel7/MC/VB/AddiontalCpus" to="." method="_on_addiontal_cpus_item_selected"]
 [connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/TutorialButton" to="." method="_on_tutorial_button_pressed"]
 [connection signal="pressed" from="MC/VB/MC/PL/MC/VB/HbMainButtons/ControlsButton" to="." method="_on_controls_button_pressed"]

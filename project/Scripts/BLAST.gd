@@ -27,6 +27,7 @@ const CRATES: Array = [
 const LIVES: Array = [ 1, 2, 3, 4, 5, 6, 7 ]
 const CROSSHAIRS: Array = [ false, true ]
 const GAME_MODES: Array = [ "default", "race" ]
+const ADD_CPUS: Array = [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 
 
 var is_loading_settings: bool = false
@@ -59,7 +60,7 @@ func get_num_rocks() -> int:
 
 
 func get_num_crates() -> int:
-	return CRATES[ data.settings.map_size ][ data.settings.crate_density ]
+	return CRATES[ data.settings.map_size ][ data.settings.crate_density ] * 2
 
 
 func get_rect() -> Rect2:
@@ -110,6 +111,9 @@ func load_settings() -> void:
 	if loaded_settings.has( "show_crosshairs" ):
 		var index = Globals.parse_field( loaded_settings.show_crosshairs, "int" )
 		settings.show_crosshairs = clampi( index, 0, CROSSHAIRS.size() - 1 )
+	if loaded_settings.has( "added_cpus" ):
+		var index = Globals.parse_field( loaded_settings.added_cpus, "int" )
+		settings.added_cpus = clampi( index, 0, ADD_CPUS.size() - 1 )
 
 
 func _ready() -> void:

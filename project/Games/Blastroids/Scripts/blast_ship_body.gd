@@ -512,7 +512,7 @@ func reset_ship() -> void:
 	laser_energy = max_laser_energy
 	energy = max_energy
 	while not is_clear:
-		position = game.get_random_start_pos()
+		position = game.get_random_start_pos( 500 )
 		shapecast.target_position = Vector2.ZERO
 		shapecast.force_shapecast_update()
 		is_clear = not shapecast.is_colliding()

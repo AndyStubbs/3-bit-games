@@ -258,7 +258,8 @@ func _on_body_entered( body: Node ) -> void:
 	if body.has_method( "get_clones" ):
 		for clone in body.get_clones():
 			var explosion = game.scenes.EXPLOSION.instantiate()
+			explosion.velocity = body.linear_velocity
 			explosion.scale = Vector2( 2, 2 )
-			clone.add_child( explosion )
+			clone.get_parent().add_child( explosion )
 			explosion.global_position = global_position
 	destroy( body )

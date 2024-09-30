@@ -23,11 +23,11 @@ const COLORS = [
 
 var header_boxes: Array
 var header_titles: Array = [
-	"Player",
-	"Ship Kills",
-	"Asteroid Kills",
-	"Crate Kills",
-	"Missile Kills"
+	"TR_PLAYER" ,
+	"TR_SHIP_KILLS",
+	"TR_ASTEROID_KILLS",
+	"TR_CRATE_KILLS",
+	"TR_MISSILE_KILLS"
 ]
 var labels: Array = []
 var tween: Tween = null
@@ -94,7 +94,7 @@ func update_scores( game: BlastGame ) -> void:
 	
 	var winner: BlastShipBody = game.ships[ 0 ]
 	var winner_label = $VB/WinnerLabel
-	winner_label.text = "%s Wins" % winner.display_name
+	winner_label.text = "%s %s" % [ winner.display_name, tr( "TR_WINS" ) ]
 	winner_label.modulate = winner.ui_color
 	var grid: GridContainer = $VB/GridContainer
 	for ship in game.ships:
@@ -122,7 +122,7 @@ func _ready() -> void:
 	header_boxes = [ hb, hb2, hb3, hb4, hb5 ]
 	for i in range( header_titles.size() ):
 		var box: HBoxContainer = header_boxes[ i ]
-		var title: String = header_titles[ i ]
+		var title: String = tr( header_titles[ i ] )
 		for c in title:
 			var label: Label = create_label( c )
 			labels.append( label )

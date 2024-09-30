@@ -418,7 +418,7 @@ func create_rocks( num_rocks: int, is_init: bool = false ) -> void:
 		rigid_bodies.append( rock )
 		var is_placed: bool = false
 		while not is_placed:
-			rock.position = get_random_start_pos( 0, true )
+			rock.position = get_random_start_pos( 500, true )
 			rock.shape_cast.force_shapecast_update()
 			is_placed = not rock.shape_cast.is_colliding()
 		if Blast.data.settings.map_type == 0:

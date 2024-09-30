@@ -7,6 +7,7 @@ extends Node
 @onready var crate_count = $MC/VB/MC/PL/MC/VB/HbOptions/Panel4/MC/VB/CrateCount
 @onready var lives_count = $MC/VB/MC/PL/MC/VB/HbOptions/Panel5/MC/VB/LivesCount
 @onready var crosshairs = $MC/VB/MC/PL/MC/VB/HbOptions/Panel6/MC/VB/Crosshairs
+@onready var added_cpus = $MC/VB/MC/PL/MC/VB/HbOptions/Panel7/MC/VB/AddiontalCpus
 
 
 func update_settings() -> void:
@@ -16,6 +17,7 @@ func update_settings() -> void:
 	Blast.settings.crate_density = crate_count.selected
 	Blast.settings.lives_count = lives_count.selected
 	Blast.settings.show_crosshairs = crosshairs.selected
+	Blast.settings.added_cpus = added_cpus.selected
 	if Blast.settings.map_type == 2 and Blast.settings.map_size < 4:
 		Blast.settings.map_type = 0
 		map_types.select( Blast.settings.map_type )
@@ -46,6 +48,7 @@ func _ready() -> void:
 	crate_count.select( Blast.settings.crate_density )
 	lives_count.select( Blast.settings.lives_count )
 	crosshairs.select( Blast.settings.show_crosshairs )
+	added_cpus.select( Blast.settings.added_cpus )
 	update_ui_state()
 
 
@@ -85,6 +88,10 @@ func _on_lives_count_item_selected( _index: int ) -> void:
 
 
 func _on_crosshairs_item_selected( _index: int ) -> void:
+	update_settings()
+
+
+func _on_addiontal_cpus_item_selected( _index: int ) -> void:
 	update_settings()
 
 

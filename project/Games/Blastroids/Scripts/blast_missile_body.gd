@@ -26,12 +26,21 @@ var fired_from_ship: BlastShipBody
 @onready var marker = $Sprite2D/Sprite2D
 
 
-func init( fired_from: BlastShipBody ) -> void:
+func init( fired_from: BlastShipBody, weapon: String ) -> void:
+	var weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
+	is_bomb = weapon_data.TYPE == "bomb"
+	explosion_scale = weapon_data.EXPLOSION_SCALE
+	energy = weapon_data.ENERGY
+	mass = weapon_data.MASS
+	sprite.scale = weapon_data.SCALE
+	sprite.texture = weapon_data.IMAGE
+	marker.texture = weapon_data.MARKER
+	damage = weapon_data.DAMAGE
 	fired_from_ship = fired_from
 	game = fired_from_ship.game
 	for i in range( game.worlds.size() ):
 		var world = game.worlds[ i ]
-		var clone: BlastMissile = BlastGame.MISSILE_SCENE.instantiate()
+		var clone: BlastMissile = game.scenes.MISSILE.instantiate()
 		world.add_child( clone )
 		clone.sprite.texture = sprite.texture
 		clone.marker.texture = marker.texture
@@ -40,12 +49,11 @@ func init( fired_from: BlastShipBody ) -> void:
 		clones.append( clone )
 
 
-func fire( new_velocity: Vector2, color: Color, new_damage: float, new_rotation ) -> void:
+func fire( new_velocity: Vector2, color: Color, new_rotation ) -> void:
 	sprite.modulate = Color( color.r + 0.1, color.g + 0.1, color.b + 0.1, color.a )
 	phase_0_end = Time.get_ticks_msec() + 600
 	linear_velocity = new_velocity
 	rotation = new_rotation
-	damage = new_damage
 	await get_tree().create_timer( 0.2 ).timeout
 	set_collision_layer_value( 1, true )
 	set_collision_mask_value( 1, true )
@@ -176,7 +184,7 @@ func destroy( body_hit = null ) -> void:
 	
 	# Create Explosion
 	for world in game.worlds:
-		var explosion = BlastGame.EXPLOSION_SCENE.instantiate()
+		var explosion = game.scenes.EXPLOSION.instantiate()
 		explosion.scale = explosion_scale
 		world.add_child( explosion )
 		explosion.position = position
@@ -244,7 +252,7 @@ func _on_body_entered( body: Node ) -> void:
 			r_body.apply_impulse( normal * mass, diff )
 	if body.has_method( "get_clones" ):
 		for clone in body.get_clones():
-			var explosion = BlastGame.EXPLOSION_SCENE.instantiate()
+			var explosion = game.scenes.EXPLOSION.instantiate()
 			explosion.scale = Vector2( 2, 2 )
 			clone.add_child( explosion )
 			explosion.global_position = global_position

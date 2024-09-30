@@ -23,7 +23,7 @@ func init_clones() -> void:
 	# Init Clones
 	for i in range( game.worlds.size() ):
 		var world = game.worlds[ i ]
-		var clone: BlastBeacon = BlastGame.BEACON_SCENE.instantiate()
+		var clone: BlastBeacon = game.scenes.BEACON.instantiate()
 		clone.is_clone = true
 		clone.scale = scale
 		clone.modulate = modulate

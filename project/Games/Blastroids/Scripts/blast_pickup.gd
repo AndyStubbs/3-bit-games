@@ -2,7 +2,7 @@ extends Area2D
 
 
 @export var is_energy: bool = true
-@export var weapon: BlastGame.WEAPONS
+@export var weapon: String
 
 
 var energy: float = 400
@@ -55,7 +55,7 @@ func slide( weight: float ) -> void:
 
 
 func _ready() -> void:
-	lifetime = randf_range( 5.0, 6.0 )
+	lifetime = randf_range( 5.0, 8.0 )
 
 
 func _physics_process( delta: float ) -> void:
@@ -71,6 +71,8 @@ func _physics_process( delta: float ) -> void:
 	update_clones()
 	lifetime -= delta
 	if lifetime < 0:
+		if not is_energy:
+			game.on_pickup_destroyed.emit( weapon )
 		lifetime = 5.0
 		var tween = create_tween()
 		tween.tween_property( self, "modulate:a", 0, 0.5 )

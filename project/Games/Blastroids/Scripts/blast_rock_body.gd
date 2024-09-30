@@ -80,7 +80,7 @@ func init( new_game: BlastGame ) -> void:
 	game = new_game
 	for i in range( game.worlds.size() ):
 		var world = game.worlds[ i ]
-		var clone_rock: BlastRock = BlastGame.ROCK_SCENE.instantiate()
+		var clone_rock: BlastRock = game.scenes.ROCK.instantiate()
 		world.add_child( clone_rock )
 		clone_rock.sprite.texture = sprite.texture
 		clones.append( clone_rock )
@@ -208,7 +208,7 @@ func breakup_rock() -> void:
 	var num = DATA[ rock_size ].break_num
 	var new_rocks = []
 	while num > 0:
-		var rock: BlastRockBody = BlastGame.ROCK_SCENE_BODY.instantiate()
+		var rock: BlastRockBody = game.scenes.ROCK_BODY.instantiate()
 		if num > 8 and randf_range( 0, 1.0 ) > 0.5:
 			rock.rock_size = "large"
 			num -= 8
@@ -242,8 +242,8 @@ func breakup_rock() -> void:
 	if is_energy_dense or randf_range( 0, 1 ) > 0.5:
 		var count = maxi( randi_range( -5, 5 ), 1 )
 		if is_energy_dense:
-			count += maxi( randi_range( -3, 3 ), 1 )
-		game.create_pickups( position, linear_velocity, count, 100, base_move )
+			count += maxi( randi_range( -3, 5 ), 1 )
+		game.create_pickups( position, linear_velocity, count, 50, base_move )
 
 
 func get_clones() -> Array:

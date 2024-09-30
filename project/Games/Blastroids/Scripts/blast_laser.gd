@@ -12,12 +12,14 @@ var game: BlastGame
 var base_h: float
 var spin: float
 var ship: BlastShipBody
+var weapon: String
 
 
 @onready var sprite: Sprite2D = $Sprite2D
 
 
-func init( fired_from_ship: BlastShipBody ) -> void:
+func init( fired_from_ship: BlastShipBody, set_weapon: String ) -> void:
+	weapon = set_weapon
 	ship = fired_from_ship
 	game = ship.game
 	var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -34,7 +36,7 @@ func init( fired_from_ship: BlastShipBody ) -> void:
 		clone.texture = sprite.texture
 		world.add_child( clone )
 		clones.append( clone )
-	
+
 
 func fire( new_velocity: Vector2, color: Color, new_damage: float, new_rotation: float ) -> void:
 	base_h = color.h
@@ -74,6 +76,7 @@ func _physics_process( delta: float ) -> void:
 func _on_body_entered( body: Node2D ) -> void:
 	if body.has_method( "hit" ):
 		body.hit( damage * sprite.modulate.a, ship )
+		game.on_body_hit.emit( weapon, body )
 		if mass > 0:
 			var r_body = body as RigidBody2D
 			var diff = ( body.position - position )
@@ -81,8 +84,7 @@ func _on_body_entered( body: Node2D ) -> void:
 			r_body.apply_impulse( normal * mass, diff )
 	if body.has_method( "get_clones" ):
 		for clone in body.get_clones():
-			var explosion = BlastGame.EXPLOSION_SCENE.instantiate()
-			#explosion.modulate.a = sprite.modulate.a
+			var explosion = game.scenes.EXPLOSION.instantiate()
 			explosion.modulate = sprite.modulate
 			clone.add_child( explosion )
 			explosion.global_position = global_position

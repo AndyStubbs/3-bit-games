@@ -2,26 +2,12 @@ extends Node
 class_name BlastGame
 
 
-enum WEAPONS {
-	LASER, MASS, MISSILE, SPREAD, CHARGE, BOMB
-}
-
-
-const BEACON_SCENE = preload( "res://Games/Blastroids/Scenes/blast_beacon.tscn" )
-const TUTORIAL_SCENE = preload( "res://Games/Blastroids/Scenes/blast_tutorial.tscn" )
-const SHIP_BODY = preload( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" )
-const PL_ONE = preload( "res://Games/Blastroids/Scenes/pl_one.tscn" )
-const PL_TWO = preload( "res://Games/Blastroids/Scenes/pl_two.tscn" )
-const PL_THREE = preload( "res://Games/Blastroids/Scenes/pl_three.tscn" )
-const PL_FOUR = preload( "res://Games/Blastroids/Scenes/pl_four.tscn" )
 const PLAYER_UI_SMALL = preload( "res://Games/Blastroids/Images/blast_player_ui_small.png" )
 const BUFFER = 1000
 const BORDER_SHADER = preload( "res://Games/Blastroids/Scripts/v_drops.gdshader" )
 const MINIMAP_SHADER = preload( "res://Shaders/outline.gdshader" )
-const EXPLOSION_SCENE = preload( "res://Games/Blastroids/Scenes/blast_explosion.tscn" )
 const LASER_IMAGE = preload( "res://Games/Blastroids/Images/blast_laser.png" )
 const LASER_PICKUP_IMAGE = preload( "res://Games/Blastroids/Images/blast_laser_pickup.png" )
-const LASER_SCENE = preload( "res://Games/Blastroids/Scenes/blast_laser.tscn" )
 const LASER_UI_IMAGE = preload( "res://Games/Blastroids/Images/ui_blast_laser.png" )
 const LASER_UI_MARKER = preload( "res://Games/Blastroids/Images/ui_blast_laser_markers.png" )
 const CHARGE_UI_IMAGE = preload( "res://Games/Blastroids/Images/ui_blast_charge.png" )
@@ -34,8 +20,6 @@ const SPREAD_PICKUP = preload( "res://Games/Blastroids/Images/blast_spread_picku
 const MASS_IMAGE = preload( "res://Games/Blastroids/Images/blast_mass.png" )
 const MASS_PICKUP_IMAGE = preload( "res://Games/Blastroids/Images/blast_mass_pickup.png" )
 const MASS_UI_MARKER = preload( "res://Games/Blastroids/Images/ui_blast_mass_markers.png" )
-const MISSILE_BODY_SCENE = preload( "res://Games/Blastroids/Scenes/blast_missile_body.tscn" )
-const MISSILE_SCENE = preload( "res://Games/Blastroids/Scenes/blast_missile.tscn" )
 const MISSILE_UI_IMAGE = preload( "res://Games/ReadyAimFire/Images/ui_self_guided_missile.png" )
 const MISSILE_UI_MARKER = preload( "res://Games/Blastroids/Images/ui_blast_missile_markers.png" )
 const MISSILE_IMAGE = preload( "res://Games/ReadyAimFire/Images/self_guided_missile.png" )
@@ -45,19 +29,10 @@ const BOMB_UI_IMAGE = preload( "res://Games/Blastroids/Images/ui_blast_bomb.png"
 const BOMB_UI_MARKER = preload( "res://Games/Blastroids/Images/ui_blast_bomb_markers.png" )
 const BOMB_PICKUP_IMAGE = preload( "res://Games/Blastroids/Images/blast_bomb_pickup.png" )
 const BOMB_MARKER = preload( "res://Games/Blastroids/Images/blast_bomb_markers.png" )
-const PICKUP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_pickup.tscn" )
-const ROCK_SCENE_BODY = preload( "res://Games/Blastroids/Scenes/blast_rock_body.tscn" )
-const ROCK_SCENE = preload( "res://Games/Blastroids/Scenes/blast_rock.tscn" )
-const CRATE_BODY_SCENE = preload( "res://Games/Blastroids/Scenes/blast_crate_body.tscn" )
-const CRATE_SCENE = preload( "res://Games/Blastroids/Scenes/blast_crate.tscn" )
-const SHIP_SCENE = preload( "res://Games/Blastroids/Scenes/blast_ship.tscn" )
 const TRI_IMAGE = preload( "res://Games/Blastroids/Images/triangle.png" )
 const TRI_IMAGE_BACK = preload( "res://Games/Blastroids/Images/triangle_back.png" )
-const BORDER_SCENE = preload( "res://Games/Blastroids/Scenes/blast_border.tscn" )
-const PLANET_SCENE = preload( "res://Games/Blastroids/Scenes/blast_planet.tscn" )
 const WEAPONS_DATA: Dictionary = {
-	WEAPONS.LASER: {
-		"SCENE": LASER_SCENE,
+	"laser": {
 		"PICKUP_IMAGE": LASER_PICKUP_IMAGE,
 		"UI_IMAGE": LASER_UI_IMAGE,
 		"UI_MARKER": LASER_UI_MARKER,
@@ -72,8 +47,7 @@ const WEAPONS_DATA: Dictionary = {
 		"SPEED": 1000,
 		"SCALE": Vector2( 2, 2 )
 	},
-	WEAPONS.MASS: {
-		"SCENE": LASER_SCENE,
+	"mass": {
 		"PICKUP_IMAGE": MASS_PICKUP_IMAGE,
 		"UI_IMAGE": LASER_UI_IMAGE,
 		"UI_MARKER": MASS_UI_MARKER,
@@ -88,8 +62,7 @@ const WEAPONS_DATA: Dictionary = {
 		"SPEED": 500,
 		"SCALE": Vector2( 1.5, 1.5 )
 	},
-	WEAPONS.MISSILE: {
-		"SCENE": MISSILE_BODY_SCENE,
+	"missile": {
 		"PICKUP_IMAGE": MISSILE_PICKUP_IMAGE,
 		"UI_IMAGE": MISSILE_UI_IMAGE,
 		"UI_MARKER": MISSILE_UI_MARKER,
@@ -108,8 +81,7 @@ const WEAPONS_DATA: Dictionary = {
 		"SPEED": 100,
 		"SCALE": Vector2( 1, 1 )
 	},
-	WEAPONS.SPREAD: {
-		"SCENE": LASER_SCENE,
+	"spread": {
 		"PICKUP_IMAGE": SPREAD_PICKUP,
 		"UI_IMAGE": SPREAD_UI_IMAGE,
 		"UI_MARKER": SPREAD_UI_MARKER,
@@ -124,8 +96,7 @@ const WEAPONS_DATA: Dictionary = {
 		"SPEED": 1000,
 		"SCALE": Vector2( 2, 2 )
 	},
-	WEAPONS.CHARGE: {
-		"SCENE": LASER_SCENE,
+	"charge": {
 		"PICKUP_IMAGE": CHARGE_PICKUP,
 		"UI_IMAGE": CHARGE_UI_IMAGE,
 		"UI_MARKER": CHARGE_UI_MARKER,
@@ -141,8 +112,7 @@ const WEAPONS_DATA: Dictionary = {
 		"SPEED": 500,
 		"SCALE": Vector2( 1, 1 )
 	},
-	WEAPONS.BOMB: {
-		"SCENE": MISSILE_BODY_SCENE,
+	"bomb": {
 		"PICKUP_IMAGE": BOMB_PICKUP_IMAGE,
 		"UI_IMAGE": BOMB_UI_IMAGE,
 		"UI_MARKER": BOMB_UI_MARKER,
@@ -164,6 +134,34 @@ const WEAPONS_DATA: Dictionary = {
 }
 
 
+@warning_ignore( "unused_signal" )
+signal on_body_hit( weapon: String, body: RigidBody2D )
+
+@warning_ignore( "unused_signal" )
+signal on_pickup_destroyed( weapon: String )
+
+
+var scenes: Dictionary = {
+	"MISSILE_BODY": load( "res://Games/Blastroids/Scenes/blast_missile_body.tscn" ),
+	"MISSILE": load( "res://Games/Blastroids/Scenes/blast_missile.tscn" ),
+	"BEACON": load( "res://Games/Blastroids/Scenes/blast_beacon.tscn" ),
+	"TUTORIAL":load( "res://Games/Blastroids/Scenes/blast_tutorial.tscn" ),
+	"SHIP_BODY": load( "res://Games/Blastroids/Scenes/blast_ship_body.tscn" ),
+	"PL_ONE": load( "res://Games/Blastroids/Scenes/pl_one.tscn" ),
+	"PL_TWO": load( "res://Games/Blastroids/Scenes/pl_two.tscn" ),
+	"PL_THREE": load( "res://Games/Blastroids/Scenes/pl_three.tscn" ),
+	"PL_FOUR": load( "res://Games/Blastroids/Scenes/pl_four.tscn" ),
+	"EXPLOSION": load( "res://Games/Blastroids/Scenes/blast_explosion.tscn" ),
+	"LASER": load( "res://Games/Blastroids/Scenes/blast_laser.tscn" ),
+	"PICKUP": load( "res://Games/Blastroids/Scenes/blast_pickup.tscn" ),
+	"ROCK_BODY": load( "res://Games/Blastroids/Scenes/blast_rock_body.tscn" ),
+	"ROCK": load( "res://Games/Blastroids/Scenes/blast_rock.tscn" ),
+	"CRATE_BODY": load( "res://Games/Blastroids/Scenes/blast_crate_body.tscn" ),
+	"CRATE": load( "res://Games/Blastroids/Scenes/blast_crate.tscn" ),
+	"SHIP": load( "res://Games/Blastroids/Scenes/blast_ship.tscn" ),
+	"BORDER": load( "res://Games/Blastroids/Scenes/blast_border.tscn" ),
+	"PLANET": load( "res://Games/Blastroids/Scenes/blast_planet.tscn" )
+}
 var worlds: Array
 var uis: Array
 var ships: Array = []
@@ -280,7 +278,7 @@ func init_borders() -> void:
 	var rect: Rect2 = Blast.get_rect()
 	
 	# Create left borders
-	var border_left: BlastBorder = BORDER_SCENE.instantiate()
+	var border_left: BlastBorder = scenes.BORDER.instantiate()
 	border_left.rect = Rect2(
 		rect.position.x - BUFFER,
 		rect.position.y - BUFFER,
@@ -291,7 +289,7 @@ func init_borders() -> void:
 	bodies.add_child( border_left )
 	
 	# Create top border
-	var border_top: BlastBorder = BORDER_SCENE.instantiate()
+	var border_top: BlastBorder = scenes.BORDER.instantiate()
 	border_top.rect = Rect2(
 		rect.position.x - BUFFER,
 		rect.position.y - BUFFER,
@@ -302,7 +300,7 @@ func init_borders() -> void:
 	bodies.add_child( border_top )
 	
 	# Create right borders
-	var border_right: BlastBorder = BORDER_SCENE.instantiate()
+	var border_right: BlastBorder = scenes.BORDER.instantiate()
 	border_right.rect = Rect2(
 		rect.position.x + rect.size.x,
 		rect.position.y - BUFFER,
@@ -313,7 +311,7 @@ func init_borders() -> void:
 	bodies.add_child( border_right )
 	
 	# Create bottom border
-	var border_bottom: BlastBorder = BORDER_SCENE.instantiate()
+	var border_bottom: BlastBorder = scenes.BORDER.instantiate()
 	border_bottom.rect = Rect2(
 		rect.position.x - BUFFER,
 		rect.position.y + rect.size.y,
@@ -333,7 +331,7 @@ func init_map() -> void:
 	
 	# Earth System
 	if Blast.data.settings.map_type == 1:
-		var planet = PLANET_SCENE.instantiate()
+		var planet = scenes.PLANET.instantiate()
 		planet.load( "sun" )
 		planet.position = Vector2(
 			rect.position.x + rect.size.x / 2,
@@ -347,7 +345,7 @@ func init_map() -> void:
 	elif Blast.data.settings.map_type == 2:
 		
 		# The Sun
-		var sun = PLANET_SCENE.instantiate()
+		var sun = scenes.PLANET.instantiate()
 		sun.load( "sun" )
 		sun.position = Vector2(
 			rect.position.x + rect.size.x / 2,
@@ -358,35 +356,35 @@ func init_map() -> void:
 		planets.append( sun )
 		
 		# Mercury
-		var mercury = PLANET_SCENE.instantiate()
+		var mercury = scenes.PLANET.instantiate()
 		mercury.load( "mercury" )
 		bodies.add_child( mercury )
 		planets.append( mercury )
 		mercury.setup_orbit( sun, 2500 )
 		
 		# Venus
-		var venus = PLANET_SCENE.instantiate()
+		var venus = scenes.PLANET.instantiate()
 		venus.load( "venus" )
 		bodies.add_child( venus )
 		planets.append( venus )
 		venus.setup_orbit( sun, 3500 )
 		
 		# Earth
-		var earth = PLANET_SCENE.instantiate()
+		var earth = scenes.PLANET.instantiate()
 		earth.load( "earth" )
 		bodies.add_child( earth )
 		planets.append( earth )
 		earth.setup_orbit( sun, 5500 )
 		
 		# The Moon
-		var moon = PLANET_SCENE.instantiate()
+		var moon = scenes.PLANET.instantiate()
 		moon.load( "moon" )
 		bodies.add_child( moon )
 		planets.append( moon )
 		moon.setup_orbit( earth, 1000 )
 		
 		# Mars
-		var mars = PLANET_SCENE.instantiate()
+		var mars = scenes.PLANET.instantiate()
 		mars.load( "mars" )
 		bodies.add_child( mars )
 		planets.append( mars )
@@ -408,7 +406,7 @@ func create_rocks( num_rocks: int, is_init: bool = false ) -> void:
 	rock_sizes.append_array( fill_array( "small", 3 ) )
 	rock_sizes.append_array( fill_array( "tiny", 3 ) )
 	for i in range( num_rocks ):
-		var rock: BlastRockBody = ROCK_SCENE_BODY.instantiate()
+		var rock: BlastRockBody = scenes.ROCK_BODY.instantiate()
 		rock.rock_size = rock_sizes.pick_random()
 		rock.set_collision_mask_value( 1, false )
 		bodies.add_child( rock )
@@ -423,6 +421,17 @@ func create_rocks( num_rocks: int, is_init: bool = false ) -> void:
 		rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
 		if is_init:
 			rock.init( self )
+
+
+func create_rock( rock_size: String, energy_dense_chance: float ) -> BlastRockBody:
+	var rock: BlastRockBody = scenes.ROCK_BODY.instantiate()
+	rock.rock_size = rock_size
+	rock.energy_dense_chance = energy_dense_chance
+	bodies.add_child( rock )
+	rigid_bodies.append( rock )
+	rock.init( self )
+	rock.angular_velocity = randf_range( -PI / 2, PI / 2 )
+	return rock
 
 
 func init_crates() -> void:
@@ -442,7 +451,7 @@ func init_crates() -> void:
 		var x = 0
 		var y = 0
 		for j in range( bonus_crates ):
-			var crate: BlastCrateBody = CRATE_BODY_SCENE.instantiate()
+			var crate: BlastCrateBody = scenes.CRATE_BODY.instantiate()
 			crate.position = Vector2( pos.x + x * crate_size, pos.y + y * crate_size )
 			bodies.add_child( crate )
 			rigid_bodies.append( crate )
@@ -450,6 +459,17 @@ func init_crates() -> void:
 			if x >= cols:
 				x = 0
 				y += 1
+
+
+func create_crate( set_weapon: String = "" ) -> BlastCrateBody:
+	var crate: BlastCrateBody = scenes.CRATE_BODY.instantiate()
+	bodies.add_child( crate )
+	rigid_bodies.append( crate )
+	if set_weapon != "":
+		crate.init( self, set_weapon )
+	else:
+		crate.init( self )
+	return crate
 
 
 func get_orbit_velocity( body: RigidBody2D ) -> Vector2:
@@ -563,7 +583,7 @@ func create_explosions( num: int, radius: float, body: RigidBody2D, esize: float
 	for j in range( num, 0, -1 ):
 		for i in range( worlds.size() ):
 			var world = worlds[ i ]
-			var explosion = EXPLOSION_SCENE.instantiate()
+			var explosion = scenes.EXPLOSION.instantiate()
 			explosion.position = body.position + Vector2(
 				randf_range( -radius / 2, radius / 2 ),
 				randf_range( -radius / 2, radius / 2 )
@@ -589,7 +609,7 @@ func create_pickups(
 	var push
 	var move
 	for i in range( count ):
-		pickup = PICKUP_SCENE.instantiate()
+		pickup = scenes.PICKUP.instantiate()
 		push = Vector2.from_angle( randf_range( a, a + da / 2 ) ) * b_push
 		move = Vector2.from_angle( randf_range( a, a + da / 2  ) ) * b_move
 		pickup.velocity = vel + push * randf_range( 0.5, 1.0 )
@@ -605,7 +625,7 @@ func create_weapon_pickup(
 	count: int,
 	b_push: float,
 	b_move: float,
-	weapon: WEAPONS
+	weapon: String
 ) -> void:
 	var da = TAU / count
 	var a = TAU * randf_range( 0, 1 )
@@ -613,7 +633,7 @@ func create_weapon_pickup(
 	var push
 	var move
 	for i in range( count ):
-		pickup = PICKUP_SCENE.instantiate()
+		pickup = scenes.PICKUP.instantiate()
 		push = Vector2.from_angle( randf_range( a, a + da / 2 ) ) * b_push
 		move = Vector2.from_angle( randf_range( a, a + da / 2  ) ) * b_move
 		pickup.velocity = vel + push * randf_range( 0.5, 1.0 )
@@ -657,28 +677,28 @@ func setup_players() -> void:
 				players.append( player )
 	var pl: Panel
 	if players.size() == 1:
-		pl = PL_ONE.instantiate()
+		pl = scenes.PL_ONE.instantiate()
 		Blast.data.player_count = 1
 	elif players.size() == 2:
-		pl = PL_TWO.instantiate()
+		pl = scenes.PL_TWO.instantiate()
 		Blast.data.player_count = 2
 	elif players.size() == 3:
-		pl = PL_THREE.instantiate()
+		pl = scenes.PL_THREE.instantiate()
 		Blast.data.player_count = 3
 	else:
-		pl = PL_FOUR.instantiate()
+		pl = scenes.PL_FOUR.instantiate()
 		Blast.data.player_count = 4
 	$Players.add_child( pl )
 	var bodies2 = $CanvasLayer/SubViewportContainer/WorldViewport/World/Bodies
 	var world_id = 0
 	for player in players:
-		var ship_body = SHIP_BODY.instantiate()
+		var ship_body = scenes.SHIP_BODY.instantiate()
 		ship_body.world_id = world_id
 		bodies2.add_child( ship_body )
 		ship_body.setup_ship( player )
 		world_id += 1
 	for i in Blast.data.settings.added_cpus:
-		var ship_body = SHIP_BODY.instantiate()
+		var ship_body = scenes.SHIP_BODY.instantiate()
 		ship_body.world_id = -1
 		bodies2.add_child( ship_body )
 		ship_body.setup_ship( {
@@ -711,7 +731,7 @@ func _ready() -> void:
 		Blast.data.settings = Blast.settings
 	var tutorial
 	if Blast.data.is_tutorial:
-		tutorial = TUTORIAL_SCENE.instantiate()
+		tutorial = scenes.TUTORIAL.instantiate()
 		$CanvasLayer.add_child( tutorial )
 		tutorial.init( self )
 		Blast.data.settings = tutorial.get_settings()

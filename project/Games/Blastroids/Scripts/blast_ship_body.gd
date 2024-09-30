@@ -106,11 +106,11 @@ var weapon_box: HBoxContainer
 var ammo_label: Label
 var coordinates_label: Label
 var is_alternate_tick: bool = false
-var weapon: BlastGame.WEAPONS:
+#var weapon_data2: Dictionary
+var weapon: String:
 	set( value ):
 		weapon = value
-		weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
-var weapon_data: Dictionary
+		#weapon_data2 = BlastGame.WEAPONS_DATA[ weapon ]
 var weapon_store: Array = []
 var weapon_index: int
 var ammo: Dictionary = {}
@@ -154,7 +154,7 @@ func init( new_game: BlastGame ) -> void:
 	if world_id > -1:
 		init_ui()
 	lives = Blast.data.settings.lives_count + 1
-	add_weapon( BlastGame.WEAPONS.LASER )
+	add_weapon( "laser" )
 	weapon_index = 0
 	select_weapon()
 	init_clones()
@@ -220,6 +220,7 @@ func setup_weapon() -> void:
 	var ui = game.uis[ world_id ]
 	var weapon_marker: TextureRect = ui.get_node( "WeaponsData/WeaponImage/WeaponMarker" )
 	var weapon_image: TextureRect = ui.get_node( "WeaponsData/WeaponImage" )
+	var weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
 	weapon_image.texture = weapon_data.UI_IMAGE
 	weapon_marker.texture = weapon_data.UI_MARKER
 	weapon_marker.modulate = ship_color
@@ -253,6 +254,7 @@ func select_weapon() -> void:
 func update_ammo() -> void:
 	if world_id == -1:
 		return
+	var weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
 	if weapon_data.AMMO_TYPE == "physical":
 		ammo_label.show()
 		ammo_label.text = "%d" % ammo[ weapon ]
@@ -260,7 +262,7 @@ func update_ammo() -> void:
 		ammo_label.hide()
 
 
-func add_weapon( new_weapon: BlastGame.WEAPONS ) -> void:
+func add_weapon( new_weapon: String ) -> void:
 	var new_weapon_data = BlastGame.WEAPONS_DATA[ new_weapon ]
 	
 	# Add physical ammo
@@ -285,7 +287,7 @@ func show_hide_weapons() -> void:
 		panel.get_child( 0 ).hide()
 		panel.get_child( 1 ).hide()
 	for i in range( weapon_store.size() ):
-		var sel_weapon: BlastGame.WEAPONS = weapon_store[ i ]
+		var sel_weapon: String = weapon_store[ i ]
 		var panel: Panel = weapon_box.get_child( i )
 		var weapon_sprite: Sprite2D = panel.get_child( 0 )
 		var weapon_sprite2: Sprite2D = panel.get_child( 1 )
@@ -303,7 +305,7 @@ func init_clones() -> void:
 		var world = game.worlds[ i ]
 		
 		# Create Clone Ship
-		var clone_ship: BlastShip = BlastGame.SHIP_SCENE.instantiate()
+		var clone_ship: BlastShip = game.scenes.SHIP.instantiate()
 		clone_ship.ship_body = self
 		if i == world_id:
 			clone_ship.is_main_ship = true
@@ -377,6 +379,7 @@ func can_cpu_fire() -> bool:
 
 func fire_lasers( delta: float ) -> void:
 	var is_low_power_mode = false
+	var weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
 	if weapon_data.AMMO_TYPE == "energy":
 		var drain = weapon_data.DRAIN
 		if laser_energy < max_laser_energy * 0.25:
@@ -398,29 +401,22 @@ func fire_lasers( delta: float ) -> void:
 	is_laser_firing = true
 	var laser_velocity = linear_velocity + Vector2.from_angle( rotation ) * weapon_data.SPEED
 	if weapon_data.TYPE == "missile" or weapon_data.TYPE == "bomb":
-		var missile: BlastMissileBody = weapon_data.SCENE.instantiate()
+		var missile: BlastMissileBody = game.scenes.MISSILE_BODY.instantiate()
 		missile.position = missile_point.global_position
 		get_parent().add_child( missile )
-		missile.is_bomb = weapon_data.TYPE == "bomb"
-		missile.explosion_scale = weapon_data.EXPLOSION_SCALE
-		missile.energy = weapon_data.ENERGY
-		missile.mass = weapon_data.MASS
-		missile.sprite.scale = weapon_data.SCALE
-		missile.sprite.texture = weapon_data.IMAGE
-		missile.marker.texture = weapon_data.MARKER
-		missile.init( self )
-		missile.fire( laser_velocity, ship_color, weapon_data.DAMAGE, rotation )
+		missile.init( self, weapon_store[ weapon_index ] )
+		missile.fire( laser_velocity, ship_color, rotation )
 	elif weapon_data.TYPE == "energy":
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = base_gun_points[ 0 ].x + 7
-			var bullet: BlastLaser = weapon_data.SCENE.instantiate()
+			var bullet: BlastLaser = game.scenes.LASER.instantiate()
 			bullet.mass = weapon_data.MASS
 			bullet.position = gun_point.global_position
 			bullet.spin = weapon_data.SPIN
 			get_parent().add_child( bullet )
 			bullet.sprite.scale = weapon_data.SCALE
 			bullet.sprite.texture = weapon_data.IMAGE
-			bullet.init( self )
+			bullet.init( self, weapon_store[ weapon_index ] )
 			if is_low_power_mode:
 				var laser_color = ui_color
 				laser_color.a = 0.75
@@ -431,14 +427,14 @@ func fire_lasers( delta: float ) -> void:
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = base_gun_points[ 0 ].x + 7
 			for a in [ -PI / 8, 0, PI / 8 ]:
-				var bullet: BlastLaser = weapon_data.SCENE.instantiate()
+				var bullet: BlastLaser = game.scenes.LASER.instantiate()
 				bullet.mass = weapon_data.MASS
 				bullet.position = gun_point.global_position
 				bullet.spin = weapon_data.SPIN
 				get_parent().add_child( bullet )
 				bullet.sprite.scale = weapon_data.SCALE
 				bullet.sprite.texture = weapon_data.IMAGE
-				bullet.init( self )
+				bullet.init( self, weapon_store[ weapon_index ] )
 				var vel =  linear_velocity + Vector2.from_angle( rotation + a ) * weapon_data.SPEED
 				if is_low_power_mode:
 					var laser_color = ui_color
@@ -449,14 +445,14 @@ func fire_lasers( delta: float ) -> void:
 	elif weapon_data.TYPE == "charge":
 		for gun_point in gun_points.get_children():
 			gun_point.position.x = base_gun_points[ 0 ].x + blast_charge_size * 10
-			var bullet: BlastLaser = weapon_data.SCENE.instantiate()
+			var bullet: BlastLaser = game.scenes.LASER.instantiate()
 			bullet.mass = weapon_data.MASS
 			bullet.position = gun_point.global_position
 			bullet.spin = weapon_data.SPIN
 			get_parent().add_child( bullet )
 			bullet.sprite.scale = weapon_data.SCALE * blast_charge_size
 			bullet.sprite.texture = weapon_data.IMAGE
-			bullet.init( self )
+			bullet.init( self, weapon_store[ weapon_index ] )
 			bullet.fire(
 				laser_velocity, ui_color, weapon_data.DAMAGE * blast_charge_size * 2, rotation
 			)
@@ -617,6 +613,7 @@ func process_rotation() -> void:
 
 
 func process_firing( delta: float ) -> void:
+	var weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
 	if weapon_data.TYPE == "charge":
 		if get_input( "Fire_" + controls, true ):
 			blast_charge_size = 0.2
@@ -699,6 +696,7 @@ func process_energy( delta: float ) -> void:
 		energy += shield_charge
 		
 		# Charge from lasers - Make sure can fire next laser
+		var weapon_data = BlastGame.WEAPONS_DATA[ weapon ]
 		if laser_energy > weapon_data.DRAIN * delta * 2:
 			var laser_charge = ( laser_charge_rate * delta ) / 2
 			if laser_charge > laser_energy:
@@ -827,7 +825,7 @@ func pickup( boost: float, is_silent: bool = false ) -> void:
 	boost_charge_stop = Time.get_ticks_msec() + 1000
 
 
-func pickup_weapon( new_weapon: BlastGame.WEAPONS ) -> void:
+func pickup_weapon( new_weapon: String ) -> void:
 	for clone: BlastShip in clones:
 		clone.pickup_sound.play()
 	add_weapon( new_weapon )

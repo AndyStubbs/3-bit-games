@@ -3,12 +3,11 @@ class_name BlastCrateBody
 
 
 const CRATE_PICKUPS: Array = [
-	BlastGame.WEAPONS.BOMB,
-	BlastGame.WEAPONS.SPREAD,
-	BlastGame.WEAPONS.CHARGE,
-	BlastGame.WEAPONS.MASS,
-	BlastGame.WEAPONS.MISSILE, BlastGame.WEAPONS.MISSILE,
-	BlastGame.WEAPONS.MISSILE
+	"bomb",
+	"spread",
+	"charge",
+	"mass",
+	"missile", "missile", "missile", "missile"
 ]
 
 
@@ -23,21 +22,24 @@ var is_destroyed: bool = false
 var rect: Rect2
 var img: Image
 var texture: ImageTexture
-var weapon: BlastGame.WEAPONS
+var weapon: String
 
 
 @onready var sprite: Sprite2D = $Sprite2D
 
 
-func init( new_game: BlastGame ) -> void:
-	weapon = CRATE_PICKUPS.pick_random()
+func init( new_game: BlastGame, set_weapon: String = "" ) -> void:
+	if set_weapon == "":
+		weapon = CRATE_PICKUPS.pick_random()
+	else:
+		weapon = set_weapon
 	rect = Rect2( 0, 0, img.get_width(), img.get_height() )
 	game = new_game
 	for i in range( game.worlds.size() ):
 		
 		# Create clone
 		var world = game.worlds[ i ]
-		var clone_crate: BlastCrate = BlastGame.CRATE_SCENE.instantiate()
+		var clone_crate: BlastCrate = game.scenes.CRATE.instantiate()
 		world.add_child( clone_crate )
 		clone_crate.sprite.texture = sprite.texture
 		clones.append( clone_crate )
@@ -126,7 +128,7 @@ func destroy( is_burned: bool = false) -> void:
 
 func breakup_crate() -> void:
 	# Create energy pickups
-	var count = maxi( randi_range( -5, 10 ), 1 )
+	var count = maxi( randi_range( -3, 12 ), 3 )
 	game.create_pickups( position, linear_velocity, count, 50.0, 20.0 )
 	
 	# Create Weapon Pickup

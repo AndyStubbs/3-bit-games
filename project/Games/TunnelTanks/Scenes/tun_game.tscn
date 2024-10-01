@@ -139,18 +139,23 @@ text = "TR_RETURN_MENU"
 
 [node name="LaserHit" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_t4klx")
+bus = &"Sound"
 
 [node name="LaserFire" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("6_5chly")
+bus = &"Sound"
 
 [node name="TankExploded" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("7_gw5ui")
+bus = &"Sound"
 
 [node name="TankHit" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_5b1i4")
+bus = &"Sound"
 
 [node name="TankCollided" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_ehhgo")
+bus = &"Sound"
 
 [node name="LoadingScreen" type="Panel" parent="."]
 anchors_preset = 15

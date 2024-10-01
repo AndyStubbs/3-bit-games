@@ -65,7 +65,6 @@ const SLIME_COLOR: Color = Color( 0.15, 0.8, 0.15 )
 const MINI_CLUSTER_IMAGE = preload( "res://Games/ReadyAimFire/Images/mini_cluster.png" )
 const BULLET_FIELDS: Dictionary = {
 	"modulate": "color",
-	#"text": "string",
 	"freq": "int",
 	"radius": "float",
 	"force": "float",
@@ -93,7 +92,7 @@ const BULLET_DATA: Dictionary = {
 		"force": 200,
 		"points": 50,
 		"explosion_scale": 1,
-		"bullet_scale": 4,
+		"bullet_scale": 4.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.IRON: {
@@ -106,7 +105,7 @@ const BULLET_DATA: Dictionary = {
 		"force": 250,
 		"points": 60,
 		"explosion_scale": 1.15,
-		"bullet_scale": 4,
+		"bullet_scale": 4.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.GOLD: {
@@ -119,7 +118,7 @@ const BULLET_DATA: Dictionary = {
 		"force": 300,
 		"points": 70,
 		"explosion_scale": 1.3,
-		"bullet_scale": 4,
+		"bullet_scale": 4.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.DIAMOND: {
@@ -132,7 +131,7 @@ const BULLET_DATA: Dictionary = {
 		"force": 350,
 		"points": 80,
 		"explosion_scale": 1.45,
-		"bullet_scale": 4,
+		"bullet_scale": 4.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.SELF_GUIDED: {
@@ -145,7 +144,7 @@ const BULLET_DATA: Dictionary = {
 		"force": 200,
 		"points": 30,
 		"explosion_scale": 0.9,
-		"bullet_scale": 1,
+		"bullet_scale": 1.0,
 		"type": "missile"
 	},
 	Raf.BULLET_TYPES.SLIME: {
@@ -179,7 +178,7 @@ const BULLET_DATA: Dictionary = {
 		"text": "TR_BRIDGE_BULLET",
 		"freq": 6,
 		"bridge": true,
-		"bullet_scale": 1,
+		"bullet_scale": 1.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.SHOVEL: {
@@ -189,7 +188,7 @@ const BULLET_DATA: Dictionary = {
 		"text": "TR_SHOVEL_BULLET",
 		"freq": 8,
 		"shovel": true,
-		"bullet_scale": 1,
+		"bullet_scale": 1.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.CLUSTER: {
@@ -198,7 +197,7 @@ const BULLET_DATA: Dictionary = {
 		"modulate": Color.WHITE,
 		"text": "TR_CLUSTER_BOMB",
 		"freq": 6,
-		"bullet_scale": 1,
+		"bullet_scale": 1.0,
 		"type": "cluster",
 		"cluster_distance": 15,
 		"radius": 5,
@@ -212,7 +211,7 @@ const BULLET_DATA: Dictionary = {
 		"modulate": Color.WHITE,
 		"text": "TR_MINI_CLUSTER",
 		"freq": 0,
-		"bullet_scale": 1,
+		"bullet_scale": 1.0,
 		"type": "bullet",
 		"radius": 5,
 		"force": 200,
@@ -225,7 +224,7 @@ const BULLET_DATA: Dictionary = {
 		"modulate": Color.WHITE,
 		"text": "TR_BOUNCING",
 		"freq": 6,
-		"bullet_scale": 1,
+		"bullet_scale": 1.0,
 		"type": "bullet",
 		"bouncing": true,
 		"radius": 7,
@@ -265,11 +264,11 @@ const BULLET_DATA: Dictionary = {
 		"modulate": Color.WHITE,
 		"text": "TR_NUKE",
 		"freq": 2,
-		"radius": 45,
+		"radius": 40,
 		"force": 750,
 		"points": 150,
 		"explosion_scale": 2,
-		"bullet_scale": 1.5,
+		"bullet_scale": 2.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.ROCKET_BOOST: {
@@ -288,7 +287,7 @@ const BULLET_DATA: Dictionary = {
 		"force": 1000,
 		"points": 300,
 		"explosion_scale": 2,
-		"bullet_scale": 1.5,
+		"bullet_scale": 3.0,
 		"type": "bullet"
 	},
 	Raf.BULLET_TYPES.POTION: {

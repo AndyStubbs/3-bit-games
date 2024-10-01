@@ -317,6 +317,8 @@ func init_clones() -> void:
 		
 		# Create Clone Nav Marker
 		var clone_nav: Sprite2D = Sprite2D.new()
+		if not Globals.is_debug:
+			clone_nav.modulate.a = 0
 		clone_nav.texture = nav_marker.texture
 		clone_ship.add_child( clone_nav )
 		nav_clones.append( clone_nav )

@@ -89,6 +89,8 @@ func init_stars( star_scene: PackedScene ) -> void:
 
 
 func init_main_ship() -> void:
+	if not Globals.is_debug:
+		$Label.hide()
 	var buffer: int = 500
 	var rect: Rect2 = Blast.get_rect()
 	if not ship_body.is_cpu and Blast.data.settings.show_crosshairs == 1:

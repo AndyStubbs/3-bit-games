@@ -99,7 +99,14 @@ func process( delta: float ) -> void:
 	# Process cpu state if not collided
 	if not collider:
 		state.process( delta )
-		
+	
+	# Randomly change weapons
+	if ship.weapon_store.size() > 1 and randf_range( 0, 1 ) > 0.995:
+		if randf_range( 0, 1 ) > 0.5:
+			input.is_action_pressed[ "ToggleDown_CPU" ] = true
+		else:
+			input.is_action_pressed[ "ToggleUp_CPU" ] = true
+	
 	# Check for targets
 	if randf_range( 0, 1 ) > 0.75:
 		collider = ship.shapecast_2d( ship.position + Vector2.from_angle( ship.rotation ) * 600 )

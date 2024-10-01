@@ -38,7 +38,7 @@
 31. Fix tutorial bug, one time when started I was at the ship where I needed to kill it wit
 	h missiles but I had no missiles and I had to reset.
 32. Fix bug when gameover and last ship is also destroyed, the last ship reappears, should not happen.
-
+33. Need to set sounds to be the similar volumes on all games.
 Ready Aim Fire Bug
 Don't allow other controllers to toggle weapons.
 

@@ -117,6 +117,8 @@ var is_fullscreen: bool = false
 
 func _ready() -> void:
 	is_debug = OS.get_cmdline_args().find( "debug" ) != -1
+	if is_debug:
+		print( "DEBUG MODE" )
 	for pl in PLAYERS_DEFAULT:
 		players.append( {
 			"id": pl.id,

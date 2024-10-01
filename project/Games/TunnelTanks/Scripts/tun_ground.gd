@@ -251,21 +251,16 @@ func draw_rocks() -> void:
 		min_height = 5 + 5 * rock_scale + 5 * map_scale
 		max_height = 15 + 5 * rock_scale + 5 * map_scale
 	var attempts = 0
-	print( "Placing rocks: %s" % num_rocks )
 	while num_rocks > 0 and attempts < 5000:
 		attempts += 1
 		if attempts % 500 == 499:
-			print( "Tick" )
 			max_width = clampi( max_width - 1, min_width, max_width )
 			max_height = clampi( max_height - 1, min_height, max_height )
-			print( "W: %s, H: %s" % [ max_width, max_height ] )
 		if attempts % 1000 == 999:
 			min_width = clampi( min_width - 1, 10, min_width )
 			min_height = clampi( min_height - 1, 7, min_height )
 			max_width = clampi( max_width - 1, min_width, max_width )
 			max_height = clampi( max_height - 1, min_height, max_height )
-			print( "MW: %s, MH: %s" % [ min_width, min_height ] )
-			print( "W: %s, H: %s" % [ max_width, max_height ] )
 		var size: Vector2 = Vector2(
 			randf_range( min_width, max_width ),
 			randf_range( min_height, max_height )
@@ -291,15 +286,12 @@ func draw_rocks() -> void:
 		var rock_data = Globals.create_rock( rect, Vector2i( 5, 9 ) )
 		Globals.draw_rock( img, rock_data, rect, ROCK_COLORS, ROCK_COLOR )
 		num_rocks -= 1
-	print( "Attempts: %s" % attempts )
-	print( "Rocks: %s" % num_rocks )
 
 
 func draw_bases( tanks: Array ) -> void:
 	for i in range( tanks.size() ):
 		var tank = tanks[ i ]
 		var base = tank.base
-		#draw_base( base, tank.color2, tank.color1 )
 		draw_base2( base )
 
 
@@ -379,8 +371,6 @@ func setup_grid() -> void:
 	@warning_ignore( "integer_division" )
 	var grid_height: int = floor( height / Tun.GRID_SIZE )
 	grid = AStarGrid2D.new()
-	#grid.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
-	#grid.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	grid.region = Rect2i( 0, 0, grid_width, grid_height )
 	grid.cell_size = Vector2( Tun.GRID_SIZE, Tun.GRID_SIZE )
@@ -388,8 +378,8 @@ func setup_grid() -> void:
 	for cell_y in range( grid_height ):
 		for cell_x in range( grid_width ):
 			update_grid_cell( cell_x, cell_y )
-			#debug_update_grid_cell( cell_x, cell_y )
-	print_grid()
+	if Globals.is_debug:
+		print_grid()
 
 
 func update_grid_cell( cell_x: int, cell_y: int ) -> void:
@@ -428,8 +418,6 @@ func update_grid_from_pixels( pixels: Array ) -> void:
 	
 	for cell in cells.keys():
 		update_grid_cell( cell.x, cell.y )
-	#if randf_range( 0, 1 ) < 0.1:
-	#	print_grid()
 
 
 func print_grid() -> void:
@@ -449,5 +437,4 @@ func print_grid() -> void:
 					msg += " "
 				else:
 					msg += "."
-				#msg += "%s" % ( weight_scale * 10 - 1 )
 		print( msg )

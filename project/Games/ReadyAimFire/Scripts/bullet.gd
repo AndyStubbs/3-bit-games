@@ -254,7 +254,6 @@ func _on_area_2d_area_entered( area: Area2D ) -> void:
 	var grand_parent = area.get_parent().get_parent()
 	if grand_parent.is_in_group( "RAF_Tank" ):
 		if grand_parent == fired_from and Time.get_ticks_msec() < wired_time:
-			print( "Hit self, bullet not trigged" )
 			return
 		explode( grand_parent )
 	#else:

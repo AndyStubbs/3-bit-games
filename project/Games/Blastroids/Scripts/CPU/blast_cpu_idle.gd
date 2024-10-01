@@ -103,8 +103,6 @@ func get_target_ship_position() -> Vector2:
 	
 	var pos = target_ship.position
 	
-	print( "%s Targeting %s" % [ ship.display_name, target_ship.display_name ] )
-	
 	# Make sure we don't set the target too far to avoid collisions
 	if min_distance > 1000:
 		var diff = target_ship.position - ship.position

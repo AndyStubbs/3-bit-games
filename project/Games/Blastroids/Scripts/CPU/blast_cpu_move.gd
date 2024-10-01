@@ -75,10 +75,8 @@ func process_targeting( _delta: float ) -> void:
 		target.obj = null
 		target.pos = nav_point
 		update_target()
-		#substate = SUBSTATE.ROTATE
 		set_substate( SUBSTATE.ROTATE )
 	else:
-		#print( ship.speed )
 		cpu.input.is_action_pressed[ "Down_CPU" ] = true
 
 
@@ -122,7 +120,6 @@ func process_thrust( _delta ) -> void:
 		else:
 			cpu.input.is_action_pressed[ "Down_CPU" ] = true
 	elif ship.speed < MIN_SPEED:
-		print( "Stopped Cruising" )
 		set_substate( SUBSTATE.TARGETING )
 	
 	# Update target distance

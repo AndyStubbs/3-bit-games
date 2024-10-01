@@ -467,7 +467,6 @@ func destroy( is_burned: bool = false ) -> void:
 		return
 	if last_hit_by != null and last_hit_time > Time.get_ticks_msec() - HIT_CREDIT_DURATION:
 		last_hit_by.stats.ship_kills += 1
-		print( "%s destroyed by %s" % [ display_name, last_hit_by.display_name ] )
 	speed = 0
 	is_destroyed = true
 	for clone in clones:
@@ -949,7 +948,6 @@ func _on_body_entered( node: Node2D ) -> void:
 		var hit_by: BlastShipBody = null
 		if node is BlastShipBody:
 			hit_by = node as BlastShipBody
-			print( "%s hit by %s" % [ display_name, hit_by.display_name ] )
 		if damage > 500:
 			collide_sound_volume = 1.5
 		elif damage > 1000:

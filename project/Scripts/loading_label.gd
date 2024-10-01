@@ -11,7 +11,6 @@ var dots: String = "..."
 
 func _ready() -> void:
 	text = tr( MSG ) + dots
-	print( tr( MSG ) )
 
 func _process( delta: float ) -> void:
 	t -= delta

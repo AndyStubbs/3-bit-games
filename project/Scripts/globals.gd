@@ -619,13 +619,6 @@ func store_field( data, data_type ):
 
 func normalize_angle( angle: float ) -> float:
 	return wrapf( angle, -PI, PI )
-	##print( "Before: %s" % rad_to_deg( angle ) )
-	#while angle < 0:
-		#angle += TAU
-	#while angle > TAU:
-		#angle -= TAU
-	##print( "After: %s" % rad_to_deg( angle ) )
-	#return angle
 
 
 func get_rotation_direction( angle_current: float, angle_target: float ) -> int:

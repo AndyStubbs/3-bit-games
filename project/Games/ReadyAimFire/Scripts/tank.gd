@@ -279,13 +279,8 @@ func on_explosion( explosion: RAF_Explosion ) -> void:
 		is_direct_hit = true
 	var tank_radius_big = tank_radius * 1.5
 	var distance = maxf( position.distance_to( point ), tank_radius_big + 1 )
-	#print( "od: %s" % distance )
 	distance -= tank_radius_big
-	#print( "d: %s, tr: %s, r: %s" % [ distance, tank_radius_big, radius ] )
-	#Globals.debug_circle( point, Color.GREEN, radius, 2, get_parent() )
-	#Globals.debug_circle( position, Color.BLUE, tank_radius_big, 2, get_parent() )
 	if distance > radius and not is_direct_hit:
-		#print( "Missed" )
 		return
 	if explosion.is_potion:
 		potion_effect = 6
@@ -298,7 +293,6 @@ func on_explosion( explosion: RAF_Explosion ) -> void:
 		hit_pct = 1
 	else:
 		hit_pct = ( radius - distance ) / radius
-	#print( "hit pct: %s" % hit_pct )
 	points_awarded = clampi(
 		ceili( float( expl_points ) * hit_pct ),
 		1,
@@ -311,9 +305,7 @@ func on_explosion( explosion: RAF_Explosion ) -> void:
 		var upward_bias = Vector2( 0, -tank_radius_big )
 		var impact_point = position - point + upward_bias
 		var direction = ( impact_point ).normalized()
-		#Globals.debug_line( position, position + direction * 50, Color.RED, 2, get_parent() )
 		var impact_magnitude = force * hit_pct
-		#print( "Impact: %s" % impact_magnitude )
 		var impact_force = direction * impact_magnitude
 		velocity = impact_force / mass
 		if velocity.y < -2500:
@@ -426,7 +418,6 @@ func fly_tank( delta ) -> void:
 		rotate_sound.stop()
 	is_boosting = false
 	control_boosters( delta )
-	#if Input.is_action_pressed( "Left_" + controls ):
 	if get_input( "Left_" + controls ):
 		if movement_points_remaining > 0:
 			var dx = -100 * delta
@@ -442,7 +433,6 @@ func fly_tank( delta ) -> void:
 				is_boosting = true
 		elif not $WrongSound.playing:
 			$WrongSound.play()
-	#elif Input.is_action_pressed( "Right_" + controls ):
 	elif get_input( "Right_" + controls ):
 		if movement_points_remaining > 0:
 			var dx = 100 * delta
@@ -464,7 +454,6 @@ func fly_tank( delta ) -> void:
 func process_bullet_select() -> void:
 	if is_firing: return
 	var is_toggled: bool = false
-	#if Input.is_action_just_pressed( "ToggleUp_ANY" ):
 	if get_input( "ToggleUp_" + controls, true ):
 		is_toggled = true
 		var selected_items: Array = bullet_select.get_selected_items()
@@ -481,7 +470,6 @@ func process_bullet_select() -> void:
 				selected_index = bullet_select.item_count - 1
 		bullet_select.select( selected_index )
 		update_bullet_image()
-	#if Input.is_action_just_pressed( "ToggleDown_ANY" ):
 	if get_input( "ToggleDown_" + controls, true ):
 		is_toggled = true
 		var selected_items: Array = bullet_select.get_selected_items()
@@ -548,7 +536,6 @@ func remove_current_bullet() -> void:
 		printerr( "Remove current bullet bug... (%s)" % bullet_select.item_count )
 		return
 	last_bullet_removed_time = Time.get_ticks_msec()
-	print( "Bullet count before: %s" % bullet_select.item_count )
 	var selected_items = bullet_select.get_selected_items()
 	if selected_items.size() == 0:
 		printerr( "Removing a bullet that doesn't exist (%s)" % bullet_select.item_count )
@@ -557,7 +544,6 @@ func remove_current_bullet() -> void:
 	var bullet_data = bullet_select.get_item_metadata( selected_index )
 	bullet_data[ 1 ] -= 1
 	if bullet_data[ 1 ] < 1:
-		print( "Removing %s" % bullet_data[ 0 ] )
 		bullet_select.remove_item( selected_index )
 		if bullet_select.item_count == 0:
 			return
@@ -568,13 +554,11 @@ func remove_current_bullet() -> void:
 		bullet_select.select( selected_index )
 		update_bullet_select_height()
 	else:
-		print( "%s %s remaining" % [ bullet_select.get_item_text( selected_index ), bullet_data[ 1 ] ] )
 		bullet_select.set_item_metadata( selected_index, bullet_data )
 		var new_text = bullet_select.get_item_text( selected_index )
 		new_text = new_text.substr( 0, new_text.find( "(" ) )
 		new_text += "(%s)" % bullet_data[ 1 ]
 		bullet_select.set_item_text( selected_index, new_text )
-	print( "Bullet count after: %s" % bullet_select.item_count )
 
 
 func update_bullet_image() -> void:
@@ -728,25 +712,21 @@ func rotate_tank_angle( delta ) -> void:
 		is_body_rotating = false
 	else:
 		is_body_rotating = true
-		#print( "Rotating" )
 	update_booster_angles()
 
 
 func control_cannon( delta ) -> void:
-	#if can_fire and Input.is_action_just_pressed( "Fire_" + controls ):
 	if can_fire and get_input( "Fire_" + controls, true ):
 		can_fire = false
 		is_firing = true
 		fire_power = 0
 		charge_sound.play()
 		show_spots()
-	#elif is_firing and Input.is_action_pressed( "Fire_" + controls ):
 	elif is_firing and get_input( "Fire_" + controls ):
 		fire_power = clampf( fire_power + fd * delta, 0.01, 1.0 )
 		if fire_power >= 1.0 || fire_power <= 0.01:
 			fd *= -1
 		set_marker_points( delta )
-	#if is_firing and Input.is_action_just_released( "Fire_" + controls ):
 	if is_firing and get_input( "Fire_" + controls, false, true ):
 		if rotate_sound.playing:
 			rotate_sound.stop()
@@ -757,13 +737,11 @@ func control_cannon( delta ) -> void:
 			fire_laser()
 		else:
 			fire_bullet()
-		print( "Fired bullet, removing bullet" )
 		remove_current_bullet()
 		can_drive = false
 
 
 func control_boosters( delta ) -> void:
-	#if Input.is_action_pressed( "Fire_" + controls ):
 	if get_input( "Fire_" + controls ):
 		if movement_points_remaining > 0:
 			engine_sound.stop()
@@ -1064,7 +1042,6 @@ func set_tank_grounded() -> void:
 
 func end_booster() -> void:
 	is_booster_activated = false
-	print( "Booster completed removing bullet" )
 	remove_current_bullet()
 	is_turn = false
 	level.on_turn_ended.emit( 0.5 )

@@ -56,7 +56,6 @@ func get_target_rotation( target_angle: float, delta: float ) -> float:
 	var vec1 = Vector2.from_angle( current_angle )
 	var vec2 = Vector2.from_angle( target_angle )
 	var between = vec1.angle_to( vec2 )
-	print( "Angle Between: %d" % rad_to_deg( between ) )
 	if abs( between ) < delta:
 		return 0
 	if between > 0:

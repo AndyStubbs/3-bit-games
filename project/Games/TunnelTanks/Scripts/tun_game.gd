@@ -466,7 +466,6 @@ func on_pixel_moved( pixel: TUN_Pixel ) -> void:
 
 
 func on_tank_destroyed( tank: TUN_Tank ) -> void:
-	print( "Tank destroyed: %s" % tank.display_name )
 	var sound: AudioStreamPlayer = sounds.TankExploded
 	sound.play()
 	explode( {
@@ -482,13 +481,9 @@ func on_tank_destroyed( tank: TUN_Tank ) -> void:
 	# Remove
 	tanks.erase( tank )
 	dead_tanks.append( tank )
-	print( "Tanks Left: %s" % tanks.size() )
-	print( "Dead Tanks: %s" % dead_tanks.size() )
 	
 	# If last tank
 	if tanks.size() == 1:
-		print( "Round Complete" )
-		print( "********************" )
 		winner = tanks[ 0 ]
 		winner.is_alive = false
 		winner.score += 1

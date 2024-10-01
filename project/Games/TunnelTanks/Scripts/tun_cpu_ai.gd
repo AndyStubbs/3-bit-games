@@ -70,7 +70,6 @@ func process() -> void:
 	
 	if stuck_count > MAX_STUCKED:
 		state = STATE.STUCK
-		print( "STUCK" )
 		var rnd = randf_range( 0, 1 )
 		if rnd < 0.25:
 			tank.remote_input.is_action_pressed.Right = true
@@ -190,25 +189,7 @@ func navigate( c_tank_data: Dictionary ) -> void:
 
 
 func pursue( c_tank_data: Dictionary ) -> void:
-	#var c_tank_position: Vector2 = c_tank_data.tank.position
-	#var target_vector = c_tank_position.direction_to( tank.position )
-	#var target = c_tank_data.tank.position + ( target_vector * ( ATTACK_RANGE - 5 ) )
-	#set_random_nav_point( target, 5 )
-	#var node = tank.get_node(
-		#"/root/TunGame/Players/TunPlayersZero/MC/HB/TunPlayerContainer/View/SubViewportContainer/SubViewport/World"
-	#)
-	#print( node )
-	#Globals.debug_line(
-		#tank.position,
-		#c_tank_data.tank.position,
-		#Color.RED,
-		#2,
-		#node,
-		#1.0
-	#)
 	var target = c_tank_data.tank.position
-	#if c_tank_data.tank.is_in_own_base:
-	#	target = tank.base.position
 	set_random_nav_point( target, roundi( ATTACK_RANGE - 5 ) )
 
 
@@ -216,7 +197,6 @@ func attack( c_tank_data: Dictionary ) -> void:
 	var chance = 0.075
 	if c_tank_data.d > 300:
 		chance = 0.15
-		print( "ATTACK CLOSE RANGE" )
 	if randf_range( 0, 1 ) < chance:
 		aim( c_tank_data )
 		fire_time = Time.get_ticks_msec()

@@ -120,7 +120,6 @@ func begin_boosting() -> void:
 func begin_moving() -> void:
 	is_moving = true
 	if is_moving:
-		print( "Starting Move" )
 		if randf_range( 0, 1 ) > 0.5:
 			move_dir = -1
 			if not tank.check_can_move( -1 ):
@@ -132,14 +131,12 @@ func begin_moving() -> void:
 
 
 func begin_choosing_bullet() -> void:
-	print( "Starting Bullet Choice" )
 	is_choosing_bullet = true
 	bullet_changes = randi_range( 0, tank.bullet_select.item_count )
 	pick_random_move_dir()
 
 
 func begin_aiming() -> void:
-	print( "Starting AIM" )
 	start_aim_time = Time.get_ticks_msec()
 	is_aiming = true
 	if tank.cannon.rotation > 0:
@@ -153,10 +150,8 @@ func begin_aiming() -> void:
 
 
 func begin_shooting() -> void:
-	print( "Begin Shooting" )
 	is_aiming = false
 	is_firing = true
-	print( "Target Power: %s" % target_power )
 	if is_debug:
 		Globals.debug_circle(
 			min_pos, Color.CORAL, tank.tank_radius, 10, tank.get_parent(), 15
@@ -205,7 +200,6 @@ func process_flip() -> void:
 
 func process_bullet_change() -> void:
 	if bullet_changes <= 0:
-		print( "Stopping Bullet Choice" )
 		is_choosing_bullet = false
 		if tank.bullet_type == Raf.BULLET_TYPES.ROCKET_BOOST:
 			begin_boosting()
@@ -241,7 +235,6 @@ func process_moving() -> void:
 		is_stopping
 	):
 		is_moving = false
-		print( "Stopping Move" )
 		begin_aiming()
 	else:
 		if move_dir < 0:
@@ -257,7 +250,6 @@ func process_firing() -> void:
 		input.is_action_pressed.Fire_CPU = true
 	else:
 		is_firing = false
-		print( "fire: %s, target: %s" % [ tank.fire_power, target_power ] )
 
 
 func process_aim( delta: float ) -> void:
@@ -267,33 +259,18 @@ func process_aim( delta: float ) -> void:
 	for i in range( start_range, 100 ):
 		var p = float( i ) / 100.0
 		estimate_shot( p, delta )
-		#if total_ticks > 3000:
-			#print( "Max ticks reached" )
-			#start_range = i + 1
-			#return
 		if not is_aiming:
 			return
 	start_range = 0
 	if is_aiming:
 		var angle = tank.cannon.rotation
-		#print( "Angle: %s " % angle )
 		if Time.get_ticks_msec() > start_aim_time + 5000:
-			#var diff = angle_difference( angle, min_distance_angle )
 			var diff = angle - min_distance_angle
-			print( "Diff: %s" % abs( diff ) )
 			if abs( diff ) < 0.01:
-				print( "Fire Closest Target" )
-				print( "Target Angle: %s" % min_distance_angle )
-				print( "Angle: %s" % angle )
-				print( "Distance: %s" % min_distance )
 				target_power = min_distance_power
 				begin_shooting()
 				return
 		if Time.get_ticks_msec() > start_aim_time + 10000:
-			print( "Fire Last Resort" )
-			print( "Target Angle: %s" % min_distance_angle )
-			print( "Angle: %s" % angle )
-			print( "Distance: %s" % min_distance )
 			target_power = 0.5
 			begin_shooting()
 			return
@@ -348,14 +325,6 @@ func estimate_shot( fire_power: float, delta: float ) -> void:
 		points.append( pos )
 		if is_debug and is_draw and not last_pos.is_zero_approx():
 			Globals.debug_line( last_pos, pos, Color( 1, 0, 0, 0.25 ), 2, tank.get_parent(), 3 )
-		#if i % 5 == 0:
-			#var hits: Array = tank.raycast_2d_all( last_pos, pos )
-			
-			#if hits.size() > 0:
-				#print( "***** HIT *****" )
-				#target_power = fire_power
-				#begin_shooting()
-				#return
 		last_pos = pos
 		for t2: RAF_Tank in tank.level.tanks:
 			if t2 != tank:
@@ -365,12 +334,7 @@ func estimate_shot( fire_power: float, delta: float ) -> void:
 					min_distance = distance
 					min_distance_power = fire_power
 					min_pos = pos
-					#print( min_distance )
 					if min_distance <= tank.tank_radius_square:
-						print( "***** HIT *****" )
-						print( "Fire Power: %s" % fire_power )
-						print( "Angle: %s" % angle )
-						print( "Ticks: %s" % i )
 						target_power = fire_power
 						begin_shooting()
 						if is_debug:

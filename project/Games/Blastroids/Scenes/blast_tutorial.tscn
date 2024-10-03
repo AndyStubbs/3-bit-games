@@ -93,7 +93,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_nq3a8")
 theme_override_font_sizes/font_size = 28
-text = "Show Controls"
+text = "TR_SHOW_CONTROLS"
 
 [node name="ResetButton" type="Button" parent="Panel2/VB/HB"]
 custom_minimum_size = Vector2(180, 0)
@@ -101,7 +101,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_nq3a8")
 theme_override_font_sizes/font_size = 28
-text = "Reset"
+text = "TR_RESET"
 
 [node name="PreviousButton" type="Button" parent="Panel2/VB/HB"]
 custom_minimum_size = Vector2(180, 0)
@@ -109,7 +109,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_nq3a8")
 theme_override_font_sizes/font_size = 28
-text = "Previous"
+text = "TR_PREVIOUS"
 
 [node name="NextButton" type="Button" parent="Panel2/VB/HB"]
 custom_minimum_size = Vector2(180, 0)
@@ -117,7 +117,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_nq3a8")
 theme_override_font_sizes/font_size = 28
-text = "Next"
+text = "TR_NEXT"
 
 [node name="Quit" type="Button" parent="Panel2/VB/HB"]
 custom_minimum_size = Vector2(180, 0)
@@ -125,7 +125,7 @@ layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_nq3a8")
 theme_override_font_sizes/font_size = 28
-text = "Quit"
+text = "TR_QUIT"
 
 [node name="TutorialCompleteSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_s77ns")
@@ -136,6 +136,8 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 grow_horizontal = 1
 grow_vertical = 1
 game_postfix = "_BLAST"

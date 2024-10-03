@@ -41,6 +41,8 @@ func update_ui_state() -> void:
 
 
 func _ready() -> void:
+	Engine.physics_ticks_per_second = 60
+	MusicPlayer.play( 3 )
 	Globals.is_menu_page = true
 	map_sizes.select( Blast.settings.map_size )
 	map_types.select( Blast.settings.map_type )

@@ -6,6 +6,7 @@ var is_loaded: bool = false
 
 
 func _ready() -> void:
+	Engine.physics_ticks_per_second = 60
 	MusicPlayer.play( 1 )
 	Globals.is_menu_page = true
 	Globals.on_player_updated.connect( on_settings_updated )

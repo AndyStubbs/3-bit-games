@@ -38,7 +38,8 @@
 31. Fix tutorial bug, one time when started I was at the ship where I needed to kill it wit
 	h missiles but I had no missiles and I had to reset.
 32. Fix bug when gameover and last ship is also destroyed, the last ship reappears, should not happen.
-33. Need to set sounds to be the similar volumes on all games.
+34. Blast CPU doesn't fire charge weapons correctly.  They need to charge the weapon for some time before releasing the fire button.
+35. Blast should end the game when players have 0 lives not -1.
 Ready Aim Fire Bug
 Don't allow other controllers to toggle weapons.
 

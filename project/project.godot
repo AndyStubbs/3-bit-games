@@ -13,7 +13,10 @@ config_version=5
 config/name="3-Bit Games"
 run/main_scene="res://Shared/main_menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+config/icon="res://Assets/Images/icon.ico"
+config/macos_native_icon="res://Assets/Images/icon.ico"
+config/windows_native_icon="res://Assets/Images/icon.ico"
 
 [autoload]
 

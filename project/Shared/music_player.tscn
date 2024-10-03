@@ -6,7 +6,9 @@
 script = ExtResource("1_hoog5")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
 bus = &"Music"
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
 bus = &"Music"

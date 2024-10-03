@@ -247,7 +247,8 @@ func update_main_ship( delta: float ) -> void:
 	camera.zoom.y = camera.zoom.x
 	
 	# Show stats
-	$Label.text = "%s" % camera.zoom.x
+	if Globals.is_debug:
+		$Label.text = "%s" % camera.zoom.x
 	#$Label.text = "%s" % log( ship_body.speed )
 	#$Label.text = "%d / %d / %d" % [ ship_body.shields, ship_body.health, ship_body.energy ]
 	#$Label.text = "%d" % ship_body.speed
@@ -263,7 +264,7 @@ func update_main_ship( delta: float ) -> void:
 		#roundi( ship_body.position.y / 100 )
 	#]
 	
-	if ship_body.is_cpu:
+	if Globals.is_debug and ship_body.is_cpu:
 		var state_name = ship_body.cpu_ai.state_name
 		var substate_name = ship_body.cpu_ai.state.substate_name
 		$Label.text = "%s - %s" % [ state_name, substate_name ]

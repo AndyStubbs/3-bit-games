@@ -158,6 +158,7 @@ func set_window_mode( new_is_fullscreen: bool ) -> void:
 	else:
 		if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_WINDOWED:
 			DisplayServer.window_set_mode( DisplayServer.WINDOW_MODE_WINDOWED )
+		print( DisplayServer.screen_get_size() )
 
 
 func get_default_player_settings( id: int ) -> Dictionary:

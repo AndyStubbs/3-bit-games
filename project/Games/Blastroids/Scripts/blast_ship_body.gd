@@ -231,6 +231,8 @@ func setup_weapon() -> void:
 
 
 func select_weapon() -> void:
+	blast_charge_size = 0
+	is_charging = false
 	weapon = weapon_store[ weapon_index ]
 	if world_id == -1:
 		return

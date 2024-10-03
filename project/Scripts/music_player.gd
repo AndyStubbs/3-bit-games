@@ -2,14 +2,15 @@ extends Node
 
 
 const FADE_TIME: float = 0.75
-const MAX_DB: float = 0
+const MAX_DB: float = -10
 const MIN_DB: float = -80
 
 
 var music = [
 	load( "res://Assets/Music/easy-listening-233944.mp3" ),
 	load( "res://Assets/Music/the-intro-ambient-233972.mp3" ),
-	load( "res://Assets/Music/upturned-nose-233930.mp3" )
+	load( "res://Assets/Music/upturned-nose-233930.mp3" ),
+	load( "res://Assets/Music/beyond-inspiration-150890.mp3" )
 ]
 
 

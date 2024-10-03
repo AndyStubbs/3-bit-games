@@ -49,6 +49,7 @@ func update_button_status() -> void:
 
 
 func _ready() -> void:
+	MusicPlayer.play( 2 )
 	Engine.physics_ticks_per_second = 60
 	Globals.on_player_updated.connect( on_player_updated )
 	opt_speed.select( Tun.settings.SPEED )

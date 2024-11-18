@@ -667,6 +667,8 @@ func update_cannon_angle( delta ) -> void:
 
 
 func set_cannon_with_mouse() -> void:
+	if is_cpu:
+		return
 	if Input.is_action_pressed( "MouseDown" ):
 		var mouse_pos = get_viewport().get_mouse_position()
 		var angle = cannon.global_position.angle_to_point( mouse_pos ) - body.rotation

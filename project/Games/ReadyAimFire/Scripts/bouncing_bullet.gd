@@ -10,6 +10,7 @@ var bullet_data: Dictionary
 var is_alive: bool = false
 var elapsed: float = 0
 var explosion: RAF_Explosion
+var wired_time: float = 0
 
 
 @onready var sprite: Sprite2D = $Sprite2D
@@ -49,6 +50,7 @@ func init( new_level: RAF_Level, source_tank: RAF_Tank, bullet_type: Raf.BULLET_
 
 
 func fire( angle: float, power: float ) -> void:
+	wired_time = Time.get_ticks_msec() + 100
 	linear_velocity = Vector2.from_angle( angle ) * power * 1.33
 	elapsed = 0
 
@@ -96,4 +98,6 @@ func detect_in_bounds() -> void:
 func _on_area_2d_area_entered( area: Area2D ) -> void:
 	var grand_parent = area.get_parent().get_parent()
 	if grand_parent.is_in_group( "RAF_Tank" ):
+		if grand_parent == fired_from and Time.get_ticks_msec() < wired_time:
+			return
 		explode( grand_parent )

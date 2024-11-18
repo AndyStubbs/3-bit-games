@@ -184,6 +184,9 @@ func process( delta: float ) -> void:
 
 
 func process_flip() -> void:
+	if not tank.is_grounded or not tank.can_drive:
+		input.is_action_pressed.Flip_CPU = false
+		return
 	var is_tank_in_sight: bool = false
 	for t2: RAF_Tank in tank.level.tanks:
 		if t2 == tank:
@@ -195,6 +198,11 @@ func process_flip() -> void:
 			if t2.position.x > tank.position.x:
 				is_tank_in_sight = true
 	if not is_tank_in_sight:
+		if is_debug:
+			print(
+				"No tank in sight. Flipping tank. Current facing direction:",
+				tank.is_facing_left
+			)
 		input.is_action_pressed.Flip_CPU = true
 
 

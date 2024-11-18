@@ -78,8 +78,6 @@ You can download **3-Bit Games** for free from Itch.io:
 
 ### Prerequisites
 - [Godot 4.3](https://godotengine.org/download/archive/)
-- A PC capable of running Godot-based games.
-- Gamepads (optional) for multiplayer fun.
 
 ### Installation
 1. Clone the repository:

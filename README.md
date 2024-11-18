@@ -92,3 +92,11 @@ git clone https://github.com/AndyStubbs/3-bit-games.git
 ## Contribution
 
 Contributions are welcome! If you'd like to improve the game or add features, feel free to fork the repository and submit pull requests.
+
+## License
+
+This project is licensed under the MIT License. You are free to use, modify, and distribute this software as per the terms of the license. See the [LICENSE](LICENSE) file for details.
+
+---
+
+MIT License

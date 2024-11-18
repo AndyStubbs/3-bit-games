@@ -10,6 +10,9 @@ extends Node
 @onready var added_cpus = $MC/VB/MC/PL/MC/VB/HbOptions/Panel7/MC/VB/AddiontalCpus
 
 
+var is_loaded: bool = false
+
+
 func update_settings() -> void:
 	Blast.settings.map_size = map_sizes.selected
 	Blast.settings.map_type = map_types.selected
@@ -52,7 +55,12 @@ func _ready() -> void:
 	crosshairs.select( Blast.settings.show_crosshairs )
 	added_cpus.select( Blast.settings.added_cpus )
 	update_ui_state()
+	await get_tree().create_timer( 0.15 ).timeout
+	is_loaded = true
 
+func _physics_process( _delta: float ) -> void:
+	if is_loaded and Input.is_action_just_pressed( "Exit" ):
+		get_tree().change_scene_to_packed( Globals.main_menu_scene )
 
 func _on_start_button_pressed() -> void:
 	Blast.data.settings = Blast.settings

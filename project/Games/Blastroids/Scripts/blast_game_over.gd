@@ -83,13 +83,6 @@ func update_scores( game: BlastGame ) -> void:
 				if a.stats[ stat ] != b.stats[ stat ]:
 					return a.stats[ stat ] > b.stats[ stat ]
 			return true
-			#if a.stats.ship_kills != b.stats.ship_kills:
-				#return a.stats.ship_kills > b.stats.ship_kills
-			#if a.stats.asteroid_kills != b.stats.asteroid_kills:
-				#return a.stats.asteroid_kills > b.stats.asteroid_kills
-			#if a.stats.crate_kills != b.stats.crate_kills:
-				#return a.stats.crate_kills > b.stats.crate_kills
-			#return a.stats.missile_kills > b.stats.crate_kills
 	)
 	
 	var winner: BlastShipBody = game.ships[ 0 ]
